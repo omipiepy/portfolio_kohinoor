@@ -1,13 +1,13 @@
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
-import Particles from '@/components/Particles'
+import Network from '@/components/Network'
 
-export default function MainLayout({ children, isDark, toggleTheme, onOpenCommand }) {
+export default function MainLayout({ children, isDark, toggleTheme }) {
   return (
-    <div className="relative min-h-screen text-text-light dark:text-text-dark transition-colors duration-300">
-      <Particles />
-      <div className="relative z-10">
-        <Navbar isDark={isDark} toggleTheme={toggleTheme} onOpenCommand={onOpenCommand} />
+    <div className="relative min-h-screen">
+      <Network />
+      <div className="relative z-10 pointer-events-none">
+        <Navbar isDark={isDark} toggleTheme={toggleTheme} />
         <main id="main-content">{children}</main>
         <Footer />
       </div>

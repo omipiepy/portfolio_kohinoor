@@ -1,24 +1,19 @@
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { FiMenu, FiX, FiSearch } from 'react-icons/fi'
+import { FiMenu, FiX } from 'react-icons/fi'
 import ThemeToggle from './ThemeToggle'
 import { navItems, personalInfo } from '@/data/portfolio'
 import { useScrollSpy } from '@/hooks/useScrollSpy'
 
-export default function Navbar({ isDark, toggleTheme, onOpenCommand }) {
+export default function Navbar({ isDark, toggleTheme }) {
   const [isOpen, setIsOpen] = useState(false)
-  const [scrolled, setScrolled] = useState(false)
   const activeId = useScrollSpy(navItems.map((item) => item.href.slice(1)), 80)
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 20)
-    window.addEventListener('scroll', onScroll)
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
-
-  useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : ''
-    return () => { document.body.style.overflow = '' }
+    return () => {
+      document.body.style.overflow = ''
+    }
   }, [isOpen])
 
   const scrollTo = (href) => {
@@ -29,27 +24,23 @@ export default function Navbar({ isDark, toggleTheme, onOpenCommand }) {
 
   return (
     <>
-      <nav
-        className={`fixed top-0 left-0 right-0 z-50 glass border-b border-slate-200/50 dark:border-slate-800/50 transition-all duration-300 ${
-          scrolled ? 'shadow-lg shadow-slate-900/5 dark:shadow-black/20' : 'shadow-sm'
-        }`}
-      >
-        <div className="max-w-7xl mx-auto px-6 sm:px-8 lg:px-10">
-          <div className="flex items-center justify-between h-16 md:h-[4.5rem]">
+      <nav className="fixed top-[13px] left-0 right-0 z-50 px-[21px] pointer-events-none" aria-label="Main">
+        <div className="nav-bar pointer-events-auto max-w-[1280px] mx-auto">
+          <div className="flex items-center justify-between h-[55px] px-[21px]">
             <motion.a
               href="#home"
               onClick={(e) => {
                 e.preventDefault()
                 scrollTo('#home')
               }}
-              className="text-xl font-bold gradient-text shrink-0"
-              whileHover={{ scale: 1.05 }}
+              className="font-mono text-[21px] font-bold tracking-tight text-[var(--color-ink)] hover:text-[var(--color-accent)] transition-colors"
+              whileHover={{ scale: 1.03 }}
             >
               {personalInfo.name.split(' ')[0]}
-              <span className="text-indigo-500">.</span>
+              <span className="text-[var(--color-accent)]">.</span>
             </motion.a>
 
-            <div className="hidden md:flex items-center gap-8">
+            <div className="hidden md:flex items-center gap-[34px]">
               {navItems.map((item) => {
                 const isActive = activeId === item.href.slice(1)
                 return (
@@ -60,53 +51,44 @@ export default function Navbar({ isDark, toggleTheme, onOpenCommand }) {
                       e.preventDefault()
                       scrollTo(item.href)
                     }}
-                    className={`relative px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
+                    className={`phi-meta uppercase transition-colors ${
                       isActive
-                        ? 'text-indigo-600 dark:text-indigo-400'
-                        : 'text-slate-600 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white'
+                        ? 'text-[var(--color-ink)]'
+                        : 'text-[var(--color-faint)] hover:text-[var(--color-muted)]'
                     }`}
                   >
-                    {item.label}
-                    {isActive && (
-                      <motion.div
-                        layoutId="nav-pill"
-                        className="absolute inset-0 bg-indigo-100 dark:bg-indigo-500/20 rounded-lg -z-10"
-                        transition={{ type: 'spring', stiffness: 400, damping: 30 }}
+                    <span className="relative inline-block pb-[8px]">
+                      {item.label}
+                      <span
+                        className={`absolute left-0 right-0 bottom-0 h-[2px] rounded-full bg-[var(--color-accent)] transition-opacity ${
+                          isActive ? 'opacity-100' : 'opacity-0'
+                        }`}
                       />
-                    )}
+                    </span>
                   </a>
                 )
               })}
             </div>
 
-            <div className="hidden md:flex items-center gap-3">
-              <motion.button
-                onClick={onOpenCommand}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="p-2 rounded-lg text-slate-500 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-indigo-50 dark:hover:bg-indigo-500/10 transition-colors cursor-pointer"
-                aria-label="Open command palette"
-              >
-                <FiSearch className="w-4 h-4" />
-              </motion.button>
+            <div className="hidden md:flex items-center gap-[21px]">
               <ThemeToggle isDark={isDark} toggle={toggleTheme} />
             </div>
 
-            <div className="flex md:hidden items-center gap-1">
+            <div className="flex md:hidden items-center gap-[13px]">
               <ThemeToggle isDark={isDark} toggle={toggleTheme} />
               <button
                 onClick={() => setIsOpen(!isOpen)}
-                className="p-2.5 mt-0.5 rounded-xl text-slate-700 dark:text-slate-200 hover:bg-indigo-50 dark:hover:bg-indigo-500/20 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors cursor-pointer"
+                className="w-[55px] h-[55px] grid place-items-center rounded-[21px] border border-[var(--color-line)] bg-[color-mix(in_srgb,var(--color-bg)_62%,transparent)] text-[var(--color-muted)] hover:text-[var(--color-accent)] hover:border-[var(--color-accent)] transition-colors cursor-pointer"
                 aria-label="Toggle menu"
               >
                 <AnimatePresence mode="wait">
                   {isOpen ? (
                     <motion.div key="x" initial={{ rotate: -90 }} animate={{ rotate: 0 }} exit={{ rotate: 90 }}>
-                      <FiX size={20} />
+                      <FiX size={21} />
                     </motion.div>
                   ) : (
                     <motion.div key="menu" initial={{ rotate: 90 }} animate={{ rotate: 0 }} exit={{ rotate: -90 }}>
-                      <FiMenu size={20} />
+                      <FiMenu size={21} />
                     </motion.div>
                   )}
                 </AnimatePresence>
@@ -122,7 +104,7 @@ export default function Navbar({ isDark, toggleTheme, onOpenCommand }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[60] bg-black/40 backdrop-blur-sm md:hidden"
+            className="fixed inset-0 z-[60] bg-black/60 backdrop-blur-sm md:hidden pointer-events-auto"
             onClick={() => setIsOpen(false)}
           >
             <motion.div
@@ -131,9 +113,9 @@ export default function Navbar({ isDark, toggleTheme, onOpenCommand }) {
               exit={{ x: '100%' }}
               transition={{ type: 'spring', damping: 25, stiffness: 200 }}
               onClick={(e) => e.stopPropagation()}
-              className="absolute right-0 top-0 h-full w-72 glass shadow-xl p-6 pt-28 border-l border-slate-200/50 dark:border-slate-700/50"
+              className="absolute right-0 top-0 h-full w-[233px] net-panel rounded-none p-[34px] pt-[89px] border-l border-[var(--color-line)]"
             >
-              <div className="flex flex-col gap-2">
+              <div className="flex flex-col gap-[21px]">
                 {navItems.map((item) => {
                   const isActive = activeId === item.href.slice(1)
                   return (
@@ -144,18 +126,18 @@ export default function Navbar({ isDark, toggleTheme, onOpenCommand }) {
                         e.preventDefault()
                         scrollTo(item.href)
                       }}
-                      className={`px-4 py-2 rounded-xl text-sm font-medium transition-all ${
+                      className={`phi-meta uppercase transition-colors ${
                         isActive
-                          ? 'bg-indigo-100 dark:bg-indigo-500/20 text-indigo-600 dark:text-indigo-400'
-                          : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800'
+                          ? 'text-[var(--color-accent)]'
+                          : 'text-[var(--color-muted)] hover:text-[var(--color-ink)]'
                       }`}
                     >
-                      <ul className="flex items-center gap-2">
-                        <li>{item.label}</li>
-                      </ul>
+                      {item.label}
                     </a>
                   )
                 })}
+                <hr className="net-divider" />
+                <ThemeToggle isDark={isDark} toggle={toggleTheme} />
               </div>
             </motion.div>
           </motion.div>

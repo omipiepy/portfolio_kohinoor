@@ -35,30 +35,26 @@ function InfoItem({ item, delay }) {
 
   return (
     <motion.div
-      initial={{ opacity: 0, x: -20 }}
+      initial={{ opacity: 0, x: -13 }}
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.5, delay }}
-      className="flex items-start gap-4 group"
+      transition={{ duration: 0.4, delay }}
+      className="flex items-center gap-[13px] py-[13px] group"
     >
-      <div className="p-3 rounded-2xl bg-gradient-to-br from-indigo-50 to-cyan-50 dark:from-indigo-500/10 dark:to-cyan-500/10 text-indigo-600 dark:text-indigo-400 shrink-0 shadow-sm group-hover:shadow-md transition-shadow">
-        <Icon className="w-5 h-5" />
-      </div>
-      <div className="flex-1 min-w-0 pt-1">
-        <p className="text-xs font-medium text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-0.5">
-          {item.label}
-        </p>
+      <span className="w-[34px] h-[34px] grid place-items-center rounded-[13px] bg-[color-mix(in_srgb,var(--color-accent)_12%,transparent)] text-[var(--color-accent)] shrink-0">
+        <Icon size={13} />
+      </span>
+      <div className="flex-1 min-w-0">
+        <p className="phi-meta uppercase mb-[4px]">{item.label}</p>
         {item.href ? (
           <a
             href={item.href}
-            className="text-sm font-medium text-slate-800 dark:text-slate-200 hover:text-indigo-600 dark:hover:text-indigo-400 transition-colors truncate block"
+            className="text-[14px] font-medium text-[var(--color-ink)] hover:text-[var(--color-accent)] transition-colors truncate block"
           >
             {item.value}
           </a>
         ) : (
-          <p className="text-sm font-medium text-slate-800 dark:text-slate-200 truncate">
-            {item.value}
-          </p>
+          <p className="text-[14px] font-medium text-[var(--color-ink)] truncate">{item.value}</p>
         )}
       </div>
       {item.copyable && (
@@ -66,20 +62,10 @@ function InfoItem({ item, delay }) {
           onClick={handleCopy}
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
-          className="p-2 rounded-xl text-slate-400 hover:text-indigo-600 dark:hover:text-indigo-400 hover:bg-slate-100 dark:hover:bg-slate-800 transition-all cursor-pointer opacity-0 group-hover:opacity-100 mt-1 shrink-0"
+          className="p-[8px] rounded-[13px] text-[var(--color-faint)] hover:text-[var(--color-accent)] hover:bg-[color-mix(in_srgb,var(--color-accent)_8%,transparent)] transition-all cursor-pointer opacity-0 group-hover:opacity-100 shrink-0"
           aria-label={`Copy ${item.label}`}
         >
-          {copied ? (
-            <motion.span
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              className="text-emerald-500"
-            >
-              <FiCheck className="w-4 h-4" />
-            </motion.span>
-          ) : (
-            <FiCopy className="w-4 h-4" />
-          )}
+          {copied ? <FiCheck size={13} className="text-[var(--color-accent-2)]" /> : <FiCopy size={13} />}
         </motion.button>
       )}
     </motion.div>
@@ -88,94 +74,92 @@ function InfoItem({ item, delay }) {
 
 export default function ContactInfo() {
   return (
-    <ContactCard className="p-8 md:p-10 lg:p-12 h-full">
-      <div className="flex flex-col h-full gap-8">
-        <div className="space-y-6">
+    <ContactCard className="p-[34px] h-full">
+      <div className="flex flex-col h-full gap-[34px]">
+        <div>
           <motion.h2
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 13 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5 }}
-            className="text-4xl md:text-5xl font-bold tracking-tight"
+            transition={{ duration: 0.4 }}
+            className="phi-h2 mb-[13px]"
           >
             {contactInfo.heading}
           </motion.h2>
           <motion.p
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 13 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-slate-500 dark:text-slate-400 leading-relaxed text-[15px] max-w-md"
+            transition={{ duration: 0.4, delay: 0.1 }}
+            className="phi-body text-[14px]"
           >
             {contactInfo.intro}
           </motion.p>
         </div>
 
-        <div className="space-y-6">
+        <div className="flex flex-col divide-y divide-[var(--color-line)]">
           {contactDetails.map((item, i) => (
-            <InfoItem key={item.key} item={item} delay={0.2 + i * 0.1} />
+            <InfoItem key={item.key} item={item} delay={0.1 + i * 0.08} />
           ))}
         </div>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.5 }}
-          className="inline-flex items-center gap-2.5 px-4 py-2.5 rounded-2xl bg-emerald-50/70 dark:bg-emerald-500/10 border border-emerald-200/60 dark:border-emerald-500/20 w-fit"
-        >
-          <span className="relative flex h-2.5 w-2.5">
-            <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 animate-ping" />
-            <span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-emerald-500" />
-          </span>
-          <span className="text-sm font-medium text-emerald-700 dark:text-emerald-400">
-            {contactInfo.availability}
-          </span>
-        </motion.div>
-
-        <div className="flex flex-wrap gap-3 pt-2">
-          <motion.a
-            href={contactInfo.resumeUrl}
-            download
-            initial={{ opacity: 0, y: 20 }}
+        <div className="mt-auto space-y-[21px]">
+          <motion.div
+            initial={{ opacity: 0, y: 13 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.6 }}
-            whileHover={{ scale: 1.04 }}
-            whileTap={{ scale: 0.96 }}
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium bg-slate-900 dark:bg-white text-white dark:text-slate-900 hover:bg-slate-800 dark:hover:bg-slate-100 transition-colors shadow-md"
+            transition={{ duration: 0.4, delay: 0.3 }}
+            className="inline-flex items-center gap-[13px] net-chip w-fit"
           >
-            <FiDownload className="w-4 h-4" />
-            Download Resume
-          </motion.a>
-          <motion.a
-            href="#"
-            initial={{ opacity: 0, y: 20 }}
+            <span className="relative flex h-[8px] w-[8px]">
+              <span className="absolute inline-flex h-full w-full rounded-full bg-[var(--color-accent-2)] opacity-75 animate-ping" />
+              <span className="relative inline-flex h-[8px] w-[8px] rounded-full bg-[var(--color-accent-2)]" />
+            </span>
+            <span className="!text-[var(--color-muted)]">{contactInfo.availability}</span>
+          </motion.div>
+
+          <div className="flex flex-wrap gap-[13px]">
+            <motion.a
+              href={contactInfo.resumeUrl}
+              download
+              initial={{ opacity: 0, y: 13 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: 0.35 }}
+              whileHover={{ y: -2 }}
+              whileTap={{ scale: 0.97 }}
+              className="btn-phi btn-phi--accent btn-phi--sm"
+            >
+              <FiDownload size={13} />
+              Download Resume
+            </motion.a>
+            <motion.a
+              href="#"
+              initial={{ opacity: 0, y: 13 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.4, delay: 0.4 }}
+              whileHover={{ y: -2 }}
+              whileTap={{ scale: 0.97 }}
+              className="btn-phi btn-phi--outline btn-phi--sm"
+            >
+              <FiCalendar size={13} />
+              Schedule Meeting
+            </motion.a>
+          </div>
+
+          <hr className="net-divider" />
+
+          <motion.div
+            initial={{ opacity: 0, y: 13 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ duration: 0.5, delay: 0.65 }}
-            whileHover={{ scale: 1.04 }}
-            whileTap={{ scale: 0.96 }}
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-medium border border-slate-300 dark:border-slate-600 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors"
+            transition={{ duration: 0.4, delay: 0.45 }}
           >
-            <FiCalendar className="w-4 h-4" />
-            Schedule Meeting
-          </motion.a>
+            <p className="phi-meta uppercase mb-[13px]">Find me online</p>
+            <SocialLinks />
+          </motion.div>
         </div>
-
-        <div className="mt-auto pt-4">
-          <SocialLinks />
-        </div>
-
-        <motion.p
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5, delay: 0.7 }}
-          className="text-sm text-slate-400 dark:text-slate-500 italic"
-        >
-          {contactInfo.callout}
-        </motion.p>
       </div>
     </ContactCard>
   )

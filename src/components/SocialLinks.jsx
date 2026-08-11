@@ -10,7 +10,7 @@ const iconMap = {
 
 export default function SocialLinks() {
   return (
-    <div className="flex items-center gap-3">
+    <div className="flex items-center gap-[13px]">
       {socialLinks.map((link, i) => {
         const Icon = iconMap[link.icon]
         return (
@@ -19,16 +19,16 @@ export default function SocialLinks() {
             href={link.url}
             target="_blank"
             rel="noopener noreferrer"
-            initial={{ opacity: 0, y: 10 }}
+            initial={{ opacity: 0, y: 13 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            transition={{ delay: 0.5 + i * 0.08 }}
-            whileHover={{ scale: 1.15, y: -2 }}
-            whileTap={{ scale: 0.9 }}
-            className={`w-11 h-11 rounded-xl flex items-center justify-center text-slate-500 dark:text-slate-400 bg-slate-100 dark:bg-slate-800/60 ${link.color} transition-colors shadow-sm hover:shadow-md`}
+            transition={{ delay: 0.3 + i * 0.06 }}
+            whileHover={{ scale: 1.1, y: -2 }}
+            whileTap={{ scale: 0.92 }}
+            className="w-[34px] h-[34px] rounded-[13px] grid place-items-center text-[var(--color-muted)] bg-[color-mix(in_srgb,var(--color-accent)_8%,transparent)] border border-[var(--color-line)] hover:text-[var(--color-accent)] hover:border-[var(--color-accent)] transition-colors"
             aria-label={link.name}
           >
-            <Icon className="w-4 h-4" />
+            <Icon size={13} />
           </motion.a>
         )
       })}

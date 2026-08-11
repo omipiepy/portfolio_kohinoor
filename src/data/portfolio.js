@@ -30,28 +30,40 @@ export const skillCategories = [
   {
     category: 'Programming',
     skills: [
-      { name: 'Python', level: 85, icon: 'FaPython' },
-      { name: 'JavaScript', level: 80, icon: 'FaJs' },
-      { name: 'HTML', level: 85, icon: 'FaHtml5' },
-      { name: 'CSS', level: 80, icon: 'FaCss3' },
-      { name: 'C++', level: 70, icon: 'FaCode' },
+      { name: 'Python', level: 85, icon: 'SiPython' },
+      { name: 'TypeScript', level: 72, icon: 'SiTypescript' },
+      { name: 'JavaScript', level: 80, icon: 'SiJavascript' },
+      { name: 'HTML', level: 85, icon: 'SiHtml5' },
+      { name: 'CSS', level: 80, icon: 'SiCss3' },
+      { name: 'C++', level: 65, icon: 'SiCplusplus' },
     ],
   },
   {
     category: 'AI & ML',
     skills: [
       { name: 'PyTorch', level: 75, icon: 'SiPytorch' },
-      { name: 'NumPy', level: 80, icon: 'SiNumpy' },
-      { name: 'Pandas', level: 80, icon: 'SiPandas' },
-      { name: 'Matplotlib', level: 75, icon: 'FaChartBar' },
+      { name: 'TensorFlow', level: 60, icon: 'SiTensorflow' },
+      { name: 'NumPy', level: 82, icon: 'SiNumpy' },
+      { name: 'Pandas', level: 82, icon: 'SiPandas' },
       { name: 'scikit-learn', level: 70, icon: 'SiScikitlearn' },
+      { name: 'LangChain', level: 62, icon: 'SiLangchain' },
+    ],
+  },
+  {
+    category: 'Frontend',
+    skills: [
+      { name: 'React', level: 78, icon: 'SiReact' },
+      { name: 'Next.js', level: 62, icon: 'SiNextjs' },
+      { name: 'Tailwind CSS', level: 76, icon: 'SiTailwindcss' },
+      { name: 'Vite', level: 70, icon: 'SiVite' },
     ],
   },
   {
     category: 'Backend',
     skills: [
-      { name: 'Node.js', level: 75, icon: 'FaNodeJs' },
-      { name: 'Express', level: 75, icon: 'SiExpress' },
+      { name: 'Node.js', level: 75, icon: 'SiNodedotjs' },
+      { name: 'Express', level: 74, icon: 'SiExpress' },
+      { name: 'FastAPI', level: 70, icon: 'SiFastapi' },
     ],
   },
   {
@@ -64,15 +76,16 @@ export const skillCategories = [
   {
     category: 'DevOps',
     skills: [
-      { name: 'Docker', level: 65, icon: 'FaDocker' },
-      { name: 'Git', level: 80, icon: 'FaGitAlt' },
+      { name: 'Docker', level: 65, icon: 'SiDocker' },
+      { name: 'Git', level: 80, icon: 'SiGit' },
     ],
   },
   {
     category: 'Tools',
     skills: [
-      { name: 'VS Code', level: 90, icon: 'SiVscodium' },
+      { name: 'VS Code', level: 90, icon: 'SiVscode' },
       { name: 'Jupyter', level: 80, icon: 'SiJupyter' },
+      { name: 'Linux', level: 60, icon: 'SiLinux' },
     ],
   },
 ]
@@ -205,6 +218,66 @@ export const projects = [
     results: 'Fully functional blogging platform deployed with support for multiple user roles and rich media content.',
     learned: 'Full-stack development patterns with MERN, JWT authentication, and building responsive UIs with React.',
   },
+  {
+    title: 'RAG Knowledge Chatbot',
+    category: 'ai-ml',
+    tagline: 'Chat with your documents using retrieval-augmented generation.',
+    description:
+      'A RAG-powered assistant that answers questions from a private knowledge base — embedding retrieval with an LLM for grounded, citation-aware responses.',
+    image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800&h=450&fit=crop',
+    technologies: ['Python', 'LangChain', 'FastAPI', 'React', 'Vector DB'],
+    github: 'https://github.com/omipiepy',
+    live: '#',
+    highlights: [
+      'Document ingestion & chunking',
+      'Vector embedding retrieval',
+      'Grounded LLM responses',
+      'Source citations in chat',
+    ],
+    overview: 'A retrieval-augmented generation system that lets users upload documents and ask questions, retrieving the most relevant chunks before generating answers.',
+    problem: 'General-purpose LLMs hallucinate and have no access to private documents, making them unreliable for domain-specific Q&A.',
+    solution: 'Documents are chunked, embedded, and stored in a vector database; user queries retrieve the top matching chunks and feed them into the LLM as context.',
+    architecture: 'FastAPI backend orchestrating ingestion and retrieval pipelines, LangChain for prompt and chain management, and a React frontend for chat.',
+    features: [
+      'Multi-format document ingestion',
+      'Semantic chunk retrieval',
+      'Grounded, citation-aware answers',
+      'Streaming chat interface',
+    ],
+    challenges: 'Tuning chunk size and retrieval top-k to balance context relevance with token limits, and keeping retrieval latency low.',
+    results: 'Accurate, source-backed answers on a private corpus with sub-second retrieval latency.',
+    learned: 'End-to-end RAG pipelines, embedding strategies, and prompt engineering for grounded generation.',
+  },
+  {
+    title: 'Real-Time Kanban Board',
+    category: 'fullstack',
+    tagline: 'Collaborative task board with live sync across sessions.',
+    description:
+      'A multi-user kanban board where cards, columns, and comments sync in real time over WebSockets with optimistic UI updates.',
+    image: 'https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=800&h=450&fit=crop',
+    technologies: ['React', 'Node.js', 'Express', 'MongoDB', 'WebSockets'],
+    github: 'https://github.com/omipiepy',
+    live: '#',
+    highlights: [
+      'Live multi-user sync',
+      'Drag-and-drop cards',
+      'Optimistic updates',
+      'Board & task history',
+    ],
+    overview: 'A real-time collaborative kanban board built on WebSockets, with drag-and-drop cards and instant sync across all connected clients.',
+    problem: 'Team tools often have noticeable lag or complex sync logic; a lightweight, live board was needed for fast-moving task tracking.',
+    solution: 'WebSocket server broadcasts board mutations to all clients; the client applies optimistic updates and reconciles on acknowledgment.',
+    architecture: 'Express + WebSocket server with MongoDB persistence, React client with drag-and-drop cards and board-level undo.',
+    features: [
+      'Real-time column and card sync',
+      'Drag-and-drop between columns',
+      'Task comments and tags',
+      'Per-board activity history',
+    ],
+    challenges: 'Handling concurrent edits without conflicts and keeping the optimistic UI consistent with server state.',
+    results: 'Near-instant sync across sessions with conflict-free concurrent editing.',
+    learned: 'WebSocket architectures, optimistic UI patterns, and conflict resolution for collaborative apps.',
+  },
 ]
 
 export const experiences = [
@@ -276,4 +349,4 @@ export const interests = [
 ]
 
 export const aboutSummary =
-  'I am a Computer Engineering graduate from Thapathali Campus, Tribhuvan University, currently working as an AI/ML Intern at Alpinist Studios. I have built projects across ML, full-stack web development, and database systems. I believe in the philosophy "Jack of all trades, master of none" — I enjoy exploring diverse technologies and frameworks. I am basically a vibecoder who loves building things and learning along the way.'
+  'I am a Computer Engineering graduate from Thapathali Campus, Tribhuvan University, currently working as an AI/ML Intern at Alpinist Studios.\n\nI build across the stack — ML models, AI applications, and full-stack web products. I have shipped projects spanning deep learning, retrieval-augmented generation, and real-time web apps.\n\nI believe in the philosophy "Jack of all trades, master of none" — I enjoy exploring diverse technologies, building things, and learning along the way.'

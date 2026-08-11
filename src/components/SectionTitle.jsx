@@ -1,27 +1,21 @@
 import { motion } from 'framer-motion'
 
-export default function SectionTitle({ title, subtitle }) {
+export default function SectionTitle({ kicker, title, subtitle }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 21 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-50px' }}
       transition={{ duration: 0.5 }}
-      className="text-center mb-14 md:mb-16"
+      className="mb-[55px] text-center"
     >
-      <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-5">
-        <span className="gradient-text">{title}</span>
-      </h2>
+      {kicker && <p className="phi-meta mb-[13px] uppercase">{kicker}</p>}
+      <h2 className="phi-h2 mb-[13px]">{title}</h2>
       {subtitle && (
-        <p className="text-slate-600 dark:text-slate-400 max-w-2xl mx-auto text-base md:text-lg leading-relaxed">
+        <p className="phi-body mx-auto" style={{ maxWidth: '61.8%', minWidth: '280px' }}>
           {subtitle}
         </p>
       )}
-      <div className="mt-6 flex items-center justify-center gap-2">
-        <span className="w-12 h-1 rounded-full bg-gradient-to-r from-indigo-500 to-cyan-500" />
-        <span className="w-2 h-2 rounded-full bg-indigo-500" />
-        <span className="w-12 h-1 rounded-full bg-gradient-to-r from-cyan-500 to-indigo-500" />
-      </div>
     </motion.div>
   )
 }
