@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://johndoe.dev/sitemap.xml
