@@ -1,10 +1,10 @@
-# Kohinoor Dallakoti — Portfolio
+# Portfolio
 
-A dark, minimal, single-page portfolio built with React, Vite, and Tailwind CSS — featuring a living tsParticles network background that reacts to your cursor.
+A dark, minimal, single-page portfolio built with React, Vite, and Tailwind CSS — featuring a living tsParticles network background that reacts to the cursor.
 
 ## Highlights
 
-- **Interactive particle network** — 120 colorful particles that flee and swirl around your cursor, with connection lines drawn from the cursor to every nearby particle
+- **Interactive particle network** — colorful particles that flee and swirl around the cursor, with connection lines drawn from the cursor to every nearby particle
 - **Golden-ratio design system** — every size on the page follows the φ scale (13 → 16 → 26 → 42 → 68), from typography to spacing and radii
 - **Floating translucent UI** — frosted-glass panels and a pill navbar over the live background
 - **Animated sections** — staggered framer-motion reveals, typewriter hero, project case-study modals
@@ -64,4 +64,4 @@ Tune the network feel in `src/components/Network.jsx` (constants at the top of t
 
 ## License
 
-© Kohinoor Dallakoti. All rights reserved.
+All rights reserved.
