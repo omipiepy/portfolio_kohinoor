@@ -14,11 +14,7 @@ export default function About() {
   return (
     <section id="about" className="phi-section">
       <div className="phi-wrap pointer-events-auto">
-        <SectionTitle
-          kicker="about"
-          title="About Me"
-          subtitle="A vibecoder who builds across the stack — from ML models to full-stack apps."
-        />
+        <SectionTitle title="About Me" />
 
         <div className="grid md:grid-cols-[38.2fr_61.8fr] gap-[55px] items-start">
           <motion.div {...fade} className="flex flex-col items-center md:items-start gap-[34px]">

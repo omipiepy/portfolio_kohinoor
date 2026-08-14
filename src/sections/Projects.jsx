@@ -20,9 +20,7 @@ export default function Projects() {
     <section id="projects" className="phi-section">
       <div className="phi-wrap pointer-events-auto">
         <SectionTitle
-          kicker="projects"
           title="Featured Projects"
-          subtitle="A selection of projects that showcase my expertise in AI, backend, and full-stack development."
         />
 
         <div className="flex flex-wrap justify-center gap-[13px] mb-[55px]">

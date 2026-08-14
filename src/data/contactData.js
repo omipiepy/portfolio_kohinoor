@@ -8,7 +8,7 @@ export const contactInfo = {
   phone: '+977-9800000000',
   location: 'Kathmandu, Nepal',
   availability: 'Open to Opportunities',
-  resumeUrl: '#download',
+  resumeUrl: '/resume.pdf',
   callout: "Let's build something amazing together.",
 }
 

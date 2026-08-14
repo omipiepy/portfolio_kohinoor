@@ -1,12 +1,19 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import {
-  FiX, FiGithub, FiExternalLink, FiCheck, FiAlertCircle, FiBookOpen, FiTarget, FiLayers, FiBarChart2, FiCamera,
+  FiX, FiCheck, FiAlertCircle, FiBookOpen, FiTarget, FiLayers, FiBarChart2, FiCamera, FiImage,
 } from 'react-icons/fi'
+
+const categoryLabels = {
+  fullstack: 'Web / Full Stack',
+  design: 'UI/UX Design',
+  'ai-ml': 'AI / ML',
+  research: 'Research',
+}
 
 function ModalSection({ icon: Icon, label, accent, children }) {
   return (
     <div>
-      <h3 className="flex items-center gap-[13px] mb-[13px]">
+      <h3 className="flex items-center gap-[13px] mb-[21px]">
         <span
           className="w-[34px] h-[34px] grid place-items-center rounded-[13px]"
           style={{
@@ -41,7 +48,7 @@ export default function ProjectModal({ project, onClose }) {
           onClick={(e) => e.stopPropagation()}
           className="min-h-screen flex items-center justify-center p-[21px]"
         >
-          <div className="w-full max-w-4xl net-panel overflow-hidden my-[34px]">
+          <div className="w-full max-w-4xl net-panel p-0 overflow-hidden my-[34px] bg-[var(--color-panel-2)]">
             <div className="relative">
               <div className="aspect-video overflow-hidden bg-[var(--color-panel)]">
                 <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
@@ -55,18 +62,18 @@ export default function ProjectModal({ project, onClose }) {
                 <FiX size={13} />
               </button>
               <div className="absolute bottom-[21px] left-[21px] right-[21px]">
-                <p className="phi-meta mb-[8px]">{project.category.replace('-', ' / ')}</p>
+                <p className="phi-meta mb-[8px]">{categoryLabels[project.category] || project.category}</p>
                 <h2 className="phi-h2 text-white mb-[8px]">{project.title}</h2>
                 <p className="phi-meta text-white/60">{project.tagline}</p>
               </div>
             </div>
 
-            <div className="p-[34px] space-y-[34px]">
+            <div className="p-[55px] space-y-[55px]">
               <ModalSection icon={FiLayers} label="Overview" accent="var(--color-accent)">
                 <p className="phi-body text-[14px]">{project.overview}</p>
               </ModalSection>
 
-              <div className="grid md:grid-cols-2 gap-[34px]">
+              <div className="grid md:grid-cols-2 gap-[55px]">
                 <ModalSection icon={FiAlertCircle} label="Problem" accent="var(--color-accent-2)">
                   <p className="phi-body text-[14px]">{project.problem}</p>
                 </ModalSection>
@@ -82,7 +89,7 @@ export default function ProjectModal({ project, onClose }) {
               )}
 
               <ModalSection icon={FiCheck} label="Key Features" accent="var(--color-accent)">
-                <div className="flex flex-col gap-[13px]">
+                <div className="flex flex-col gap-[21px]">
                   {project.features.map((f) => (
                     <div
                       key={f}
@@ -96,7 +103,7 @@ export default function ProjectModal({ project, onClose }) {
               </ModalSection>
 
               <ModalSection icon={FiBarChart2} label="Technologies" accent="var(--color-accent-2)">
-                <div className="flex flex-wrap gap-[8px]">
+                <div className="flex flex-wrap gap-[13px]">
                   {project.technologies.map((tech) => (
                     <span key={tech} className="net-chip !px-[8px] !py-[4px] !text-[12px]">
                       {tech}
@@ -105,7 +112,23 @@ export default function ProjectModal({ project, onClose }) {
                 </div>
               </ModalSection>
 
-              <div className="grid md:grid-cols-2 gap-[34px]">
+              {project.gallery && project.gallery.length > 1 && (
+                <ModalSection icon={FiImage} label="Gallery" accent="var(--color-accent)">
+                  <div className="grid sm:grid-cols-2 gap-[13px]">
+                    {project.gallery.map((src) => (
+                      <img
+                        key={src}
+                        src={src}
+                        alt={`${project.title} screenshot`}
+                        className="w-full aspect-video object-cover rounded-[13px] border border-[var(--color-line)]"
+                        loading="lazy"
+                      />
+                    ))}
+                  </div>
+                </ModalSection>
+              )}
+
+              <div className="grid md:grid-cols-2 gap-[55px]">
                 <ModalSection icon={FiAlertCircle} label="Challenges" accent="var(--color-accent-2)">
                   <p className="phi-body text-[14px]">{project.challenges}</p>
                 </ModalSection>
@@ -118,29 +141,16 @@ export default function ProjectModal({ project, onClose }) {
                 <p className="phi-body text-[14px]">{project.learned}</p>
               </ModalSection>
 
-              <div className="flex flex-wrap gap-[13px] pt-[21px] border-t border-[var(--color-line)]">
-                <motion.a
-                  href={project.github}
-                  target="_blank"
-                  rel="noopener noreferrer"
+              <div className="flex flex-wrap gap-[13px] pt-[34px] border-t border-[var(--color-line)]">
+                <motion.button
+                  onClick={onClose}
                   whileHover={{ y: -2 }}
                   whileTap={{ scale: 0.97 }}
-                  className="btn-phi btn-phi--outline btn-phi--sm"
+                  className="btn-phi btn-phi--accent btn-phi--sm !gap-[13px] !px-[21px] !py-[13px] !tracking-[0.08em] cursor-pointer"
                 >
-                  <FiGithub size={13} />
-                  View on GitHub
-                </motion.a>
-                <motion.a
-                  href={project.live}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ y: -2 }}
-                  whileTap={{ scale: 0.97 }}
-                  className="btn-phi btn-phi--accent btn-phi--sm"
-                >
-                  <FiExternalLink size={13} />
-                  Live Demo
-                </motion.a>
+                  <FiX size={13} />
+                  Close Case Study
+                </motion.button>
               </div>
             </div>
           </div>

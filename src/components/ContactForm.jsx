@@ -1,16 +1,17 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
-  FiUser, FiMail, FiEdit3, FiMessageSquare, FiSend, FiX,
+  FiSend, FiX,
   FiCheck, FiLoader, FiAlertCircle,
 } from 'react-icons/fi'
 import ContactCard from './ContactCard'
+import { submitContactMessage } from '@/utils/contactApi'
 
 const fields = [
-  { key: 'name', label: 'Your Name', icon: FiUser, type: 'text', multiline: false },
-  { key: 'email', label: 'Your Email', icon: FiMail, type: 'email', multiline: false },
-  { key: 'subject', label: 'Subject', icon: FiEdit3, type: 'text', multiline: false },
-  { key: 'message', label: 'Your Message', icon: FiMessageSquare, type: 'text', multiline: true },
+  { key: 'name', label: 'Your Name', type: 'text', multiline: false },
+  { key: 'email', label: 'Your Email', type: 'email', multiline: false },
+  { key: 'subject', label: 'Subject', type: 'text', multiline: false },
+  { key: 'message', label: 'Your Message', type: 'text', multiline: true },
 ]
 
 const MAX_MESSAGE = 500
@@ -18,9 +19,7 @@ const MAX_MESSAGE = 500
 function FloatingInput({ field, value, onChange, error, onClear }) {
   const [focused, setFocused] = useState(false)
   const hasValue = value.length > 0
-  const isFloating = focused || hasValue
   const Tag = field.multiline ? 'textarea' : 'input'
-  const Icon = field.icon
 
   return (
     <div>
@@ -33,12 +32,6 @@ function FloatingInput({ field, value, onChange, error, onClear }) {
               : 'border-[var(--color-line)] bg-[rgba(255,255,255,0.03)] hover:border-[var(--color-line-2)]'
         }`}
       >
-        <div
-          className="absolute left-[21px] top-1/2 -translate-y-1/2 pointer-events-none text-[var(--color-faint)]"
-          style={field.multiline ? { top: '21px', transform: 'none' } : {}}
-        >
-          <Icon size={13} />
-        </div>
         <Tag
           type={field.multiline ? undefined : field.type}
           value={value}
@@ -46,20 +39,12 @@ function FloatingInput({ field, value, onChange, error, onClear }) {
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
           rows={field.multiline ? 5 : undefined}
-          className={`w-full bg-transparent outline-none text-[14px] text-[var(--color-ink)] transition-all resize-none ${
-            field.multiline ? 'pt-[21px] pb-[13px] pl-[47px] pr-[34px]' : 'pt-[13px] pb-[13px] pl-[47px] pr-[34px]'
+          placeholder={field.label}
+          className={`w-full bg-transparent outline-none text-[14px] text-[var(--color-ink)] transition-all resize-none placeholder:text-[var(--color-faint)] ${
+            field.multiline ? 'pt-[21px] pb-[21px] pl-[21px] pr-[47px]' : 'pt-[13px] pb-[13px] pl-[21px] pr-[47px]'
           }`}
           aria-label={field.label}
         />
-        <label
-          className={`absolute left-[47px] transition-all pointer-events-none select-none ${
-            field.multiline ? (isFloating ? 'top-[8px] text-[11px]' : 'top-[21px] text-[14px]') : (isFloating ? 'top-[4px] text-[11px]' : 'top-1/2 -translate-y-1/2 text-[14px]')
-          } ${
-            error ? 'text-[#f87171]' : isFloating ? 'text-[var(--color-accent)]' : 'text-[var(--color-faint)]'
-          }`}
-        >
-          {field.label}
-        </label>
         {hasValue && (
           <button
             onClick={onClear}
@@ -106,6 +91,7 @@ export default function ContactForm() {
   const [errors, setErrors] = useState({})
   const [sending, setSending] = useState(false)
   const [submitted, setSubmitted] = useState(false)
+  const [submitError, setSubmitError] = useState('')
 
   const validate = () => {
     const e = {}
@@ -146,22 +132,40 @@ export default function ContactForm() {
     e.preventDefault()
     if (!validate()) return
     setSending(true)
-    await new Promise((r) => setTimeout(r, 1800))
-    setSending(false)
-    setSubmitted(true)
-    setTimeout(() => {
-      setSubmitted(false)
-      setForm({ name: '', email: '', subject: '', message: '' })
-    }, 4000)
+    setSubmitError('')
+    try {
+      await submitContactMessage(form)
+      setSubmitted(true)
+      setTimeout(() => {
+        setSubmitted(false)
+        setForm({ name: '', email: '', subject: '', message: '' })
+      }, 4000)
+    } catch (err) {
+      if (import.meta.env.DEV) {
+        // No API running in plain `npm run dev` — keep the demo working locally.
+        console.warn('[contact] API unavailable in dev, simulating success:', err.message)
+        await new Promise((r) => setTimeout(r, 800))
+        setSubmitted(true)
+        setTimeout(() => {
+          setSubmitted(false)
+          setForm({ name: '', email: '', subject: '', message: '' })
+        }, 4000)
+      } else {
+        setSubmitError(err.message || 'Something went wrong. Please try again.')
+      }
+    } finally {
+      setSending(false)
+    }
   }
 
   const clearAll = () => {
     setForm({ name: '', email: '', subject: '', message: '' })
     setErrors({})
+    setSubmitError('')
   }
 
   return (
-    <ContactCard className="p-[34px] h-full">
+    <ContactCard className="p-[21px] sm:p-[34px] lg:p-[55px] h-full">
       <AnimatePresence mode="wait">
         {submitted ? (
           <motion.div
@@ -240,6 +244,21 @@ export default function ContactForm() {
               ))}
             </div>
 
+            <AnimatePresence mode="wait">
+              {submitError && (
+                <motion.p
+                  key="submit-error"
+                  initial={{ opacity: 0, y: -6, height: 0 }}
+                  animate={{ opacity: 1, y: 0, height: 'auto' }}
+                  exit={{ opacity: 0, y: -6, height: 0 }}
+                  className="flex items-center gap-[8px] text-[13px] text-[#f87171]"
+                >
+                  <FiAlertCircle size={13} className="shrink-0" />
+                  {submitError}
+                </motion.p>
+              )}
+            </AnimatePresence>
+
             <motion.div
               initial={{ opacity: 0, y: 13 }}
               animate={{ opacity: 1, y: 0 }}
@@ -251,7 +270,7 @@ export default function ContactForm() {
                 disabled={sending}
                 whileHover={sending ? {} : { y: -2 }}
                 whileTap={sending ? {} : { scale: 0.97 }}
-                className="btn-phi btn-phi--accent flex-1 cursor-pointer disabled:cursor-not-allowed"
+                className="btn-phi btn-phi--accent flex-1 !gap-[13px] !px-[21px] !py-[13px] !tracking-[0.08em] cursor-pointer disabled:cursor-not-allowed"
               >
                 {sending ? (
                   <>
@@ -270,7 +289,7 @@ export default function ContactForm() {
                 onClick={clearAll}
                 whileHover={{ y: -2 }}
                 whileTap={{ scale: 0.97 }}
-                className="btn-phi btn-phi--ghost cursor-pointer"
+                className="btn-phi btn-phi--ghost !gap-[13px] !px-[21px] !py-[13px] !tracking-[0.08em] cursor-pointer"
               >
                 <FiX size={13} />
                 Clear

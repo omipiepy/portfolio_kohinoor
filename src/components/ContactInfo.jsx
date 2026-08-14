@@ -74,7 +74,7 @@ function InfoItem({ item, delay }) {
 
 export default function ContactInfo() {
   return (
-    <ContactCard className="p-[34px] h-full">
+    <ContactCard className="p-[21px] sm:p-[34px] lg:p-[55px] h-full">
       <div className="flex flex-col h-full gap-[34px]">
         <div>
           <motion.h2

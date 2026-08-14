@@ -23,9 +23,9 @@ html {
 
 html.light {
   color-scheme: light;
-  --color-bg: #eef0f6;
-  --color-panel: rgba(255, 255, 255, 0.72);
-  --color-panel-2: rgba(255, 255, 255, 0.9);
+  --color-bg: #ffffff;
+  --color-panel: rgba(255, 255, 255, 0.85);
+  --color-panel-2: #ffffff;
   --color-line: rgba(15, 23, 42, 0.1);
   --color-line-2: rgba(15, 23, 42, 0.22);
   --color-ink: #0f172a;
@@ -33,6 +33,12 @@ html.light {
   --color-faint: #94a3b8;
   --color-accent: #6366f1;
   --color-accent-2: #0891b2;
+}
+
+html.light .net-panel,
+html.light .nav-bar,
+html.light .net-control {
+  background: var(--color-panel-2);
 }
 
 * {
@@ -127,16 +133,19 @@ body {
 
 /* ---------- Surfaces ---------- */
 
-.net-panel {
-  background: color-mix(in srgb, var(--color-bg) 48%, transparent);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
-  border: 1px solid var(--color-line);
-  border-radius: 34px;
-}
+@layer components {
+  .net-panel {
+    background: color-mix(in srgb, var(--color-bg) 48%, transparent);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+    border: 1px solid var(--color-line);
+    border-radius: 34px;
+    padding: 34px;
+  }
 
-.net-panel-sm {
-  border-radius: 21px;
+  .net-panel-sm {
+    border-radius: 21px;
+  }
 }
 
 .net-chip {
@@ -318,26 +327,6 @@ body {
 
 ::selection {
   background: color-mix(in srgb, var(--color-accent) 30%, transparent);
-}
-
-.skip-link {
-  position: fixed;
-  top: -55px;
-  left: 21px;
-  z-index: 200;
-  padding: 13px 21px;
-  border-radius: 13px;
-  background: var(--color-panel);
-  border: 1px solid var(--color-line-2);
-  color: var(--color-ink);
-  font-family: var(--font-mono);
-  font-size: 13px;
-  text-decoration: none;
-  transition: top 0.2s;
-}
-
-.skip-link:focus {
-  top: 21px;
 }
 
 @media (prefers-reduced-motion: reduce) {

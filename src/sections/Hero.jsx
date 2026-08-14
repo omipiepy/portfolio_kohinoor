@@ -55,10 +55,6 @@ export default function Hero() {
           </span>
         </motion.div>
 
-        <motion.p variants={itemVariants} className="phi-body mx-auto mb-[55px]">
-          {personalInfo.tagline}
-        </motion.p>
-
         <motion.div variants={itemVariants} className="flex flex-wrap items-center justify-center gap-[21px] mb-[55px]">
           <Button
             variant="primary"

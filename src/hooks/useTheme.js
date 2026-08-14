@@ -4,7 +4,7 @@ export function useTheme() {
   const [isDark, setIsDark] = useState(() => {
     const stored = localStorage.getItem('theme')
     if (stored) return stored === 'dark'
-    return !window.matchMedia('(prefers-color-scheme: light)').matches
+    return false // default to light (pure white background)
   })
 
   useEffect(() => {
