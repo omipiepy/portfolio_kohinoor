@@ -27,73 +27,54 @@ export const navItems = [
 
 export const skillCategories = [
   {
-    category: 'UI/UX & Development',
+    category: 'Frontend',
+    skills: [
+      { name: 'HTML', level: 90, icon: 'SiHtml5' },
+      { name: 'CSS', level: 85, icon: 'SiCss3' },
+      { name: 'JavaScript', level: 85, icon: 'SiJavascript' },
+      { name: 'React', level: 80, icon: 'SiReact' },
+    ],
+  },
+  {
+    category: 'Backend',
+    skills: [
+      { name: 'Node.js', level: 85, icon: 'SiNodejs' },
+      { name: 'Python', level: 80, icon: 'SiPython' },
+    ],
+  },
+  {
+    category: 'Data & ML',
+    skills: [
+      { name: 'MongoDB', level: 80, icon: 'SiMongodb' },
+      { name: 'PostgreSQL', level: 75, icon: 'SiPostgresql' },
+      { name: 'Scikit-learn', level: 65, icon: 'SiScikitlearn' },
+    ],
+  },
+  {
+    category: 'Design Tools',
     skills: [
       { name: 'Figma', level: 90, icon: 'SiFigma' },
       { name: 'Adobe Illustrator', level: 85, icon: 'SiIllustrator' },
-      { name: 'Sketch', level: 75, icon: 'SiSketch' },
-      { name: 'HTML', level: 85, icon: 'SiHtml5' },
-      { name: 'CSS', level: 80, icon: 'SiCss3' },
-      { name: 'JavaScript', level: 80, icon: 'SiJavascript' },
     ],
   },
 ]
 
 export const projectCategories = [
   { id: 'all', label: 'All' },
-  { id: 'fullstack', label: 'Web' },
   { id: 'design', label: 'UI/UX' },
+  { id: 'fullstack', label: 'Web' },
 ]
 
 export const projects = [
   {
-    title: 'Guff App',
-    category: 'fullstack',
-    tagline: 'Social media app — log in to post, discover, and connect.',
-    description:
-      'My main project: a full social media platform where users log in to post updates, discover new content, browse their feed, see notifications, view profiles, and manage their inbox.',
-    image: '/images/post.png',
-    gallery: ['/images/post.png', '/images/login.png', '/images/discover.png', '/images/inbox.png'],
-    technologies: ['React', 'Node.js', 'Express', 'MongoDB', 'JWT Auth'],
-    github: 'https://github.com/omipiepy',
-    live: '#',
-    highlights: [
-      'Login & authentication',
-      'Create & share posts',
-      'Discover new content',
-      'Personalized feed',
-      'Notifications',
-      'Profiles & inbox',
-    ],
-    overview:
-      'Guff App is a social media app where users log in to post, discover new content, see a personalized feed, get notifications, view profiles, and chat in their inbox.',
-    problem:
-      'Most social platforms are cluttered and hard to learn from. I wanted to build a clean, full-stack social app covering the core features people use every day.',
-    solution:
-      'Built with the MERN stack — MongoDB for user and post data, an Express + Node.js REST API with JWT authentication, and a React frontend for posting, feeds, discovery, notifications, profiles, and inbox.',
-    architecture:
-      'MongoDB collections for users, posts, likes, comments, and messages; Express REST API with JWT-protected routes; React single-page app for the UI.',
-    features: [
-      'Secure login & signup with JWT',
-      'Create and share posts',
-      'Discover feed for new content',
-      'Notifications for activity',
-      'User profiles',
-      'Inbox for direct messages',
-    ],
-    challenges:
-      'Designing clean data models for posts, likes, notifications, and messages while keeping the API fast and the UI responsive.',
-    results:
-      'A complete social app where you can log in, post, discover, see your feed and notifications, view profiles, and chat in your inbox.',
-    learned:
-      'Full-stack development with the MERN stack — authentication, REST APIs, data modeling, and building a responsive React UI.',
-  },
-  {
+    id: 1,
     title: 'Controller Poster',
     category: 'design',
+    categoryLabel: 'UI/UX',
     tagline: 'Poster design for a gaming controller.',
     description:
-      'A poster design featuring a gaming controller — a graphic design project built with UI/UX design tools.',
+      'A bold promotional poster for a gaming controller, exploring strong typography, product composition, visual hierarchy, and color contrast.',
+    designFocus: ['Typography', 'Composition', 'Color System', 'Product Presentation'],
     image: '/images/controller-poster.png',
     technologies: ['Figma', 'Adobe Illustrator'],
     github: 'https://github.com/omipiepy',
@@ -103,25 +84,28 @@ export const projects = [
       'Typography hierarchy',
       'Color grading',
     ],
-    overview: 'A poster design of a gaming controller, crafted as a visual design project.',
-    problem: 'Create a striking, poster-worthy visual for a gaming controller product.',
-    solution: 'Designed a bold poster layout with strong typography, composition, and color grading in design tools.',
-    architecture: 'Single-page poster composition combining the product visual with typography and color treatment.',
+    overview: 'A poster design of a gaming controller.',
+    problem: 'Create a striking poster-worthy visual for a gaming controller.',
+    solution: 'Designed a bold poster layout with strong typography, composition, and color grading.',
+    architecture: 'Single-page poster composition combining product visual with typography and color.',
     features: [
       'Bold product-focused composition',
       'Clean typography hierarchy',
       'Polished color treatment',
     ],
-    challenges: 'Balancing the product visual with text elements without overcrowding the poster.',
-    results: 'A clean, professional poster that highlights the controller as the hero element.',
+    challenges: 'Balancing product visual with text elements without overcrowding.',
+    results: 'A clean, professional poster highlighting the controller as the hero element.',
     learned: 'Poster design fundamentals — composition, hierarchy, and visual storytelling.',
   },
   {
-    title: 'Animated Shoes Ad',
-    category: 'design',
+    id: 2,
+    title: 'The Converse Shoes',
+    category: 'visual',
+    categoryLabel: 'Web / Visual Design',
     tagline: 'Animated advertisement for shoes.',
     description:
-      'An animated shoe advertisement — a motion and graphic design project for showcasing a product.',
+      'An experimental digital shopping experience focused on bold editorial typography, product presentation, and immersive visual storytelling.',
+    designFocus: ['Layout', 'Typography', 'Product UI', 'Navigation'],
     image: '/images/shoes-ads.png',
     technologies: ['Figma', 'Adobe Illustrator'],
     github: 'https://github.com/omipiepy',
@@ -131,10 +115,10 @@ export const projects = [
       'Motion design',
       'Brand-forward visuals',
     ],
-    overview: 'An animated advertisement designed to showcase a pair of shoes with eye-catching motion.',
+    overview: 'An animated advertisement showcasing a pair of shoes with eye-catching motion.',
     problem: 'Create an ad that makes a shoe product feel dynamic and appealing.',
     solution: 'Designed the ad visual in Figma and Illustrator with a motion-ready layout for animation.',
-    architecture: 'Ad frame design combining the shoe product with animated motion elements.',
+    architecture: 'Ad frame design combining shoe product with animated motion elements.',
     features: [
       'Animated product showcase',
       'Motion-friendly layout',
@@ -145,34 +129,75 @@ export const projects = [
     learned: 'Designing for motion — layouts that hold up across animated frames.',
   },
   {
-    title: 'Food App',
-    category: 'design',
-    tagline: 'Restaurant food service UI designed in Figma.',
-    description:
-      'A restaurant food service app UI designed in Figma — food1, food2, and food3 show the food service screens.',
-    image: '/images/food1.png',
-    gallery: ['/images/food1.png', '/images/food2.png', '/images/food3.png'],
-    technologies: ['Figma', 'UI/UX Design'],
-    github: 'https://github.com/omipiepy',
+    id: 3,
+    title: 'ITKhoji',
+    category: 'fullstack',
+    categoryLabel: 'Web Development',
+    tagline: 'Job portal for IT professionals',
+    description: 'A MERN stack job board where IT professionals can search for roles, upload resumes, and employers can post jobs and manage applicants.',
+    designFocus: ['UI Design', 'System Architecture', 'User Flow', 'Data Modeling'],
+    image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800&h=500&fit=crop',
+    gallery: ['/images/itkhoji1.png', '/images/itkhoji2.png'],
+    technologies: ['React', 'Node.js', 'Express', 'MongoDB', 'JWT Auth', 'Redux'],
+    github: 'https://github.com/omipiepy/itkhoji',
     live: '#',
     highlights: [
-      'Restaurant food service screens',
-      'Figma-designed UI',
-      'Menu & ordering experience',
+      'Job search with filters',
+      'Resume upload and parsing',
+      'Employer dashboard',
+      'Real-time notifications',
+      'Secure authentication'
     ],
-    overview: 'A restaurant food service app UI designed entirely in Figma, covering the food ordering experience.',
-    problem: 'Design a clean, appetizing UI for a restaurant food delivery service.',
-    solution: 'Created multiple screens in Figma — food listings, ordering flow, and service screens — with a warm, food-first visual style.',
-    architecture: 'Figma screen designs for the restaurant food service flow.',
+    overview: 'ITKhoji connects IT job seekers with employers through a responsive web application.',
+    problem: 'Finding relevant IT jobs is scattered across multiple platforms; there was a need for a dedicated portal.',
+    solution: 'Built a MERN stack application with MongoDB for job and user data, Express/Node.js for REST API with JWT auth, React frontend with Redux for state management.',
+    architecture: 'MongoDB collections for users, jobs, applications; Express REST API with protected routes; React SPA with Redux store.',
     features: [
-      'Restaurant food service screens',
-      'Clean menu browsing UI',
-      'Appetizing visual design',
+      'Secure login & signup with JWT',
+      'Advanced job search and filtering',
+      'Resume upload and parsing',
+      'Employer job posting and applicant management',
+      'Real-time notifications via WebSocket (optional)'
     ],
-    challenges: 'Making food photography and UI elements work together without clutter.',
-    results: 'A polished food service UI with a clear browsing and ordering experience.',
-    learned: 'UI/UX design in Figma — screen flow, components, and food-focused visual design.',
+    challenges: 'Designing efficient search algorithms and ensuring file uploads/resume parsing worked smoothly.',
+    results: 'A functional job portal where users can search, apply, and employers can manage hiring workflow.',
+    learned: 'Full-stack development with MERN, integrating file handling, role-based access control, and real-time updates.'
   },
+  {
+    id: 4,
+    title: 'BeautyKart',
+    category: 'fullstack',
+    categoryLabel: 'Web Development',
+    tagline: 'Online cosmetic store',
+    description: 'An e-commerce platform for cosmetics built with PostgreSQL, Prisma, Express, React, and Node.js.',
+    designFocus: ['E-Commerce UX', 'Product UI', 'Checkout Flow'],
+    image: 'https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=800&h=500&fit=crop',
+    gallery: ['/images/beautykart1.png', '/images/beautykart2.png'],
+    technologies: ['React', 'Node.js', 'Express', 'PostgreSQL', 'Prisma'],
+    github: 'https://github.com/omipiepy/beautykart',
+    live: '#',
+    highlights: [
+      'Product catalog with search and filters',
+      'Shopping cart and checkout',
+      'User authentication and order history',
+      'Admin panel for product management',
+      'Responsive design'
+    ],
+    overview: 'BeautyKart offers a seamless shopping experience for cosmetic products.',
+    problem: 'Existing cosmetic stores lacked a modern, user-friendly interface and robust backend.',
+    solution: 'Used Prisma ORM with PostgreSQL for reliable data modeling, Express/Node.js for REST API, React for frontend with context API for state.',
+    architecture: 'PostgreSQL database with Prisma schema defining products, users, orders; Express REST API; React SPA.',
+    features: [
+      'Secure authentication with JWT',
+      'Product browsing, search, and filtering',
+      'Shopping cart with persistence',
+      'Checkout and order processing',
+      'Admin dashboard for inventory and orders'
+    ],
+    challenges: 'Setting up Prisma migrations and ensuring smooth integration between PostgreSQL and the API.',
+    results: 'A fully functional e-commerce site where users can browse, purchase, and track orders.',
+    learned: 'Working with Prisma ORM, PostgreSQL, and building a complete e-commerce flow from product listing to order fulfillment.'
+  }
 ]
 
 export const experiences = [
@@ -181,7 +206,7 @@ export const experiences = [
     company: 'Alpinist Studios',
     period: 'Current',
     description:
-      'Working on AI/ML projects, applying machine learning concepts to real-world problems, and building intelligent solutions.',
+      'Working on AI/ML projects, applying ML to real-world problems, and building intelligent solutions.',
     technologies: ['Python', 'PyTorch', 'Machine Learning', 'Deep Learning'],
   },
 ]
@@ -191,7 +216,7 @@ export const education = [
     degree: 'B.E. in Computer Engineering',
     institution: 'Thapathali Campus, Tribhuvan University',
     period: 'Graduated',
-    description: 'Completed Bachelor in Computer Engineering with projects spanning ML, web development, and database systems.',
+    description: 'Completed Bachelor in Computer Engineering with projects in ML, web development, and databases.',
   },
 ]
 
@@ -242,4 +267,4 @@ export const interests = [
 ]
 
 export const aboutSummary =
-  'I am a Computer Engineering graduate from Thapathali Campus, Tribhuvan University, currently working as an AI/ML Intern at Alpinist Studios.\n\nI build across the stack — ML models, AI applications, and full-stack web products. I have shipped projects spanning deep learning, retrieval-augmented generation, and real-time web apps.'
+  'I am a Computer Engineering graduate working as an AI/ML Intern. I build ML models, AI applications, and full-stack web products.'
