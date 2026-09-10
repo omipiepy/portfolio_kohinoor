@@ -57,7 +57,7 @@ export default function Hero({ isDark }) {
               textAlign: "center",
             }}
             paletteColors={["#5B5F8A", "#38BDF8", "#EC4899", "#A855F7", "#6B9080"]}
-            color={isDark ? "#1E3A5F" : "#2D4A6F"}
+            color={isDark ? "#1E3A5F" : "#0F172A"}
             style={{ height: "clamp(120px, 20vw, 180px)" }}
           />
         </motion.div>
