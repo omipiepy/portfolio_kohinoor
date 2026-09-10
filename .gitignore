@@ -20,6 +20,10 @@ docs/
 .env.*
 !.env.example
 
+# Task/temp files
+.task_complete
+task_complete.txt
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
