@@ -6,7 +6,6 @@ import { skillCategories } from '@/data/portfolio'
 const iconImages = {
   SiFigma: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg',
   SiIllustrator: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/illustrator/illustrator-plain.svg',
-  SiSketch: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sketch/sketch-original.svg',
   SiHtml5: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg',
   SiCss3: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg',
   SiJavascript: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg',
@@ -15,7 +14,6 @@ const iconImages = {
   SiPython: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg',
   SiMongodb: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original-wordmark.svg',
   SiPostgresql: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg',
-  SiSql: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sql/sql-original.svg',
   SiScikitlearn: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/scikitlearn/scikitlearn-original.svg',
 }
 
@@ -23,7 +21,7 @@ const allSkills = skillCategories.flatMap((cat) => cat.skills)
 
 export default function Skills() {
   const [showAll, setShowAll] = useState(false)
-  const visible = showAll ? allSkills : allSkills.slice(0, 10)
+  const visible = showAll ? allSkills : allSkills.slice(0, 5)
 
   return (
     <section id="skills" className="phi-section">
@@ -32,67 +30,56 @@ export default function Skills() {
           title="What I Work With"
         />
 
-        {/* Grouped by category */}
-        <div className="space-y-10">
-          {skillCategories.map((category) => (
-            <motion.div
-              key={category.category}
-              initial={{ opacity: 0, y: 21 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5 }}
-            >
-              <h3 className="font-mono text-[13px] uppercase tracking-[0.05em] text-[var(--color-faint)] mb-4">
-                {category.category}
-              </h3>
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5">
-                {visible
-                  .filter((skill) => category.skills.some((s) => s.name === skill.name))
-                  .map((skill, i) => (
+        <motion.div
+          initial={{ opacity: 0, y: 21 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
+        >
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5">
+            {visible.map((skill, i) => (
+              <motion.div
+                key={skill.name}
+                layout
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.05 }}
+                whileHover={{ scale: 1.05, y: -4 }}
+                className="net-panel net-panel-sm p-6 flex flex-col items-center gap-4 cursor-default glass-card"
+              >
+                {iconImages[skill.icon] ? (
+                  <motion.img
+                    src={iconImages[skill.icon]}
+                    alt={skill.name}
+                    className="w-10 h-10"
+                    whileHover={{ rotate: 8 }}
+                    transition={{ type: 'spring', stiffness: 300 }}
+                  />
+                ) : (
+                  <span className="w-10 h-10 grid place-items-center rounded-lg bg-[color-mix(in_srgb,var(--color-accent)_12%,transparent)] text-[var(--color-accent)] text-xl font-bold">
+                    {skill.name[0]}
+                  </span>
+                )}
+                <h4 className="font-sans text-[14px] font-semibold text-[var(--color-ink)]">{skill.name}</h4>
+                <div className="w-full flex items-center gap-2 px-1">
+                  <div className="flex-1 h-1.5 rounded-full bg-[color-mix(in_srgb,var(--color-faint)_18%,transparent)] overflow-hidden">
                     <motion.div
-                      key={skill.name}
-                      layout
-                      initial={{ opacity: 0, y: 10 }}
-                      whileInView={{ opacity: 1, y: 0 }}
+                      initial={{ width: 0 }}
+                      whileInView={{ width: `${skill.level}%` }}
                       viewport={{ once: true }}
-                      transition={{ delay: i * 0.05 }}
-                      whileHover={{ scale: 1.05, y: -4 }}
-                      className="net-panel net-panel-sm p-6 flex flex-col items-center gap-4 cursor-default glass-card"
-                    >
-                      {iconImages[skill.icon] ? (
-                        <motion.img
-                          src={iconImages[skill.icon]}
-                          alt={skill.name}
-                          className="w-10 h-10"
-                          whileHover={{ rotate: 8 }}
-                          transition={{ type: 'spring', stiffness: 300 }}
-                        />
-                      ) : (
-                        <span className="w-10 h-10 grid place-items-center rounded-lg bg-[color-mix(in_srgb,var(--color-accent)_12%,transparent)] text-[var(--color-accent)] text-xl font-bold">
-                          {skill.name[0]}
-                        </span>
-                      )}
-                      <h4 className="font-sans text-[14px] font-semibold text-[var(--color-ink)]">{skill.name}</h4>
-                      <div className="w-full flex items-center gap-2 px-1">
-                        <div className="flex-1 h-1.5 rounded-full bg-[color-mix(in_srgb,var(--color-faint)_18%,transparent)] overflow-hidden">
-                          <motion.div
-                            initial={{ width: 0 }}
-                            whileInView={{ width: `${skill.level}%` }}
-                            viewport={{ once: true }}
-                            transition={{ duration: 0.9, ease: 'easeOut', delay: 0.2 }}
-                            className="h-full rounded-full bg-[var(--color-accent)]"
-                          />
-                        </div>
-                        <span className="font-mono text-[11px] text-[var(--color-accent)] shrink-0">{skill.level}%</span>
-                      </div>
-                    </motion.div>
-                  ))}
-              </div>
-            </motion.div>
-          ))}
-        </div>
+                      transition={{ duration: 0.9, ease: 'easeOut', delay: 0.2 }}
+                      className="h-full rounded-full bg-[var(--color-accent)]"
+                    />
+                  </div>
+                  <span className="font-mono text-[11px] text-[var(--color-accent)] shrink-0">{skill.level}%</span>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </motion.div>
 
-        {allSkills.length > 10 && (
+        {allSkills.length > 5 && (
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
