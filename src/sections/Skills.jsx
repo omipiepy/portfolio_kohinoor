@@ -45,7 +45,7 @@ export default function Skills() {
               <h3 className="font-mono text-[13px] uppercase tracking-[0.05em] text-[var(--color-faint)] mb-4">
                 {category.category}
               </h3>
-              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5">
                 {visible
                   .filter((skill) => category.skills.some((s) => s.name === skill.name))
                   .map((skill, i) => (
@@ -57,7 +57,7 @@ export default function Skills() {
                       viewport={{ once: true }}
                       transition={{ delay: i * 0.05 }}
                       whileHover={{ scale: 1.05, y: -4 }}
-                      className="net-panel net-panel-sm p-5 flex flex-col items-center gap-3 cursor-default glass-card"
+                      className="net-panel net-panel-sm p-6 flex flex-col items-center gap-4 cursor-default glass-card"
                     >
                       {iconImages[skill.icon] ? (
                         <motion.img
@@ -73,8 +73,8 @@ export default function Skills() {
                         </span>
                       )}
                       <h4 className="font-sans text-[14px] font-semibold text-[var(--color-ink)]">{skill.name}</h4>
-                      <div className="w-full flex items-center gap-2">
-                        <div className="flex-1 h-1 rounded-full bg-[color-mix(in_srgb,var(--color-faint)_18%,transparent)] overflow-hidden">
+                      <div className="w-full flex items-center gap-2 px-1">
+                        <div className="flex-1 h-1.5 rounded-full bg-[color-mix(in_srgb,var(--color-faint)_18%,transparent)] overflow-hidden">
                           <motion.div
                             initial={{ width: 0 }}
                             whileInView={{ width: `${skill.level}%` }}
@@ -83,7 +83,7 @@ export default function Skills() {
                             className="h-full rounded-full bg-[var(--color-accent)]"
                           />
                         </div>
-                        <span className="font-mono text-[11px] text-[var(--color-accent)]">{skill.level}%</span>
+                        <span className="font-mono text-[11px] text-[var(--color-accent)] shrink-0">{skill.level}%</span>
                       </div>
                     </motion.div>
                   ))}

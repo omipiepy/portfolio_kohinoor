@@ -8,7 +8,9 @@ export const personalInfo = {
   avatar: '/pic3.jpeg',
   rotatingTitles: [
     'UI/UX Designer',
-    'AI/ML Engineer',
+    'Web Developer',
+    'Backend Developer',
+    'Full Stack Developer',
   ],
 }
 
