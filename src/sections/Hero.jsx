@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { FaGithub, FaEnvelope, FaDownload } from 'react-icons/fa'
 import Button from '@/components/Button'
+import FluidText from '@/components/FluidText'
 import { useTypewriter } from '@/hooks/useTypewriter'
 import { personalInfo, socialLinks } from '@/data/portfolio'
 
@@ -22,7 +23,7 @@ const itemVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
 }
 
-export default function Hero() {
+export default function Hero({ isDark }) {
   const typewriterText = useTypewriter(personalInfo.rotatingTitles)
 
   return (
@@ -36,26 +37,34 @@ export default function Hero() {
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="relative z-10 text-center max-w-[640px] min-w-[320px] pointer-events-auto"
+        className="relative z-10 text-center w-full max-w-[1000px] pointer-events-auto flex flex-col gap-5"
       >
         {/* Eyebrow */}
-        <motion.p variants={itemVariants} className="font-mono text-[14px] tracking-[0.05em] text-[var(--color-accent)] mb-4">
+        <motion.p variants={itemVariants} className="font-mono text-[14px] tracking-[0.05em] text-[var(--color-accent)]">
           <span className="text-[var(--color-accent)]">{'<'}</span>hello, world <span className="text-[var(--color-accent)]">{'/>'}</span>
         </motion.p>
 
-        {/* Name — two lines */}
-        <motion.h1 variants={itemVariants} className="mb-6" style={{ lineHeight: 1.05 }}>
-          <span className="block font-sans text-[64px] md:text-[72px] font-extrabold text-[var(--color-ink)] tracking-tight">
-            {personalInfo.name.split(' ')[0]}
-          </span>
-          <span className="block font-sans text-[64px] md:text-[72px] font-extrabold tracking-tight" style={{ color: 'var(--color-accent)' }}>
-            {personalInfo.name.split(' ').slice(1).join(' ')}
-          </span>
-        </motion.h1>
+        {/* Name — FluidText */}
+        <motion.div variants={itemVariants} className="mb-2">
+          <FluidText
+            text="Kohinoor"
+            font={{
+              fontFamily: "Inter",
+              fontWeight: 800,
+              fontSize: "clamp(28px, 5vw, 52px)",
+              lineHeight: "1.2em",
+              letterSpacing: "-0.02em",
+              textAlign: "center",
+            }}
+            paletteColors={["#5B5F8A", "#38BDF8", "#EC4899", "#A855F7", "#6B9080"]}
+            color={isDark ? "#1E3A5F" : "#2D4A6F"}
+            style={{ height: "clamp(120px, 20vw, 180px)" }}
+          />
+        </motion.div>
 
         {/* Tagline with typewriter and blinking cursor */}
-        <motion.div variants={itemVariants} className="flex items-center justify-center mb-8">
-          <span className="font-mono text-[20px] text-[var(--color-muted)]">
+        <motion.div variants={itemVariants} className="flex items-center justify-center">
+          <span className="font-mono text-[20px]" style={{ color: isDark ? '#1E3A5F' : 'var(--color-muted)' }}>
             {typewriterText}
             <motion.span
               animate={{ opacity: [1, 0] }}
@@ -66,9 +75,9 @@ export default function Hero() {
         </motion.div>
 
         {/* CTA row + Social row as one connected group */}
-        <motion.div variants={itemVariants} className="flex flex-col items-center gap-4">
+        <motion.div variants={itemVariants} className="flex flex-col items-center gap-8">
           {/* CTA buttons */}
-          <div className="flex flex-wrap items-center justify-center gap-4">
+          <div className="flex flex-wrap items-center justify-center gap-5">
             <Button
               variant="primary"
               onClick={() => {

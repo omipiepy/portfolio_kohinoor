@@ -12,7 +12,7 @@ export default function App() {
 
   return (
     <MainLayout isDark={isDark} toggleTheme={toggle}>
-      <Hero />
+      <Hero isDark={isDark} />
       <About />
       <Skills />
       <Projects />
