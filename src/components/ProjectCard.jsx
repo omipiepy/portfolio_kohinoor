@@ -1,48 +1,28 @@
-import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { FiEye, FiArrowUpRight, FiCheck } from 'react-icons/fi'
+import { FiEye, FiArrowUpRight, FiCheck, FiGithub, FiExternalLink } from 'react-icons/fi'
 
-export default function ProjectCard({ project, index, total, onCaseStudy }) {
-  const isEven = index % 2 === 0
+export default function ProjectCard({ project, onCaseStudy }) {
   const gallery = project.gallery?.length ? project.gallery : [project.image]
-  const [active, setActive] = useState(0)
+  const isFullstack = project.category === 'fullstack'
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 34 }}
+      initial={{ opacity: 0, y: 21 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-80px' }}
-      transition={{ duration: 0.7 }}
-      className="grid md:grid-cols-[61.8fr_38.2fr] gap-[55px] items-center max-w-[1280px] mx-auto"
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
+      className="net-panel relative overflow-hidden"
     >
-      <motion.div
-        role="button"
-        tabIndex={0}
-        onClick={() => onCaseStudy(project)}
-        onKeyDown={(e) => {
-          if (e.key === 'Enter' || e.key === ' ') {
-            e.preventDefault()
-            onCaseStudy(project)
-          }
-        }}
-        aria-label={`Open case study for ${project.title}`}
-        className={`relative group cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-accent)] focus-visible:ring-offset-2 focus-visible:ring-offset-transparent rounded-[21px] ${
-          isEven ? 'md:order-1' : 'md:order-2'
-        }`}
-        whileHover={{ scale: 1.02 }}
-        whileTap={{ scale: 0.98 }}
-        transition={{ duration: 0.4, ease: 'easeOut' }}
-      >
-        <div className="relative aspect-video rounded-[21px] overflow-hidden border border-[var(--color-line)] bg-[var(--color-panel)] transition-colors duration-300 group-hover:border-[color-mix(in_srgb,var(--color-accent)_55%,transparent)]">
-          <motion.img
-            key={gallery[active]}
-            src={gallery[active]}
+      {/* Image */}
+      {gallery.length > 0 && (
+        <div className="relative">
+          <img
+            src={gallery[0]}
             alt={project.title}
-            className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-            loading="lazy"
+            className="w-full h-[200px] object-cover"
           />
           {gallery.length > 1 && (
-            <div className="absolute bottom-[13px] left-1/2 -translate-x-1/2 flex items-center gap-[8px] px-[13px] py-[8px] rounded-full bg-black/40 backdrop-blur-md">
+            <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex items-center gap-2 px-3 py-2 rounded-full bg-black/30 backdrop-blur-sm">
               {gallery.map((src, i) => (
                 <button
                   key={src}
@@ -50,50 +30,37 @@ export default function ProjectCard({ project, index, total, onCaseStudy }) {
                   onClick={(e) => {
                     e.preventDefault()
                     e.stopPropagation()
-                    setActive(i)
                   }}
-                  className={`h-[8px] rounded-full transition-all duration-300 cursor-pointer ${
-                    i === active ? 'w-[21px] bg-white' : 'w-[8px] bg-white/50 hover:bg-white/80'
+                  className={`h-4 w-4 rounded-full transition-all duration-300 cursor-pointer ${
+                    i === 0 ? 'w-6 bg-white' : 'w-4 bg-white/50'
                   }`}
-                  aria-label={`View image ${i + 1} of ${gallery.length}`}
                 />
               ))}
             </div>
           )}
-          <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-          <div className="absolute top-[13px] right-[13px] opacity-0 group-hover:opacity-100 transition-all duration-500 translate-y-[8px] group-hover:translate-y-0">
-            <span className="flex items-center gap-[13px] px-[21px] py-[13px] rounded-full bg-black/50 backdrop-blur-md text-white text-[13px] font-medium tracking-[0.06em]">
-              <FiEye size={13} />
-              View Case Study
-            </span>
-          </div>
         </div>
-      </motion.div>
+      )}
 
-      <motion.div
-        initial={{ opacity: 0, y: 21 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true }}
-        transition={{ duration: 0.5, delay: 0.15 }}
-        className={isEven ? 'md:order-2' : 'md:order-1'}
-      >
-        <p className="phi-meta mb-[13px]">{String(index + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}</p>
-        <h3 className="phi-h2 mb-[13px]">{project.title}</h3>
-        <p className="phi-meta text-[var(--color-accent)] mb-[21px]">{project.tagline}</p>
-        <p className="phi-body mb-[34px] text-[14px] line-clamp-3">{project.description}</p>
+      {/* Content */}
+      <div className="p-6">
+        <h3 className="phi-h2 mb-3">{project.title}</h3>
+        <p className="phi-meta text-[var(--color-accent)] mb-3">{project.tagline}</p>
+        <p className="phi-body mb-5">{project.description}</p>
 
-        <div className="flex flex-wrap gap-[8px] mb-[34px]">
+        {/* Technologies */}
+        <div className="flex flex-wrap gap-2 mb-5">
           {project.technologies.map((tech) => (
-            <span key={tech} className="net-chip !px-[8px] !py-[4px] !text-[12px]">
+            <span key={tech} className="net-chip px-3 py-1 text-[12px]">
               {tech}
             </span>
           ))}
         </div>
 
-        <ul className="space-y-[13px] mb-[34px]">
+        {/* Highlights */}
+        <ul className="space-y-2.5 mb-5 text-[var(--color-muted)]">
           {project.highlights.map((h) => (
-            <li key={h} className="flex items-start gap-[13px] text-[13px] text-[var(--color-muted)]">
-              <span className="mt-[2px] w-[13px] h-[13px] rounded-full bg-[color-mix(in_srgb,var(--color-accent)_15%,transparent)] grid place-items-center shrink-0">
+            <li key={h} className="flex items-start gap-2.5">
+              <span className="mt-0.5 flex h-3 w-3 items-center justify-center rounded-full bg-[color-mix(in_srgb,var(--color-accent)_20%,transparent)]">
                 <FiCheck size={8} className="text-[var(--color-accent)]" />
               </span>
               {h}
@@ -101,19 +68,40 @@ export default function ProjectCard({ project, index, total, onCaseStudy }) {
           ))}
         </ul>
 
-        <div className="flex flex-wrap items-center gap-[13px]">
-          <motion.button
-            onClick={() => onCaseStudy(project)}
-            whileHover={{ y: -2 }}
-            whileTap={{ scale: 0.97 }}
-            className="btn-phi btn-phi--accent btn-phi--sm !gap-[13px] !px-[21px] !py-[13px] !tracking-[0.08em] cursor-pointer"
-          >
-            <FiEye size={13} />
-            View Case Study
-            <FiArrowUpRight size={13} />
-          </motion.button>
-        </div>
-      </motion.div>
+        {/* Buttons */}
+        {isFullstack && (
+          <div className="flex flex-col sm:flex-row gap-3 mt-4">
+            {project.github && (
+              <motion.a
+                href={project.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ y: -3, scale: 1.02 }}
+                whileTap={{ scale: 0.97 }}
+                className="group flex-1 flex items-center justify-center gap-2.5 px-5 py-3.5 rounded-xl border border-[var(--color-line-2)] bg-[color-mix(in_srgb,var(--color-bg)_60%,transparent)] backdrop-blur-md text-[var(--color-ink)] font-medium text-[14px] hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] transition-all duration-300 cursor-pointer"
+              >
+                <FiGithub size={16} />
+                <span>GitHub</span>
+                <FiArrowUpRight size={14} className="opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
+              </motion.a>
+            )}
+            {project.live && project.live !== '#' && (
+              <motion.a
+                href={project.live}
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ y: -3, scale: 1.02 }}
+                whileTap={{ scale: 0.97 }}
+                className="group flex-1 flex items-center justify-center gap-2.5 px-5 py-3.5 rounded-xl bg-gradient-to-r from-[var(--color-accent)] to-[color-mix(in_srgb,var(--color-accent)_70%,#fff)] text-white font-semibold text-[14px] shadow-lg shadow-[color-mix(in_srgb,var(--color-accent)_25%,transparent)] hover:shadow-xl hover:shadow-[color-mix(in_srgb,var(--color-accent)_35%,transparent)] transition-all duration-300 cursor-pointer"
+              >
+                <FiExternalLink size={16} />
+                <span>Live Demo</span>
+                <FiArrowUpRight size={14} className="opacity-0 -translate-x-1 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
+              </motion.a>
+            )}
+          </div>
+        )}
+      </div>
     </motion.div>
   )
 }

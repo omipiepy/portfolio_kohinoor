@@ -24,11 +24,11 @@ function FloatingInput({ field, value, onChange, error, onClear }) {
   return (
     <div>
       <div
-        className={`relative rounded-[13px] border transition-all ${
+        className={`relative rounded-[10px] border transition-all duration-150 ${
           error
-            ? 'border-[#f87171] bg-[rgba(248,113,113,0.05)]'
+            ? 'border-[#EF4444] bg-[rgba(239,68,68,0.04)]'
             : focused
-              ? 'border-[var(--color-accent)] bg-[rgba(255,255,255,0.05)] shadow-[0_0_0_3px_color-mix(in_srgb,var(--color-accent)_18%,transparent)]'
+              ? 'border-[var(--color-accent)] bg-[rgba(255,255,255,0.05)] shadow-[0_0_0_3px_color-mix(in_srgb,var(--color-accent)_15%,transparent)]'
               : 'border-[var(--color-line)] bg-[rgba(255,255,255,0.03)] hover:border-[var(--color-line-2)]'
         }`}
       >
@@ -38,22 +38,22 @@ function FloatingInput({ field, value, onChange, error, onClear }) {
           onChange={(e) => onChange(e.target.value)}
           onFocus={() => setFocused(true)}
           onBlur={() => setFocused(false)}
-          rows={field.multiline ? 5 : undefined}
+          rows={field.multiline ? 6 : undefined}
           placeholder={field.label}
-          className={`w-full bg-transparent outline-none text-[14px] text-[var(--color-ink)] transition-all resize-none placeholder:text-[var(--color-faint)] ${
-            field.multiline ? 'pt-[21px] pb-[21px] pl-[21px] pr-[47px]' : 'pt-[13px] pb-[13px] pl-[21px] pr-[47px]'
+          className={`w-full bg-transparent outline-none text-[15px] text-[var(--color-ink)] transition-all resize-none placeholder:text-[var(--color-faint)] ${
+            field.multiline ? 'pt-3 pb-3 pl-4 pr-4' : 'pt-3 pb-3 pl-4 pr-4'
           }`}
           aria-label={field.label}
         />
         {hasValue && (
           <button
             onClick={onClear}
-            className="absolute right-[13px] top-1/2 -translate-y-1/2 p-[4px] rounded-[8px] text-[var(--color-faint)] hover:text-[var(--color-ink)] hover:bg-[rgba(255,255,255,0.06)] transition-all cursor-pointer"
-            style={field.multiline ? { top: '21px', transform: 'none' } : {}}
+            className="absolute right-3 top-1/2 -translate-y-1/2 p-1 rounded-md text-[var(--color-faint)] hover:text-[var(--color-ink)] hover:bg-[rgba(255,255,255,0.06)] transition-all cursor-pointer"
+            style={field.multiline ? { top: '12px', transform: 'none' } : {}}
             aria-label={`Clear ${field.label}`}
             type="button"
           >
-            <FiX size={13} />
+            <FiX size={14} />
           </button>
         )}
       </div>
@@ -61,21 +61,21 @@ function FloatingInput({ field, value, onChange, error, onClear }) {
         {error && (
           <motion.p
             key="error"
-            initial={{ opacity: 0, y: -6, height: 0 }}
+            initial={{ opacity: 0, y: -2, height: 0 }}
             animate={{ opacity: 1, y: 0, height: 'auto' }}
-            exit={{ opacity: 0, y: -6, height: 0 }}
-            className="flex items-center gap-[8px] text-[12px] text-[#f87171] mt-[8px] ml-[8px]"
+            exit={{ opacity: 0, y: -2, height: 0 }}
+            className="flex items-center gap-2 text-[13px] text-[#EF4444] mt-1.5 ml-1"
           >
-            <FiAlertCircle size={13} className="shrink-0" />
+            <FiAlertCircle size={12} className="shrink-0" />
             {error}
           </motion.p>
         )}
       </AnimatePresence>
       {field.multiline && (
-        <div className="flex justify-end mt-[8px] mr-[8px]">
+        <div className="flex justify-end mt-1.5 mr-2">
           <span
-            className={`phi-meta ${
-              value.length > MAX_MESSAGE ? '!text-[#f87171]' : ''
+            className={`font-mono text-[12px] ${
+              value.length > MAX_MESSAGE ? 'text-[#EF4444]' : 'text-[var(--color-faint)]'
             }`}
           >
             {value.length}/{MAX_MESSAGE}
@@ -98,7 +98,7 @@ export default function ContactForm() {
     if (!form.name.trim()) e.name = 'Please enter your name'
     if (!form.email.trim()) {
       e.email = 'Please enter your email'
-    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
+    } else if (!/^\S+@\S+\.\S+$/.test(form.email)) {
       e.email = 'Please enter a valid email address'
     }
     if (!form.subject.trim()) e.subject = 'Please enter a subject'
@@ -142,7 +142,6 @@ export default function ContactForm() {
       }, 4000)
     } catch (err) {
       if (import.meta.env.DEV) {
-        // No API running in plain `npm run dev` — keep the demo working locally.
         console.warn('[contact] API unavailable in dev, simulating success:', err.message)
         await new Promise((r) => setTimeout(r, 800))
         setSubmitted(true)
@@ -165,7 +164,7 @@ export default function ContactForm() {
   }
 
   return (
-    <ContactCard className="p-[21px] sm:p-[34px] lg:p-[55px] h-full">
+    <ContactCard className="h-full !p-8 md:!p-10">
       <AnimatePresence mode="wait">
         {submitted ? (
           <motion.div
@@ -173,29 +172,29 @@ export default function ContactForm() {
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, scale: 0.95 }}
-            className="flex flex-col items-center justify-center h-full py-[89px]"
+            className="flex flex-col items-center justify-center h-full py-16"
           >
             <motion.div
               initial={{ scale: 0 }}
               animate={{ scale: 1 }}
               transition={{ type: 'spring', stiffness: 200, damping: 15, delay: 0.15 }}
-              className="w-[55px] h-[55px] rounded-[21px] bg-[var(--color-accent)] grid place-items-center mb-[21px] shadow-[0_8px_34px_color-mix(in_srgb,var(--color-accent)_28%,transparent)]"
+              className="w-12 h-12 rounded-xl bg-[var(--color-accent)] grid place-items-center mb-5 shadow-[0_8px_24px_color-mix(in_srgb,var(--color-accent)_28%,transparent)]"
             >
-              <FiCheck size={21} className="text-[#0b0f1a]" />
+              <FiCheck size={20} className="text-white" />
             </motion.div>
             <motion.h3
-              initial={{ opacity: 0, y: 13 }}
+              initial={{ opacity: 0, y: 4 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}
-              className="phi-h3 mb-[8px]"
+              className="font-sans text-[20px] font-semibold text-[var(--color-ink)] mb-2"
             >
               Message Sent!
             </motion.h3>
             <motion.p
-              initial={{ opacity: 0, y: 13 }}
+              initial={{ opacity: 0, y: 4 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.3 }}
-              className="phi-meta text-center max-w-[233px]"
+              className="font-sans text-[14px] text-[var(--color-muted)] text-center max-w-[260px]"
             >
               Thank you for reaching out. I'll get back to you within 24 hours.
             </motion.p>
@@ -207,79 +206,107 @@ export default function ContactForm() {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onSubmit={handleSubmit}
-            className="flex flex-col gap-[21px] h-full"
+            className="flex flex-col h-full"
           >
-            <motion.div
-              initial={{ opacity: 0, y: 13 }}
-              animate={{ opacity: 1, y: 0 }}
-            >
-              <p className="phi-meta uppercase mb-[8px] text-[var(--color-accent)]">contact</p>
-              <h3 className="phi-h2">Send a Message</h3>
-            </motion.div>
-            <motion.p
-              initial={{ opacity: 0, y: 13 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.05 }}
-              className="phi-body text-[13px]"
-            >
-              I'll respond within 24 hours.
-            </motion.p>
-
-            <div className="flex flex-col gap-[21px] flex-1 justify-center">
-              {fields.map((field, i) => (
-                <motion.div
-                  key={field.key}
-                  initial={{ opacity: 0, y: 13 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.1 + i * 0.06 }}
-                >
-                  <FloatingInput
-                    field={field}
-                    value={form[field.key]}
-                    onChange={handleChange(field.key)}
-                    error={errors[field.key]}
-                    onClear={() => clearField(field.key)}
-                  />
-                </motion.div>
-              ))}
+            {/* Header */}
+            <div className="mb-6">
+              <h3 className="font-sans text-[28px] font-bold text-[var(--color-ink)] mb-1">Send a Message</h3>
+              <p className="font-sans text-[14px] text-[var(--color-faint)]">I'll respond within 24 hours.</p>
             </div>
 
+            {/* Fields */}
+            <div className="flex flex-col gap-5 flex-1">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                <motion.div
+                  initial={{ opacity: 0, y: 4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 }}
+                >
+                  <FloatingInput
+                    field={fields[0]}
+                    value={form[fields[0].key]}
+                    onChange={handleChange(fields[0].key)}
+                    error={errors[fields[0].key]}
+                    onClear={() => clearField(fields[0].key)}
+                  />
+                </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, y: 4 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.15 }}
+                >
+                  <FloatingInput
+                    field={fields[1]}
+                    value={form[fields[1].key]}
+                    onChange={handleChange(fields[1].key)}
+                    error={errors[fields[1].key]}
+                    onClear={() => clearField(fields[1].key)}
+                  />
+                </motion.div>
+              </div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 4 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+              >
+                <FloatingInput
+                  field={fields[2]}
+                  value={form[fields[2].key]}
+                  onChange={handleChange(fields[2].key)}
+                  error={errors[fields[2].key]}
+                  onClear={() => clearField(fields[2].key)}
+                />
+              </motion.div>
+
+              <motion.div
+                initial={{ opacity: 0, y: 4 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.25 }}
+              >
+                <FloatingInput
+                  field={fields[3]}
+                  value={form[fields[3].key]}
+                  onChange={handleChange(fields[3].key)}
+                  error={errors[fields[3].key]}
+                  onClear={() => clearField(fields[3].key)}
+                />
+              </motion.div>
+            </div>
+
+            {/* Submit error */}
             <AnimatePresence mode="wait">
               {submitError && (
                 <motion.p
                   key="submit-error"
-                  initial={{ opacity: 0, y: -6, height: 0 }}
+                  initial={{ opacity: 0, y: -2, height: 0 }}
                   animate={{ opacity: 1, y: 0, height: 'auto' }}
-                  exit={{ opacity: 0, y: -6, height: 0 }}
-                  className="flex items-center gap-[8px] text-[13px] text-[#f87171]"
+                  exit={{ opacity: 0, y: -2, height: 0 }}
+                  className="flex items-center gap-2 text-[13px] text-[#EF4444] mt-4"
                 >
-                  <FiAlertCircle size={13} className="shrink-0" />
+                  <FiAlertCircle size={12} className="shrink-0" />
                   {submitError}
                 </motion.p>
               )}
             </AnimatePresence>
 
-            <motion.div
-              initial={{ opacity: 0, y: 13 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.35 }}
-              className="flex flex-col sm:flex-row gap-[13px] pt-[8px]"
-            >
+            {/* Footer */}
+            <div className="flex flex-col sm:flex-row gap-3 mt-6">
               <motion.button
                 type="submit"
                 disabled={sending}
                 whileHover={sending ? {} : { y: -2 }}
                 whileTap={sending ? {} : { scale: 0.97 }}
-                className="btn-phi btn-phi--accent flex-1 !gap-[13px] !px-[21px] !py-[13px] !tracking-[0.08em] cursor-pointer disabled:cursor-not-allowed"
+                className="btn-phi btn-phi--accent flex-1 gap-2 px-5 py-3 cursor-pointer disabled:cursor-not-allowed"
               >
                 {sending ? (
                   <>
-                    <FiLoader size={13} className="animate-spin" />
+                    <FiLoader size={14} className="animate-spin" />
                     Sending...
                   </>
                 ) : (
                   <>
-                    <FiSend size={13} />
+                    <FiSend size={14} />
                     Send Message
                   </>
                 )}
@@ -289,12 +316,12 @@ export default function ContactForm() {
                 onClick={clearAll}
                 whileHover={{ y: -2 }}
                 whileTap={{ scale: 0.97 }}
-                className="btn-phi btn-phi--ghost !gap-[13px] !px-[21px] !py-[13px] !tracking-[0.08em] cursor-pointer"
+                className="btn-phi btn-phi--ghost gap-2 px-5 py-3 cursor-pointer"
               >
-                <FiX size={13} />
+                <FiX size={14} />
                 Clear
               </motion.button>
-            </motion.div>
+            </div>
           </motion.form>
         )}
       </AnimatePresence>

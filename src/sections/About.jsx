@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion'
 import { FiMapPin, FiMail, FiGithub } from 'react-icons/fi'
 import SectionTitle from '@/components/SectionTitle'
-import { personalInfo, aboutSummary, education, interests } from '@/data/portfolio'
+import { personalInfo, aboutSummary, education } from '@/data/portfolio'
 
 const fade = {
   initial: { opacity: 0, y: 21 },
@@ -16,82 +16,79 @@ export default function About() {
       <div className="phi-wrap pointer-events-auto">
         <SectionTitle title="About Me" />
 
-        <div className="grid md:grid-cols-[38.2fr_61.8fr] gap-[55px] items-start">
-          <motion.div {...fade} className="flex flex-col items-center md:items-start gap-[34px]">
-            <div className="w-[144px] h-[144px] rounded-[34px] overflow-hidden border border-[var(--color-line-2)] ring-8 ring-[color-mix(in_srgb,var(--color-accent)_8%,transparent)]">
+        <div className="grid md:grid-cols-[3fr_5fr] gap-14 items-start">
+          {/* Left: photo only */}
+          <motion.div {...fade} className="flex justify-center md:justify-start">
+            <div className="w-[280px] h-[280px] rounded-[24px] overflow-hidden border border-[var(--color-line-2)] ring-8 ring-[color-mix(in_srgb,var(--color-accent)_8%,transparent)]">
               <img
                 src={personalInfo.avatar}
                 alt={personalInfo.name}
                 className="w-full h-full object-cover"
               />
             </div>
-            <div className="flex flex-col gap-[13px] text-left">
-              <span className="flex items-center gap-[13px] phi-meta">
-                <FiMapPin size={13} className="text-[var(--color-accent)]" />
+          </motion.div>
+
+          {/* Right: name, contact, bio, education */}
+          <motion.div {...fade} transition={{ duration: 0.5, delay: 0.1 }}>
+            <h3 className="font-sans text-[28px] font-bold text-[var(--color-ink)] mb-4">{personalInfo.name}</h3>
+
+            {/* Contact info */}
+            <div className="flex flex-wrap gap-x-6 gap-y-3 mb-6">
+              <span className="flex items-center gap-2 font-mono text-[13px] text-[var(--color-faint)]">
+                <FiMapPin size={14} className="text-[var(--color-accent)]" />
                 {personalInfo.location}
               </span>
               <a
                 href={`mailto:${personalInfo.email}`}
-                className="flex items-center gap-[13px] phi-meta hover:text-[var(--color-accent)] transition-colors"
+                className="flex items-center gap-2 font-mono text-[13px] text-[var(--color-faint)] hover:text-[var(--color-accent)] transition-colors"
               >
-                <FiMail size={13} className="text-[var(--color-accent)]" />
+                <FiMail size={14} className="text-[var(--color-accent)]" />
                 {personalInfo.email}
               </a>
               <a
                 href="https://github.com/omipiepy"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-[13px] phi-meta hover:text-[var(--color-accent)] transition-colors"
+                className="flex items-center gap-2 font-mono text-[13px] text-[var(--color-faint)] hover:text-[var(--color-accent)] transition-colors"
               >
-                <FiGithub size={13} className="text-[var(--color-accent)]" />
+                <FiGithub size={14} className="text-[var(--color-accent)]" />
                 github.com/omipiepy
               </a>
             </div>
-          </motion.div>
 
-          <motion.div {...fade} transition={{ duration: 0.5, delay: 0.1 }}>
-            <p className="phi-meta uppercase mb-[8px] text-[var(--color-accent)]">{personalInfo.title}</p>
-            <h3 className="phi-h2 mb-[21px]">{personalInfo.name}</h3>
+            {/* Bio */}
             {aboutSummary.split('\n\n').map((paragraph) => (
-              <p key={paragraph} className="phi-body mb-[21px] last:mb-0">
+              <p key={paragraph} className="font-sans text-[16px] leading-relaxed text-[var(--color-muted)] mb-5 last:mb-0">
                 {paragraph}
               </p>
             ))}
-            <div className="flex flex-wrap gap-[13px] mt-[34px]">
-              {interests.map((interest) => (
-                <span key={interest} className="net-chip">
-                  {interest}
-                </span>
-              ))}
+
+            {/* Education */}
+            <div className="mt-10">
+              <h3 className="font-sans text-[20px] font-semibold mb-6">
+                Education
+              </h3>
+              <div className="relative pl-8 border-l border-[var(--color-line-2)]">
+                {education.map((edu, i) => (
+                  <motion.div
+                    key={edu.degree}
+                    initial={{ opacity: 0, x: -13 }}
+                    whileInView={{ opacity: 1, x: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.1 }}
+                    className="relative pb-0 last:pb-0"
+                  >
+                    <h4 className="font-sans text-[18px] font-semibold text-[var(--color-ink)] mb-2">{edu.degree}</h4>
+                    <p className="font-mono text-[13px] text-[var(--color-accent)] mb-2">
+                      {edu.institution} · {edu.period}
+                    </p>
+                    <p className="font-sans text-[15px] text-[var(--color-muted)]">{edu.description}</p>
+                  </motion.div>
+                ))}
+              </div>
             </div>
           </motion.div>
         </div>
-
-        <motion.div {...fade} transition={{ duration: 0.5, delay: 0.15 }} className="mt-[89px] max-w-[61.8%] min-w-[320px]">
-          <h3 className="phi-h3 mb-[34px]">
-            <span className="phi-meta uppercase mr-[21px] text-[var(--color-accent)]">edu</span>
-            Education
-          </h3>
-          <div className="relative pl-[34px] border-l border-[var(--color-line-2)]">
-            {education.map((edu, i) => (
-              <motion.div
-                key={edu.degree}
-                initial={{ opacity: 0, x: -13 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.1 }}
-                className="relative pb-[34px] last:pb-0"
-              >
-                <span className="absolute -left-[37px] top-[6px] w-[13px] h-[13px] rounded-full bg-[var(--color-accent)] ring-4 ring-[color-mix(in_srgb,var(--color-accent)_15%,transparent)]" />
-                <h4 className="phi-h3 mb-[8px]">{edu.degree}</h4>
-                <p className="phi-meta text-[var(--color-accent)] mb-[8px]">
-                  {edu.institution} · {edu.period}
-                </p>
-                <p className="phi-body text-[13px]">{edu.description}</p>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
       </div>
     </section>
   )

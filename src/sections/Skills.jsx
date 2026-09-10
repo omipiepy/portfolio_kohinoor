@@ -10,6 +10,13 @@ const iconImages = {
   SiHtml5: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg',
   SiCss3: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg',
   SiJavascript: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg',
+  SiReact: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original-wordmark.svg',
+  SiNodejs: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg',
+  SiPython: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg',
+  SiMongodb: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original-wordmark.svg',
+  SiPostgresql: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg',
+  SiSql: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sql/sql-original.svg',
+  SiScikitlearn: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/scikitlearn/scikitlearn-original.svg',
 }
 
 const allSkills = skillCategories.flatMap((cat) => cat.skills)
@@ -22,42 +29,64 @@ export default function Skills() {
     <section id="skills" className="phi-section">
       <div className="phi-wrap pointer-events-auto">
         <SectionTitle
-          title="Skills & Technologies"
+          title="What I Work With"
         />
 
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-[21px]">
-          {visible.map((skill, i) => (
+        {/* Grouped by category */}
+        <div className="space-y-10">
+          {skillCategories.map((category) => (
             <motion.div
-              key={skill.name}
-              layout
+              key={category.category}
               initial={{ opacity: 0, y: 21 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.05 }}
-              whileHover={{ y: -4 }}
-              className="net-panel net-panel-sm p-[34px] flex flex-col gap-[21px] cursor-default"
+              transition={{ duration: 0.5 }}
             >
-              <div className="flex items-center gap-[21px]">
-                {iconImages[skill.icon] ? (
-                  <img src={iconImages[skill.icon]} alt="" className="w-[55px] h-[55px]" />
-                ) : (
-                  <span className="w-[55px] h-[55px] grid place-items-center rounded-[21px] bg-[color-mix(in_srgb,var(--color-accent)_12%,transparent)] text-[var(--color-accent)] text-[21px] font-bold">
-                    {skill.name[0]}
-                  </span>
-                )}
-                <h4 className="phi-h3">{skill.name}</h4>
-              </div>
-              <div className="flex items-center gap-[13px]">
-                <div className="flex-1 h-[8px] rounded-full bg-[color-mix(in_srgb,var(--color-faint)_18%,transparent)] overflow-hidden">
-                  <motion.div
-                    initial={{ width: 0 }}
-                    whileInView={{ width: `${skill.level}%` }}
-                    viewport={{ once: true }}
-                    transition={{ duration: 0.9, ease: 'easeOut', delay: 0.2 }}
-                    className="h-full rounded-full bg-[var(--color-accent)]"
-                  />
-                </div>
-                <span className="phi-meta text-[var(--color-accent)]">{skill.level}%</span>
+              <h3 className="font-mono text-[13px] uppercase tracking-[0.05em] text-[var(--color-faint)] mb-4">
+                {category.category}
+              </h3>
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+                {visible
+                  .filter((skill) => category.skills.some((s) => s.name === skill.name))
+                  .map((skill, i) => (
+                    <motion.div
+                      key={skill.name}
+                      layout
+                      initial={{ opacity: 0, y: 10 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: i * 0.05 }}
+                      whileHover={{ scale: 1.05, y: -4 }}
+                      className="net-panel net-panel-sm p-5 flex flex-col items-center gap-3 cursor-default glass-card"
+                    >
+                      {iconImages[skill.icon] ? (
+                        <motion.img
+                          src={iconImages[skill.icon]}
+                          alt={skill.name}
+                          className="w-10 h-10"
+                          whileHover={{ rotate: 8 }}
+                          transition={{ type: 'spring', stiffness: 300 }}
+                        />
+                      ) : (
+                        <span className="w-10 h-10 grid place-items-center rounded-lg bg-[color-mix(in_srgb,var(--color-accent)_12%,transparent)] text-[var(--color-accent)] text-xl font-bold">
+                          {skill.name[0]}
+                        </span>
+                      )}
+                      <h4 className="font-sans text-[14px] font-semibold text-[var(--color-ink)]">{skill.name}</h4>
+                      <div className="w-full flex items-center gap-2">
+                        <div className="flex-1 h-1 rounded-full bg-[color-mix(in_srgb,var(--color-faint)_18%,transparent)] overflow-hidden">
+                          <motion.div
+                            initial={{ width: 0 }}
+                            whileInView={{ width: `${skill.level}%` }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.9, ease: 'easeOut', delay: 0.2 }}
+                            className="h-full rounded-full bg-[var(--color-accent)]"
+                          />
+                        </div>
+                        <span className="font-mono text-[11px] text-[var(--color-accent)]">{skill.level}%</span>
+                      </div>
+                    </motion.div>
+                  ))}
               </div>
             </motion.div>
           ))}
@@ -68,7 +97,7 @@ export default function Skills() {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="flex justify-center mt-[55px]"
+            className="flex justify-center mt-8"
           >
             <motion.button
               onClick={() => setShowAll(!showAll)}

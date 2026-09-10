@@ -1,31 +1,30 @@
 import { motion, AnimatePresence } from 'framer-motion'
 import {
-  FiX, FiCheck, FiAlertCircle, FiBookOpen, FiTarget, FiLayers, FiBarChart2, FiCamera, FiImage,
+  FiX, FiCheck, FiAlertCircle, FiBookOpen, FiTarget, FiLayers, FiBarChart2, FiArrowLeft,
 } from 'react-icons/fi'
 
 const categoryLabels = {
-  fullstack: 'Web / Full Stack',
-  design: 'UI/UX Design',
+  fullstack: 'WEB',
+  design: 'UI/UX DESIGN',
   'ai-ml': 'AI / ML',
   research: 'Research',
 }
 
-function ModalSection({ icon: Icon, label, accent, children }) {
+function ModalSection({ icon: Icon, label, children, tint = 8 }) {
   return (
     <div>
-      <h3 className="flex items-center gap-[13px] mb-[21px]">
+      <h3 className="flex items-center gap-3 mb-4">
         <span
-          className="w-[34px] h-[34px] grid place-items-center rounded-[13px]"
+          className="icon-tint"
           style={{
-            background: `color-mix(in srgb, ${accent} 12%, transparent)`,
-            color: accent,
+            background: `color-mix(in srgb, var(--color-accent) ${tint}%, transparent)`,
           }}
         >
-          <Icon size={13} />
+          <Icon size={18} />
         </span>
-        <span className="phi-meta uppercase">{label}</span>
+        <span className="font-mono text-[13px] uppercase tracking-[0.05em] text-[var(--color-faint)]">{label}</span>
       </h3>
-      <div className="pl-[47px]">{children}</div>
+      <div className="space-y-3">{children}</div>
     </div>
   )
 }
@@ -41,117 +40,127 @@ export default function ProjectModal({ project, onClose }) {
         onClick={onClose}
       >
         <motion.div
-          initial={{ opacity: 0, y: 34, scale: 0.98 }}
+          initial={{ opacity: 0, y: 30, scale: 0.98 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
-          exit={{ opacity: 0, y: 34, scale: 0.98 }}
+          exit={{ opacity: 0, y: 30, scale: 0.98 }}
           transition={{ duration: 0.3 }}
           onClick={(e) => e.stopPropagation()}
-          className="min-h-screen flex items-center justify-center p-[21px]"
+          className="min-h-screen flex items-start justify-center p-4 pt-16 pb-16"
         >
-          <div className="w-full max-w-4xl net-panel p-0 overflow-hidden my-[34px] bg-[var(--color-panel-2)]">
-            <div className="relative">
-              <div className="aspect-video overflow-hidden bg-[var(--color-panel)]">
-                <img src={project.image} alt={project.title} className="w-full h-full object-cover" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
-              </div>
+          <div className="w-full max-w-[960px] overflow-hidden my-6 rounded-[20px] border border-[var(--color-line)] shadow-[0_24px_64px_rgba(0,0,0,0.3)]" style={{ background: 'color-mix(in srgb, var(--color-bg) 92%, transparent)', backdropFilter: 'blur(16px)', WebkitBackdropFilter: 'blur(16px)' }}>
+            {/* Cover Image */}
+            <div className="relative h-[400px] md:h-[480px]">
+              <img
+                src={project.image}
+                alt={project.title}
+                className="w-full h-full object-cover"
+              />
+              {/* Bottom-heavy gradient scrim */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+
+              {/* Back link — top-left */}
               <button
                 onClick={onClose}
-                className="absolute top-[13px] right-[13px] w-[34px] h-[34px] grid place-items-center rounded-[13px] bg-black/50 backdrop-blur-md text-white hover:bg-black/70 transition-all cursor-pointer"
-                aria-label="Close"
+                className="absolute top-6 left-6 back-link flex items-center gap-2 hover:underline cursor-pointer"
               >
-                <FiX size={13} />
+                <FiArrowLeft size={14} />
+                Back to Projects
               </button>
-              <div className="absolute bottom-[21px] left-[21px] right-[21px]">
-                <p className="phi-meta mb-[8px]">{categoryLabels[project.category] || project.category}</p>
-                <h2 className="phi-h2 text-white mb-[8px]">{project.title}</h2>
-                <p className="phi-meta text-white/60">{project.tagline}</p>
+
+              {/* Content anchored bottom-left */}
+              <div className="absolute bottom-0 left-0 p-8 max-w-[700px]">
+                <span className="inline-block font-mono text-[12px] uppercase tracking-wider px-3 py-1 rounded-full bg-white/15 backdrop-blur-sm text-white mb-3">
+                  {categoryLabels[project.category] || project.category}
+                </span>
+                <h2 className="font-sans text-[40px] md:text-[48px] font-bold text-white mb-2" style={{ lineHeight: 1.1 }}>
+                  {project.title}
+                </h2>
+                <p className="font-sans text-[16px] text-white/85">{project.description}</p>
               </div>
             </div>
 
-            <div className="p-[55px] space-y-[55px]">
-              <ModalSection icon={FiLayers} label="Overview" accent="var(--color-accent)">
-                <p className="phi-body text-[14px]">{project.overview}</p>
+            {/* Body sections */}
+            <div className="p-8 md:p-10 space-y-10">
+              {/* Overview — full width */}
+              <ModalSection icon={FiLayers} label="Overview" tint={8}>
+                <p className="font-sans text-[16px] leading-relaxed text-[var(--color-muted)]">{project.overview}</p>
               </ModalSection>
 
-              <div className="grid md:grid-cols-2 gap-[55px]">
-                <ModalSection icon={FiAlertCircle} label="Problem" accent="var(--color-accent-2)">
-                  <p className="phi-body text-[14px]">{project.problem}</p>
+              <hr className="net-divider" />
+
+              {/* Problem / Solution — 2-col */}
+              <div className="grid md:grid-cols-2 gap-8">
+                <ModalSection icon={FiAlertCircle} label="Problem" tint={12}>
+                  <p className="font-sans text-[16px] leading-relaxed text-[var(--color-muted)]">{project.problem}</p>
                 </ModalSection>
-                <ModalSection icon={FiTarget} label="Solution" accent="var(--color-accent)">
-                  <p className="phi-body text-[14px]">{project.solution}</p>
+                <ModalSection icon={FiTarget} label="Solution" tint={14}>
+                  <p className="font-sans text-[16px] leading-relaxed text-[var(--color-muted)]">{project.solution}</p>
                 </ModalSection>
               </div>
 
+              <hr className="net-divider" />
+
+              {/* Architecture — full width */}
               {project.architecture && (
-                <ModalSection icon={FiCamera} label="Architecture" accent="var(--color-accent-2)">
-                  <p className="phi-body text-[14px]">{project.architecture}</p>
+                <ModalSection icon={FiLayers} label="Architecture" tint={8}>
+                  <p className="font-sans text-[16px] leading-relaxed text-[var(--color-muted)]">{project.architecture}</p>
                 </ModalSection>
               )}
 
-              <ModalSection icon={FiCheck} label="Key Features" accent="var(--color-accent)">
-                <div className="flex flex-col gap-[21px]">
+              {/* Key Features — checklist */}
+              <ModalSection icon={FiCheck} label="Key Features" tint={10}>
+                <div className="grid sm:grid-cols-2 gap-3">
                   {project.features.map((f) => (
-                    <div
-                      key={f}
-                      className="flex items-center gap-[13px] text-[13px] text-[var(--color-muted)]"
-                    >
-                      <span className="w-[8px] h-[8px] rounded-full bg-[var(--color-accent)] shrink-0" />
+                    <div key={f} className="flex items-center gap-3 text-[var(--color-muted)] font-sans text-[15px]">
+                      <FiCheck size={14} className="text-[var(--color-accent)] shrink-0" />
                       {f}
                     </div>
                   ))}
                 </div>
               </ModalSection>
 
-              <ModalSection icon={FiBarChart2} label="Technologies" accent="var(--color-accent-2)">
-                <div className="flex flex-wrap gap-[13px]">
+              <hr className="net-divider" />
+
+              {/* Technologies */}
+              <ModalSection icon={FiBarChart2} label="Technologies" tint={12}>
+                <div className="flex flex-wrap gap-2">
                   {project.technologies.map((tech) => (
-                    <span key={tech} className="net-chip !px-[8px] !py-[4px] !text-[12px]">
+                    <span key={tech} className="net-chip !px-3 !py-1.5 !text-[12px]">
                       {tech}
                     </span>
                   ))}
                 </div>
               </ModalSection>
 
-              {project.gallery && project.gallery.length > 1 && (
-                <ModalSection icon={FiImage} label="Gallery" accent="var(--color-accent)">
-                  <div className="grid sm:grid-cols-2 gap-[13px]">
-                    {project.gallery.map((src) => (
-                      <img
-                        key={src}
-                        src={src}
-                        alt={`${project.title} screenshot`}
-                        className="w-full aspect-video object-cover rounded-[13px] border border-[var(--color-line)]"
-                        loading="lazy"
-                      />
-                    ))}
-                  </div>
+              {/* Challenges / Results — 2-col */}
+              <div className="grid md:grid-cols-2 gap-8">
+                <ModalSection icon={FiAlertCircle} label="Challenges" tint={14}>
+                  <p className="font-sans text-[16px] leading-relaxed text-[var(--color-muted)]">{project.challenges}</p>
                 </ModalSection>
-              )}
-
-              <div className="grid md:grid-cols-2 gap-[55px]">
-                <ModalSection icon={FiAlertCircle} label="Challenges" accent="var(--color-accent-2)">
-                  <p className="phi-body text-[14px]">{project.challenges}</p>
-                </ModalSection>
-                <ModalSection icon={FiBarChart2} label="Results" accent="var(--color-accent)">
-                  <p className="phi-body text-[14px]">{project.results}</p>
+                <ModalSection icon={FiBarChart2} label="Results" tint={10}>
+                  <p className="font-sans text-[16px] leading-relaxed text-[var(--color-muted)]">{project.results}</p>
                 </ModalSection>
               </div>
 
-              <ModalSection icon={FiBookOpen} label="Lessons Learned" accent="var(--color-accent)">
-                <p className="phi-body text-[14px]">{project.learned}</p>
+              <hr className="net-divider" />
+
+              {/* Lessons Learned */}
+              <ModalSection icon={FiBookOpen} label="Lessons Learned" tint={8}>
+                <p className="font-sans text-[16px] leading-relaxed text-[var(--color-muted)]">{project.learned}</p>
               </ModalSection>
+            </div>
 
-              <div className="flex flex-wrap gap-[13px] pt-[34px] border-t border-[var(--color-line)]">
-                <motion.button
-                  onClick={onClose}
-                  whileHover={{ y: -2 }}
-                  whileTap={{ scale: 0.97 }}
-                  className="btn-phi btn-phi--accent btn-phi--sm !gap-[13px] !px-[21px] !py-[13px] !tracking-[0.08em] cursor-pointer"
-                >
-                  <FiX size={13} />
-                  Close Case Study
-                </motion.button>
-              </div>
+            {/* Close button */}
+            <div className="flex justify-end px-8 md:px-10 pb-8">
+              <motion.button
+                onClick={onClose}
+                whileHover={{ y: -2 }}
+                whileTap={{ scale: 0.97 }}
+                className="btn-phi btn-phi--accent btn-phi--sm"
+              >
+                <FiX size={16} />
+                Close
+              </motion.button>
             </div>
           </div>
         </motion.div>

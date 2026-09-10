@@ -15,8 +15,9 @@ export default function Button({
   icon,
   type = 'button',
   small = false,
+  pill = false,
 }) {
-  const cls = `btn-phi ${variants[variant]} ${small ? 'btn-phi--sm' : ''} ${className}`
+  const cls = `btn-phi ${variants[variant]} ${small ? 'btn-phi--sm' : ''} ${pill ? 'btn-phi--pill' : ''} ${className}`
 
   if (href) {
     return (
@@ -28,7 +29,7 @@ export default function Button({
         whileHover={{ y: -2 }}
         whileTap={{ scale: 0.97 }}
       >
-        {icon && <span className="text-[13px]">{icon}</span>}
+        {icon && <span className="text-[14px]">{icon}</span>}
         {children}
       </motion.a>
     )
@@ -42,7 +43,7 @@ export default function Button({
       whileHover={{ y: -2 }}
       whileTap={{ scale: 0.97 }}
     >
-      {icon && <span className="text-[13px]">{icon}</span>}
+      {icon && <span className="text-[14px]">{icon}</span>}
       {children}
     </motion.button>
   )

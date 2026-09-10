@@ -7,12 +7,18 @@ export default function SectionTitle({ kicker, title, subtitle }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-50px' }}
       transition={{ duration: 0.5 }}
-      className="mb-[55px] text-center"
+      className="mb-14 text-center"
     >
-      {kicker && <p className="phi-meta mb-[13px] uppercase">{kicker}</p>}
-      <h2 className="phi-h2 mb-[13px]">{title}</h2>
+      {kicker && (
+        <p className="font-mono text-[13px] uppercase tracking-[0.05em] text-[var(--color-faint)] mb-3">
+          {kicker}
+        </p>
+      )}
+      <h2 className="font-sans text-[32px] md:text-[36px] font-bold text-[var(--color-ink)] mb-3">
+        {title}
+      </h2>
       {subtitle && (
-        <p className="phi-body mx-auto" style={{ maxWidth: '61.8%', minWidth: '280px' }}>
+        <p className="font-sans text-[16px] text-[var(--color-muted)] mx-auto leading-relaxed" style={{ maxWidth: '580px', minWidth: '280px' }}>
           {subtitle}
         </p>
       )}

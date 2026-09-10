@@ -4,12 +4,13 @@ import ContactForm from '@/components/ContactForm'
 
 export default function Contact() {
   return (
-    <section id="contact" className="phi-section relative">
-      <div className="phi-wrap pointer-events-auto">
+    <section id="contact" className="phi-section relative z-10" style={{ background: 'transparent' }}>
+      <div className="phi-wrap pointer-events-auto relative z-10">
         <SectionTitle
           title="Get in Touch"
+          subtitle="Have a project in mind or just want to chat? I'd love to hear from you."
         />
-        <div className="grid md:grid-cols-[38.2fr_61.8fr] gap-[34px] lg:gap-[55px] items-stretch max-w-[1280px] mx-auto my-[13px]">
+        <div className="grid md:grid-cols-[1fr_1.2fr] gap-8 items-stretch max-w-[1100px] mx-auto">
           <ContactInfo />
           <ContactForm />
         </div>

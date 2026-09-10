@@ -1,98 +1,151 @@
 import { useState, useMemo } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { FiGrid, FiArrowRight } from 'react-icons/fi'
-import SectionTitle from '@/components/SectionTitle'
-import ProjectCard from '@/components/ProjectCard'
+import { motion } from 'framer-motion'
+import { FiArrowUpRight, FiGithub, FiExternalLink } from 'react-icons/fi'
 import ProjectModal from '@/components/ProjectModal'
 import { projects, projectCategories } from '@/data/portfolio'
 
 export default function Projects() {
   const [activeCategory, setActiveCategory] = useState('all')
   const [caseStudy, setCaseStudy] = useState(null)
-  const [showAll, setShowAll] = useState(false)
 
   const filtered = useMemo(() => {
-    let list = activeCategory === 'all' ? projects : projects.filter((p) => p.category === activeCategory)
-    return showAll ? list : list.slice(0, 3)
-  }, [activeCategory, showAll])
+    return activeCategory === 'all'
+      ? projects
+      : projects.filter((p) => p.category === activeCategory)
+  }, [activeCategory])
+
+  const padNumber = (n) => String(n).padStart(2, '0')
 
   return (
-    <section id="projects" className="phi-section">
-      <div className="phi-wrap pointer-events-auto">
-        <SectionTitle
-          title="Featured Projects"
-        />
+    <section id="projects" className="projects-section phi-section relative z-10">
+      <div className="phi-wrap pointer-events-auto relative z-10">
+        {/* Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 21 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-50px' }}
+          transition={{ duration: 0.5 }}
+          className="text-center mb-14"
+        >
+          <h2 className="font-sans text-[32px] md:text-[36px] font-bold text-[var(--color-ink)]">
+            Selected Projects
+          </h2>
+        </motion.div>
 
-        <div className="flex flex-wrap justify-center gap-[13px] mb-[55px]">
+        {/* Filter pills */}
+        <motion.div
+          initial={{ opacity: 0, y: 12 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.4, delay: 0.1 }}
+          className="projects-filters"
+        >
           {projectCategories.map((cat) => (
-            <motion.button
+            <button
               key={cat.id}
-              onClick={() => {
-                setActiveCategory(cat.id)
-                setShowAll(false)
-              }}
-              whileHover={{ y: -2 }}
-              whileTap={{ scale: 0.97 }}
-              className={`net-chip uppercase cursor-pointer ${
-                activeCategory === cat.id
-                  ? '!border-[var(--color-accent)] !text-[var(--color-accent)]'
-                  : ''
-              }`}
+              onClick={() => setActiveCategory(cat.id)}
+              className={`projects-filter-pill ${activeCategory === cat.id ? 'active' : ''}`}
             >
               {cat.label}
-            </motion.button>
+            </button>
           ))}
-        </div>
+        </motion.div>
 
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeCategory + String(showAll)}
-            initial={{ opacity: 0, y: 21 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -21 }}
-            transition={{ duration: 0.4 }}
-            className="space-y-[89px]"
-          >
-            {filtered.length === 0 ? (
-              <div className="text-center py-[55px]">
-                <p className="phi-body">No projects in this category yet.</p>
-              </div>
-            ) : (
-              filtered.map((project, index) => (
-                <ProjectCard
-                  key={project.title}
-                  project={project}
-                  index={index}
-                  total={projects.length}
-                  onCaseStudy={setCaseStudy}
-                />
-              ))
-            )}
-          </motion.div>
-        </AnimatePresence>
+        {/* Editorial project list */}
+        {filtered.length === 0 ? (
+          <p className="font-sans text-[16px] text-[var(--color-muted)] text-center py-16">
+            No projects in this category yet.
+          </p>
+        ) : (
+          <div className="max-w-[1100px] mx-auto">
+            {filtered.map((project, idx) => {
+              const isFullstack = project.category === 'fullstack'
+              return (
+                <motion.article
+                  key={project.id || project.title}
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: '-80px' }}
+                  transition={{ duration: 0.6, delay: 0.05 }}
+                  className="editorial-project"
+                >
+                  {/* Image */}
+                  <div className="editorial-image">
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      loading="lazy"
+                    />
+                  </div>
 
-        {projects.filter((p) => activeCategory === 'all' || p.category === activeCategory).length > 3 && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="flex justify-center mt-[55px]"
-          >
-            <motion.button
-              onClick={() => setShowAll(!showAll)}
-              whileHover={{ y: -2 }}
-              whileTap={{ scale: 0.97 }}
-              className="btn-phi btn-phi--ghost btn-phi--sm"
-            >
-              <FiGrid size={13} />
-              {showAll ? 'Show Less' : 'View All Projects'}
-              <FiArrowRight size={13} />
-            </motion.button>
-          </motion.div>
+                  {/* Content */}
+                  <div className="editorial-content">
+                    <span className="editorial-number">
+                      {padNumber(idx + 1)} / {project.categoryLabel}
+                    </span>
+
+                    <h3 className="editorial-title">{project.title}</h3>
+
+                    <p className="editorial-description">{project.description}</p>
+
+                    {project.technologies && (
+                      <div className="editorial-meta-group">
+                        <p className="editorial-meta-label">Tools</p>
+                        <div className="editorial-meta-items">
+                          {project.technologies.map((tech) => (
+                            <span key={tech} className="editorial-meta-tag">{tech}</span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Buttons */}
+                    {isFullstack && (project.github || (project.live && project.live !== '#')) && (
+                      <div className="flex flex-col sm:flex-row gap-4 mt-8 pt-6 border-t border-[var(--color-line)]">
+                        {project.github && (
+                          <motion.a
+                            href={project.github}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            whileHover={{ y: -4, scale: 1.03 }}
+                            whileTap={{ scale: 0.97 }}
+                            className="group relative flex items-center justify-center gap-3 px-8 py-4 rounded-2xl overflow-hidden border border-[var(--color-line-2)] bg-[color-mix(in_srgb,var(--color-bg)_50%,transparent)] backdrop-blur-xl text-[var(--color-ink)] font-semibold text-[15px] tracking-wide hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] transition-all duration-300 shadow-md hover:shadow-xl"
+                          >
+                            <span className="absolute inset-0 bg-gradient-to-r from-[color-mix(in_srgb,var(--color-accent)_8%,transparent)] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                            <FiGithub size={18} className="relative z-10" />
+                            <span className="relative z-10">GitHub</span>
+                            <FiArrowUpRight size={15} className="relative z-10 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
+                          </motion.a>
+                        )}
+                        {project.live && project.live !== '#' && (
+                          <motion.a
+                            href={project.live}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            whileHover={{ y: -4, scale: 1.03 }}
+                            whileTap={{ scale: 0.97 }}
+                            className="group relative flex items-center justify-center gap-3 px-8 py-4 rounded-2xl overflow-hidden bg-gradient-to-r from-[var(--color-accent)] via-[color-mix(in_srgb,var(--color-accent)_85%,#fff)] to-[var(--color-accent)] text-white font-bold text-[15px] tracking-wide shadow-lg shadow-[color-mix(in_srgb,var(--color-accent)_30%,transparent)] hover:shadow-2xl hover:shadow-[color-mix(in_srgb,var(--color-accent)_40%,transparent)] transition-all duration-300"
+                          >
+                            <span className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
+                            <FiExternalLink size={18} className="relative z-10" />
+                            <span className="relative z-10">Live Demo</span>
+                            <FiArrowUpRight size={15} className="relative z-10 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
+                          </motion.a>
+                        )}
+                      </div>
+                    )}
+                  </div>
+                </motion.article>
+              )
+            })}
+          </div>
         )}
-
-        {caseStudy && <ProjectModal project={caseStudy} onClose={() => setCaseStudy(null)} />}
       </div>
+
+      {/* Project modal */}
+      {caseStudy && (
+        <ProjectModal project={caseStudy} onClose={() => setCaseStudy(null)} />
+      )}
     </section>
   )
 }
