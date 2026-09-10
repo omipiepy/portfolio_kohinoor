@@ -100,8 +100,8 @@ export default function Projects() {
                     )}
 
                     {/* Buttons */}
-                    {isFullstack && (project.github || (project.live && project.live !== '#')) && (
-                      <div className="flex flex-col sm:flex-row gap-4 mt-8 pt-6 border-t border-[var(--color-line)]">
+                    {isFullstack && (
+                      <div className="flex flex-col sm:flex-row gap-5 pt-6">
                         {project.github && (
                           <motion.a
                             href={project.github}
@@ -109,7 +109,7 @@ export default function Projects() {
                             rel="noopener noreferrer"
                             whileHover={{ y: -4, scale: 1.03 }}
                             whileTap={{ scale: 0.97 }}
-                            className="group relative flex items-center justify-center gap-3 px-8 py-4 rounded-2xl overflow-hidden border border-[var(--color-line-2)] bg-[color-mix(in_srgb,var(--color-bg)_50%,transparent)] backdrop-blur-xl text-[var(--color-ink)] font-semibold text-[15px] tracking-wide hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] transition-all duration-300 shadow-md hover:shadow-xl"
+                            className="group relative flex items-center justify-center gap-3 px-12 py-6 rounded-2xl overflow-hidden border border-[var(--color-line-2)] bg-[color-mix(in_srgb,var(--color-bg)_50%,transparent)] backdrop-blur-xl text-[var(--color-ink)] font-semibold text-[16px] tracking-wide hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] transition-all duration-300 shadow-md hover:shadow-xl"
                           >
                             <span className="absolute inset-0 bg-gradient-to-r from-[color-mix(in_srgb,var(--color-accent)_8%,transparent)] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                             <FiGithub size={18} className="relative z-10" />
@@ -117,21 +117,19 @@ export default function Projects() {
                             <FiArrowUpRight size={15} className="relative z-10 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
                           </motion.a>
                         )}
-                        {project.live && project.live !== '#' && (
-                          <motion.a
-                            href={project.live}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            whileHover={{ y: -4, scale: 1.03 }}
-                            whileTap={{ scale: 0.97 }}
-                            className="group relative flex items-center justify-center gap-3 px-8 py-4 rounded-2xl overflow-hidden bg-gradient-to-r from-[var(--color-accent)] via-[color-mix(in_srgb,var(--color-accent)_85%,#fff)] to-[var(--color-accent)] text-white font-bold text-[15px] tracking-wide shadow-lg shadow-[color-mix(in_srgb,var(--color-accent)_30%,transparent)] hover:shadow-2xl hover:shadow-[color-mix(in_srgb,var(--color-accent)_40%,transparent)] transition-all duration-300"
-                          >
-                            <span className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
-                            <FiExternalLink size={18} className="relative z-10" />
-                            <span className="relative z-10">Live Demo</span>
-                            <FiArrowUpRight size={15} className="relative z-10 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
-                          </motion.a>
-                        )}
+                        <motion.a
+                          href={project.live || '#'}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          whileHover={{ y: -4, scale: 1.03 }}
+                          whileTap={{ scale: 0.97 }}
+                          className="group relative flex items-center justify-center gap-3 px-12 py-6 rounded-2xl overflow-hidden bg-gradient-to-r from-[var(--color-accent)] via-[color-mix(in_srgb,var(--color-accent)_85%,#fff)] to-[var(--color-accent)] text-white font-bold text-[16px] tracking-wide shadow-lg shadow-[color-mix(in_srgb,var(--color-accent)_30%,transparent)] hover:shadow-2xl hover:shadow-[color-mix(in_srgb,var(--color-accent)_40%,transparent)] transition-all duration-300"
+                        >
+                          <span className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
+                          <FiExternalLink size={18} className="relative z-10" />
+                          <span className="relative z-10">Live Demo</span>
+                          <FiArrowUpRight size={15} className="relative z-10 opacity-0 -translate-x-2 group-hover:opacity-100 group-hover:translate-x-0 transition-all duration-300" />
+                        </motion.a>
                       </div>
                     )}
                   </div>
