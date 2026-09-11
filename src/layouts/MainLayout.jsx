@@ -1,5 +1,4 @@
 import Navbar from '@/components/Navbar';
-import Footer from '@/components/Footer';
 
 export default function MainLayout({ children, isDark, toggleTheme }) {
   return (
@@ -8,7 +7,6 @@ export default function MainLayout({ children, isDark, toggleTheme }) {
         <Navbar isDark={isDark} toggleTheme={toggleTheme} />
         <main id="main-content">{children}</main>
       </div>
-      <Footer />
     </div>
   );
 }

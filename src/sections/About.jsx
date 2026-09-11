@@ -58,7 +58,7 @@ export default function About() {
 
             {/* Bio */}
             {aboutSummary.split('\n\n').map((paragraph) => (
-              <p key={paragraph} className="font-sans text-[16px] leading-relaxed text-[var(--color-muted)] mb-5 last:mb-0">
+              <p key={paragraph} className="font-sans text-[16px] leading-relaxed text-[var(--color-ink)] mb-5 last:mb-0">
                 {paragraph}
               </p>
             ))}

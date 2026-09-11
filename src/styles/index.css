@@ -37,29 +37,29 @@
   --color-scrim: rgba(0, 0, 0, 0.45);
   --color-line: var(--border);
   --color-line-2: var(--border);
-  --color-panel: rgba(15, 23, 42, 0.85);
-  --color-panel-2: rgba(15, 23, 42, 0.9);
+  --color-panel: rgba(30, 41, 59, 0.85);
+  --color-panel-2: rgba(30, 41, 59, 0.9);
 }
 
 :root {
   --background: #0F172A;
-  --foreground: #F8FAFC;
+  --foreground: #FFFFFF;
   --card: #1E293B;
-  --card-foreground: #F8FAFC;
+  --card-foreground: #FFFFFF;
   --popover: #1E293B;
-  --popover-foreground: #F8FAFC;
+  --popover-foreground: #FFFFFF;
   --primary: #8B5CF6;
   --primary-foreground: #FFFFFF;
   --secondary: #334155;
   --secondary-foreground: #F8FAFC;
   --muted: #1E293B;
-  --muted-foreground: #94A3B8;
+  --muted-foreground: #CBD5E1;
   --accent: #3730A3;
   --accent-foreground: #F8FAFC;
   --destructive: #F87171;
   --destructive-foreground: #FFFFFF;
-  --border: #334155;
-  --input: #334155;
+  --border: #475569;
+  --input: #475569;
   --ring: #8B5CF6;
   --chart-1: #8B5CF6;
   --chart-2: #A78BFA;
@@ -259,7 +259,7 @@ body {
 
 @layer components {
   .net-panel {
-    background: color-mix(in srgb, var(--color-bg) 48%, transparent);
+    background: color-mix(in srgb, var(--color-card) 60%, transparent);
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border: 1px solid var(--color-line);

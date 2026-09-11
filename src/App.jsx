@@ -8,6 +8,7 @@ import MainLayout from '@/layouts/MainLayout'
 import KineticDotsLoader from '@/components/ui/kinetic-dots-loader'
 import { NotFoundPage } from '@/components/ui/404-page-not-found'
 import ParticleField from '@/components/ParticleField'
+import Footer from '@/components/Footer'
 import scrollStore from '@/store'
 
 import Hero from '@/sections/Hero'
@@ -119,6 +120,7 @@ function HomePage() {
   }, [])
 
   return (
+    <>
     <div ref={rootRef} className="relative" style={{ zIndex: 2 }}>
       <div
         className="fixed inset-0"
@@ -143,10 +145,12 @@ function HomePage() {
         <Projects />
       </section>
 
-      <section id="contact" className="gs-pin relative w-screen h-screen overflow-hidden section-fish-bg">
+      <section id="contact" className="relative w-screen min-h-screen section-fish-bg">
         <Contact />
+        <Footer />
       </section>
     </div>
+    </>
   )
 }
 
