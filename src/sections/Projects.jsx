@@ -1,11 +1,7 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { motion } from 'framer-motion'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import ExpandableCard from '@/components/ui/expandable-card'
 import { projects } from '@/data/portfolio'
-
-gsap.registerPlugin(ScrollTrigger)
 
 const VISIBLE_COUNT = 3
 
@@ -13,16 +9,8 @@ export default function Projects() {
   const [showAll, setShowAll] = useState(false)
   const visible = showAll ? projects : projects.slice(0, VISIBLE_COUNT)
 
-  useEffect(() => {
-    const inner = document.getElementById('projects')
-    if (!inner) return
-    const section = inner.closest('.gs-pin') || inner
-    gsap.set(section, { height: showAll ? 'auto' : '', overflow: showAll ? 'visible' : '' })
-    requestAnimationFrame(() => ScrollTrigger.refresh(true))
-  }, [showAll])
-
   return (
-    <section id="projects" className="phi-section relative z-10">
+    <section id="projects" className="phi-section relative z-10 py-5">
       <div className="phi-wrap pointer-events-auto relative z-10">
         {/* Header */}
         <motion.div

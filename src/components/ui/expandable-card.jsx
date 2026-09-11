@@ -57,7 +57,7 @@ export default function ExpandableCard({ project }) {
             <motion.div
               layoutId={layoutId}
               className="relative w-full max-w-2xl rounded-2xl overflow-hidden border border-[var(--color-line)] z-10 flex flex-col shadow-xl max-h-[90vh]"
-        style={{ background: 'var(--color-card)' }}
+        style={{ background: 'color-mix(in srgb, var(--color-card) 80%, var(--color-accent) 8%)' }}
             >
               {/* Close button */}
               <button

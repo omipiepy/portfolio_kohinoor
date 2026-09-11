@@ -104,6 +104,8 @@ function HomePage() {
 
       scrollStore.targets = {}
       const allSections = [...pinnedSections]
+      const projectsSection = root.querySelector('#projects')
+      if (projectsSection) allSections.push(projectsSection)
       if (contactSection) allSections.push(contactSection)
       allSections.forEach((section) => {
         let top = 0
@@ -141,7 +143,7 @@ function HomePage() {
         <Skills />
       </section>
 
-      <section id="projects" className="gs-pin relative w-screen h-screen overflow-hidden section-fish-bg">
+      <section id="projects" className="relative w-screen section-fish-bg">
         <Projects />
       </section>
 
