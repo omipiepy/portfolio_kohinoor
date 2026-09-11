@@ -1,12 +1,10 @@
 import { useState, useMemo } from 'react'
 import { motion } from 'framer-motion'
 import { FiArrowUpRight, FiGithub, FiExternalLink } from 'react-icons/fi'
-import ProjectModal from '@/components/ProjectModal'
 import { projects, projectCategories } from '@/data/portfolio'
 
 export default function Projects() {
   const [activeCategory, setActiveCategory] = useState('all')
-  const [caseStudy, setCaseStudy] = useState(null)
 
   const filtered = useMemo(() => {
     return activeCategory === 'all'
@@ -101,7 +99,7 @@ export default function Projects() {
 
                     {/* Buttons */}
                     {isFullstack && (
-                      <div className="flex flex-col sm:flex-row gap-5 pt-6">
+                      <div className="flex flex-col sm:flex-row gap-3 sm:gap-5 pt-4 sm:pt-6">
                         {project.github && (
                           <motion.a
                             href={project.github}
@@ -109,7 +107,7 @@ export default function Projects() {
                             rel="noopener noreferrer"
                             whileHover={{ y: -4, scale: 1.03 }}
                             whileTap={{ scale: 0.97 }}
-                            className="group relative flex items-center justify-center gap-3 px-12 py-6 rounded-2xl overflow-hidden border border-[var(--color-line-2)] bg-[color-mix(in_srgb,var(--color-bg)_50%,transparent)] backdrop-blur-xl text-[var(--color-ink)] font-semibold text-[16px] tracking-wide hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] transition-all duration-300 shadow-md hover:shadow-xl"
+                            className="group relative flex items-center justify-center gap-3 px-6 sm:px-12 py-4 sm:py-6 rounded-2xl overflow-hidden border border-[var(--color-line-2)] bg-[color-mix(in_srgb,var(--color-bg)_50%,transparent)] backdrop-blur-xl text-[var(--color-ink)] font-semibold text-[14px] sm:text-[16px] tracking-wide hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] transition-all duration-300 shadow-md hover:shadow-xl"
                           >
                             <span className="absolute inset-0 bg-gradient-to-r from-[color-mix(in_srgb,var(--color-accent)_8%,transparent)] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                             <FiGithub size={18} className="relative z-10" />
@@ -123,7 +121,7 @@ export default function Projects() {
                           rel="noopener noreferrer"
                           whileHover={{ y: -4, scale: 1.03 }}
                           whileTap={{ scale: 0.97 }}
-                          className="group relative flex items-center justify-center gap-3 px-12 py-6 rounded-2xl overflow-hidden bg-gradient-to-r from-[var(--color-accent)] via-[color-mix(in_srgb,var(--color-accent)_85%,#fff)] to-[var(--color-accent)] text-white font-bold text-[16px] tracking-wide shadow-lg shadow-[color-mix(in_srgb,var(--color-accent)_30%,transparent)] hover:shadow-2xl hover:shadow-[color-mix(in_srgb,var(--color-accent)_40%,transparent)] transition-all duration-300"
+                          className="group relative flex items-center justify-center gap-3 px-6 sm:px-12 py-4 sm:py-6 rounded-2xl overflow-hidden bg-gradient-to-r from-[var(--color-accent)] via-[color-mix(in_srgb,var(--color-accent)_85%,#fff)] to-[var(--color-accent)] text-white font-bold text-[14px] sm:text-[16px] tracking-wide shadow-lg shadow-[color-mix(in_srgb,var(--color-accent)_30%,transparent)] hover:shadow-2xl hover:shadow-[color-mix(in_srgb,var(--color-accent)_40%,transparent)] transition-all duration-300"
                         >
                           <span className="absolute inset-0 bg-gradient-to-r from-white/0 via-white/20 to-white/0 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700" />
                           <FiExternalLink size={18} className="relative z-10" />
@@ -139,11 +137,6 @@ export default function Projects() {
           </div>
         )}
       </div>
-
-      {/* Project modal */}
-      {caseStudy && (
-        <ProjectModal project={caseStudy} onClose={() => setCaseStudy(null)} />
-      )}
     </section>
   )
 }

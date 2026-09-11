@@ -1,7 +1,10 @@
 import { useEffect, useRef } from 'react';
 import styles from './CloudSky.module.css';
 
-const MAX_DPR = 2;
+const MAX_DPR = typeof window !== 'undefined' && window.innerWidth < 768 ? 1 : 2;
+const IS_MOBILE = typeof window !== 'undefined' && window.innerWidth < 768;
+// Mobile: cap at ~30fps to save GPU. Desktop: uncapped.
+const FRAME_BUDGET = IS_MOBILE ? 33 : 0;
 
 // Found on a parameter grid; the look depends on these, so they are named.
 const PUFF_UP = 0.34; // ellipse radius above the puff centre
@@ -375,6 +378,11 @@ export default function CloudSky(props) {
         let leanY = 0;
 
         const render = (now) => {
+            // Frame rate throttle on mobile: skip frame if too soon
+            if (FRAME_BUDGET && (now - last) < FRAME_BUDGET) {
+                raf = requestAnimationFrame(render);
+                return;
+            }
             const dt = Math.min(0.05, (now - last) / 1000);
             last = now;
             const v = vRef.current;
@@ -431,7 +439,12 @@ export default function CloudSky(props) {
 
         // The rect RATIO is zoom-invariant -- offset and size scale together --
         // so this is safe on a zoomed Framer canvas where absolute px are not.
+        // Throttled pointer tracking: update at most every 16ms (~60Hz)
+        let lastTrack = 0;
         const track = (e) => {
+            const now = performance.now();
+            if (now - lastTrack < 16) return;
+            lastTrack = now;
             const r = canvas.getBoundingClientRect();
             if (r.width <= 0 || r.height <= 0) return;
             ptrRef.current.x = ((e.clientX - r.left) / r.width) * 2 - 1;
@@ -446,12 +459,23 @@ export default function CloudSky(props) {
         canvas.addEventListener("pointerenter", track);
         canvas.addEventListener("pointerleave", onLeave);
 
+        const onVisible = () => {
+            if (document.hidden) {
+                cancelAnimationFrame(raf);
+                raf = 0;
+            } else if (!raf) {
+                last = performance.now();
+                raf = requestAnimationFrame(render);
+            }
+        };
+        document.addEventListener("visibilitychange", onVisible);
         raf = requestAnimationFrame(render);
 
         // Never loseContext(): getContext returns the same context per canvas, so
         // StrictMode's mount -> cleanup -> mount would reuse a force-lost one.
         return () => {
             cancelAnimationFrame(raf);
+            document.removeEventListener("visibilitychange", onVisible);
             canvas.removeEventListener("pointermove", track);
             canvas.removeEventListener("pointerenter", track);
             canvas.removeEventListener("pointerleave", onLeave);
@@ -467,8 +491,6 @@ export default function CloudSky(props) {
                 overflow: "hidden",
                 background: zenithColor,
                 isolation: "isolate",
-                minWidth: 1200,
-                minHeight: 800,
                 width: typeof width === "number" && width > 0 ? width : "100%",
                 height: typeof height === "number" && height > 0 ? height : "100%",
                 ...style,

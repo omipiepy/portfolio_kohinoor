@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import {
   FiSend, FiX,
@@ -92,6 +92,17 @@ export default function ContactForm() {
   const [sending, setSending] = useState(false)
   const [submitted, setSubmitted] = useState(false)
   const [submitError, setSubmitError] = useState('')
+  const timersRef = useRef([])
+
+  useEffect(() => () => timersRef.current.forEach(clearTimeout), [])
+
+  const scheduleReset = () => {
+    const t = setTimeout(() => {
+      setSubmitted(false)
+      setForm({ name: '', email: '', subject: '', message: '' })
+    }, 4000)
+    timersRef.current.push(t)
+  }
 
   const validate = () => {
     const e = {}
@@ -136,19 +147,13 @@ export default function ContactForm() {
     try {
       await submitContactMessage(form)
       setSubmitted(true)
-      setTimeout(() => {
-        setSubmitted(false)
-        setForm({ name: '', email: '', subject: '', message: '' })
-      }, 4000)
+      scheduleReset()
     } catch (err) {
       if (import.meta.env.DEV) {
         console.warn('[contact] API unavailable in dev, simulating success:', err.message)
         await new Promise((r) => setTimeout(r, 800))
         setSubmitted(true)
-        setTimeout(() => {
-          setSubmitted(false)
-          setForm({ name: '', email: '', subject: '', message: '' })
-        }, 4000)
+        scheduleReset()
       } else {
         setSubmitError(err.message || 'Something went wrong. Please try again.')
       }

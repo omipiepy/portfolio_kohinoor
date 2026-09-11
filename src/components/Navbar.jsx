@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { FiMenu, FiX } from 'react-icons/fi'
 import ThemeToggle from './ThemeToggle'
@@ -7,7 +7,8 @@ import { useScrollSpy } from '@/hooks/useScrollSpy'
 
 export default function Navbar({ isDark, toggleTheme }) {
   const [isOpen, setIsOpen] = useState(false)
-  const activeId = useScrollSpy(navItems.map((item) => item.href.slice(1)), 80)
+  const sectionIds = useMemo(() => navItems.map((item) => item.href.slice(1)), [])
+  const activeId = useScrollSpy(sectionIds, 80)
 
   useEffect(() => {
     document.body.style.overflow = isOpen ? 'hidden' : ''
@@ -26,7 +27,7 @@ export default function Navbar({ isDark, toggleTheme }) {
     <>
       <nav className="sticky top-5 z-50 pointer-events-none flex justify-center" aria-label="Main">
         <div className="nav-bar pointer-events-auto max-w-[1000px]">
-          <div className="flex items-center justify-between h-[60px] px-10 gap-x-10">
+          <div className="flex items-center justify-between h-[52px] sm:h-[60px] px-4 sm:px-6 md:px-10 gap-x-6 sm:gap-x-10">
             <motion.a
               href="#home"
               onClick={(e) => {

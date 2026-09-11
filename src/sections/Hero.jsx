@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion'
 import { FaGithub, FaEnvelope, FaDownload } from 'react-icons/fa'
 import Button from '@/components/Button'
-import FluidText from '@/components/FluidText'
 import { useTypewriter } from '@/hooks/useTypewriter'
 import { personalInfo, socialLinks } from '@/data/portfolio'
 
@@ -27,44 +26,52 @@ export default function Hero({ isDark }) {
   const typewriterText = useTypewriter(personalInfo.rotatingTitles)
 
   return (
-    <section id="home" className="relative min-h-screen flex items-center justify-center px-4 overflow-hidden">
-      {/* Dark gradient scrim behind text */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute inset-0 bg-gradient-to-b from-black/10 via-transparent to-black/20" />
-      </div>
-
+    <section id="home" className="relative min-h-dvh flex items-center justify-center px-5 pt-24 pb-8 overflow-hidden">
       <motion.div
         variants={containerVariants}
         initial="hidden"
         animate="visible"
-        className="relative z-10 text-center w-full max-w-[1000px] pointer-events-auto flex flex-col gap-5"
+        className="relative z-10 text-center w-full max-w-[1000px] pointer-events-auto flex flex-col gap-4 sm:gap-5"
       >
-        {/* Eyebrow */}
-        <motion.p variants={itemVariants} className="font-mono text-[14px] tracking-[0.05em] text-[var(--color-accent)]">
-          <span className="text-[var(--color-accent)]">{'<'}</span>hello, world <span className="text-[var(--color-accent)]">{'/>'}</span>
+        <motion.p variants={itemVariants} className="font-mono text-sm tracking-[0.05em] text-[var(--color-accent)]">
+          {'<'}hello, world {'/>'}
         </motion.p>
 
-        {/* Name — FluidText */}
-        <motion.div variants={itemVariants} className="mb-2">
-          <FluidText
-            text="Kohinoor"
-            font={{
-              fontFamily: "Inter",
-              fontWeight: 800,
-              fontSize: "clamp(28px, 5vw, 52px)",
-              lineHeight: "1.2em",
-              letterSpacing: "-0.02em",
-              textAlign: "center",
-            }}
-            paletteColors={["#5B5F8A", "#38BDF8", "#EC4899", "#A855F7", "#6B9080"]}
-            color={isDark ? "#1E3A5F" : "#0F172A"}
-            style={{ height: "clamp(120px, 20vw, 180px)" }}
-          />
-        </motion.div>
+        <div className="font-sans font-extrabold text-[clamp(28px,5vw,52px)] leading-tight tracking-tight">
+          {/* Kohinoor — staggered letter reveal */}
+          <div className="flex justify-center">
+            {"Kohinoor".split("").map((char, i) => (
+              <motion.span
+                key={i}
+                initial={{ opacity: 0, y: 40, rotateX: -90 }}
+                animate={{ opacity: 1, y: 0, rotateX: 0 }}
+                transition={{
+                  duration: 0.5,
+                  delay: 0.3 + i * 0.06,
+                  ease: [0.215, 0.61, 0.355, 1],
+                }}
+                className="inline-block text-[#1E3A5F]"
+              >
+                {char}
+              </motion.span>
+            ))}
+          </div>
 
-        {/* Tagline with typewriter and blinking cursor */}
+          {/* Dallakoti — sliding reveal + moving gradient */}
+          <motion.div
+            className="overflow-hidden"
+            initial={{ clipPath: "inset(0 100% 0 0)" }}
+            animate={{ clipPath: "inset(0 0% 0 0)" }}
+            transition={{ duration: 0.8, delay: 0.8, ease: [0.215, 0.61, 0.355, 1] }}
+          >
+            <span className="block bg-gradient-to-r from-blue-600 via-indigo-500 to-cyan-400 bg-clip-text text-transparent bg-[length:200%_auto] animate-[gradient-shift_3s_linear_infinite]">
+              Dallakoti
+            </span>
+          </motion.div>
+        </div>
+
         <motion.div variants={itemVariants} className="flex items-center justify-center">
-          <span className="font-mono text-[20px]" style={{ color: isDark ? '#1E3A5F' : 'var(--color-muted)' }}>
+          <span className="font-mono text-[16px] sm:text-[18px] md:text-[20px]" style={{ color: isDark ? '#1E3A5F' : 'var(--color-muted)' }}>
             {typewriterText}
             <motion.span
               animate={{ opacity: [1, 0] }}
@@ -74,10 +81,8 @@ export default function Hero({ isDark }) {
           </span>
         </motion.div>
 
-        {/* CTA row + Social row as one connected group */}
-        <motion.div variants={itemVariants} className="flex flex-col items-center gap-8">
-          {/* CTA buttons */}
-          <div className="flex flex-wrap items-center justify-center gap-5">
+        <motion.div variants={itemVariants} className="flex flex-col items-center gap-6 sm:gap-8">
+          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-5">
             <Button
               variant="primary"
               onClick={() => {
@@ -92,7 +97,6 @@ export default function Hero({ isDark }) {
             </Button>
           </div>
 
-          {/* Social icons */}
           <div className="flex items-center justify-center gap-3">
             {socialLinks.map((link) => {
               const Icon = iconMap[link.icon]

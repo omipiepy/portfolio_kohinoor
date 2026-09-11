@@ -40,21 +40,19 @@ export default function Skills() {
             {visible.map((skill, i) => (
               <motion.div
                 key={skill.name}
-                layout
                 initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.05 }}
-                whileHover={{ scale: 1.05, y: -4 }}
-                className="net-panel net-panel-sm p-6 flex flex-col items-center gap-4 cursor-default glass-card"
+                whileHover={{ y: -4 }}
+                className="net-panel net-panel-sm p-5 sm:p-6 flex flex-col items-center gap-3 sm:gap-4 cursor-default"
               >
                 {iconImages[skill.icon] ? (
-                  <motion.img
+                  <img
                     src={iconImages[skill.icon]}
                     alt={skill.name}
                     className="w-10 h-10"
-                    whileHover={{ rotate: 8 }}
-                    transition={{ type: 'spring', stiffness: 300 }}
+                    loading="lazy"
                   />
                 ) : (
                   <span className="w-10 h-10 grid place-items-center rounded-lg bg-[color-mix(in_srgb,var(--color-accent)_12%,transparent)] text-[var(--color-accent)] text-xl font-bold">
@@ -86,14 +84,12 @@ export default function Skills() {
             viewport={{ once: true }}
             className="flex justify-center mt-8"
           >
-            <motion.button
+            <button
               onClick={() => setShowAll(!showAll)}
-              whileHover={{ y: -2 }}
-              whileTap={{ scale: 0.97 }}
               className="btn-phi btn-phi--ghost btn-phi--sm"
             >
               {showAll ? 'Show Less' : `Show All (${allSkills.length})`}
-            </motion.button>
+            </button>
           </motion.div>
         )}
       </div>

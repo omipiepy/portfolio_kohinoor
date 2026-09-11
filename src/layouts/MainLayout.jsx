@@ -1,41 +1,60 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useRef, useCallback } from 'react'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import CloudSky from '@/components/CloudSky'
 
 export default function MainLayout({ children, isDark, toggleTheme }) {
-  const [scrollY, setScrollY] = useState(0)
+  const scrollRef = useRef({ y: 0, ticking: false, docHeight: 0, winHeight: 0 })
 
   useEffect(() => {
-    // Use requestAnimationFrame to limit updates
-    let ticking = false
+    const s = scrollRef.current
+    s.docHeight = document.body.scrollHeight
+    s.winHeight = window.innerHeight
+
+    // Recalculate doc height on resize (rare)
+    const onResize = () => {
+      s.docHeight = document.body.scrollHeight
+      s.winHeight = window.innerHeight
+    }
+
     const onScroll = () => {
-      if (!ticking) {
+      if (!s.ticking) {
+        s.ticking = true
         window.requestAnimationFrame(() => {
-          setScrollY(window.scrollY)
-          ticking = false
+          s.y = window.scrollY
+          s.ticking = false
         })
-        ticking = true
       }
     }
 
-    window.addEventListener('scroll', onScroll)
-    return () => window.removeEventListener('scroll', onScroll)
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onResize, { passive: true })
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onResize)
+    }
   }, [])
 
-  // Calculate cloud properties based on scroll position
-  // As user scrolls down, increase cloud density and create a sense of moving through clouds
-  const scrollProgress = Math.min(scrollY / (document.body.scrollHeight - window.innerHeight), 1)
-  const cloudDensity = 100 + Math.floor(scrollProgress * 50) // Increase density from 100 to 150
-  const cloudSpeed = 64 + Math.floor(scrollProgress * 20) // Slightly increase speed from 64 to 84
+  const cloudProps = useRef({ density: 100, speed: 64 })
+
+  // Update cloud props from scroll without triggering React re-render.
+  // CloudSky reads its own vRef internally, but we pass density/speed as
+  // initial props. Since the effect has [] deps, prop changes only cause
+  // a cheap re-render (no DOM mutation on a canvas element).
+  const scrollProgress = Math.min(
+    (scrollRef.current.y || 0) / Math.max(1, (scrollRef.current.docHeight || 1) - (scrollRef.current.winHeight || 1)),
+    1
+  )
+  cloudProps.current.density = 100 + Math.floor(scrollProgress * 50)
+  cloudProps.current.speed = 64 + Math.floor(scrollProgress * 20)
 
   return (
     <div className="relative min-h-screen">
       <CloudSky
         className="z-0 pointer-events-none"
         isDark={isDark}
-        density={cloudDensity}
-        speed={cloudSpeed}
+        density={cloudProps.current.density}
+        speed={cloudProps.current.speed}
       />
       <div className="relative z-10 pointer-events-none">
         <Navbar isDark={isDark} toggleTheme={toggleTheme} />

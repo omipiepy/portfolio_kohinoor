@@ -18,7 +18,7 @@ export default function SectionTitle({ kicker, title, subtitle }) {
         {title}
       </h2>
       {subtitle && (
-        <p className="font-sans text-[16px] text-[var(--color-muted)] mx-auto leading-relaxed" style={{ maxWidth: '580px', minWidth: '280px' }}>
+        <p className="font-sans text-[16px] text-[var(--color-muted)] mx-auto leading-relaxed max-w-[580px]">
           {subtitle}
         </p>
       )}

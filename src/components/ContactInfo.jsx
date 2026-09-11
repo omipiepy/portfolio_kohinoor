@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { motion } from 'framer-motion'
 import { FiCopy, FiCheck } from 'react-icons/fi'
 import ContactCard from './ContactCard'
@@ -7,9 +7,13 @@ import { contactInfo, contactDetails } from '@/data/contactData'
 
 export default function ContactInfo() {
   const [copied, setCopied] = useState(null)
+  const timerRef = useRef(null)
+
+  useEffect(() => () => clearTimeout(timerRef.current), [])
 
   const handleCopy = async (key, value) => {
     setCopied(key)
+    clearTimeout(timerRef.current)
     try {
       await navigator.clipboard.writeText(value)
     } catch {
@@ -20,7 +24,7 @@ export default function ContactInfo() {
       document.execCommand('copy')
       document.body.removeChild(ta)
     }
-    setTimeout(() => setCopied(null), 2000)
+    timerRef.current = setTimeout(() => setCopied(null), 2000)
   }
 
   return (
