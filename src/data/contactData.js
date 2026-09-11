@@ -8,8 +8,6 @@ export const contactInfo = {
   phone: '+977-9800000000',
   location: 'Kathmandu, Nepal',
   availability: 'Open to Opportunities',
-  resumeUrl: '/resume.pdf',
-  callout: "Let's build something amazing together.",
 }
 
 export const contactDetails = [
@@ -40,7 +38,7 @@ export const contactDetails = [
 ]
 
 export const socialLinks = [
-  { name: 'GitHub', url: 'https://github.com/omipiepy', icon: 'FaGithub', color: 'hover:text-gray-900 dark:hover:text-white' },
-  { name: 'LinkedIn', url: 'https://linkedin.com/in/', icon: 'FaLinkedinIn', color: 'hover:text-blue-600' },
-  { name: 'Email', url: 'mailto:dallakotikohinoor@gmail.com', icon: 'FaEnvelope', color: 'hover:text-indigo-500' },
+  { name: 'GitHub', url: 'https://github.com/omipiepy', icon: 'FaGithub' },
+  { name: 'LinkedIn', url: 'https://linkedin.com/in/', icon: 'FaLinkedinIn' },
+  { name: 'Email', url: 'mailto:dallakotikohinoor@gmail.com', icon: 'FaEnvelope' },
 ]

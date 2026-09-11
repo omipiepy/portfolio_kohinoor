@@ -61,77 +61,8 @@ export const skillCategories = [
   },
 ]
 
-export const projectCategories = [
-  { id: 'all', label: 'All' },
-  { id: 'design', label: 'UI/UX' },
-  { id: 'fullstack', label: 'Web' },
-]
-
 export const projects = [
   {
-    id: 1,
-    title: 'Controller Poster',
-    category: 'design',
-    categoryLabel: 'UI/UX',
-    tagline: 'Poster design for a gaming controller.',
-    description:
-      'A bold promotional poster for a gaming controller, exploring strong typography, product composition, visual hierarchy, and color contrast.',
-    designFocus: ['Typography', 'Composition', 'Color System', 'Product Presentation'],
-    image: '/images/controller-poster.png',
-    technologies: ['Figma', 'Adobe Illustrator'],
-    github: 'https://github.com/omipiepy',
-    live: '#',
-    highlights: [
-      'Poster layout & composition',
-      'Typography hierarchy',
-      'Color grading',
-    ],
-    overview: 'A poster design of a gaming controller.',
-    problem: 'Create a striking poster-worthy visual for a gaming controller.',
-    solution: 'Designed a bold poster layout with strong typography, composition, and color grading.',
-    architecture: 'Single-page poster composition combining product visual with typography and color.',
-    features: [
-      'Bold product-focused composition',
-      'Clean typography hierarchy',
-      'Polished color treatment',
-    ],
-    challenges: 'Balancing product visual with text elements without overcrowding.',
-    results: 'A clean, professional poster highlighting the controller as the hero element.',
-    learned: 'Poster design fundamentals — composition, hierarchy, and visual storytelling.',
-  },
-  {
-    id: 2,
-    title: 'The Converse Shoes',
-    category: 'visual',
-    categoryLabel: 'Web / Visual Design',
-    tagline: 'Animated advertisement for shoes.',
-    description:
-      'An experimental digital shopping experience focused on bold editorial typography, product presentation, and immersive visual storytelling.',
-    designFocus: ['Layout', 'Typography', 'Product UI', 'Navigation'],
-    image: '/images/shoes-ads.png',
-    technologies: ['Figma', 'Adobe Illustrator'],
-    github: 'https://github.com/omipiepy',
-    live: '#',
-    highlights: [
-      'Animated product ad',
-      'Motion design',
-      'Brand-forward visuals',
-    ],
-    overview: 'An animated advertisement showcasing a pair of shoes with eye-catching motion.',
-    problem: 'Create an ad that makes a shoe product feel dynamic and appealing.',
-    solution: 'Designed the ad visual in Figma and Illustrator with a motion-ready layout for animation.',
-    architecture: 'Ad frame design combining shoe product with animated motion elements.',
-    features: [
-      'Animated product showcase',
-      'Motion-friendly layout',
-      'Brand-forward styling',
-    ],
-    challenges: 'Designing frames that stay visually strong when animated.',
-    results: 'A lively, product-focused animated ad.',
-    learned: 'Designing for motion — layouts that hold up across animated frames.',
-  },
-  {
-    id: 3,
     title: 'ITKhoji',
     category: 'fullstack',
     categoryLabel: 'Web Development',
@@ -199,17 +130,68 @@ export const projects = [
     challenges: 'Setting up Prisma migrations and ensuring smooth integration between PostgreSQL and the API.',
     results: 'A fully functional e-commerce site where users can browse, purchase, and track orders.',
     learned: 'Working with Prisma ORM, PostgreSQL, and building a complete e-commerce flow from product listing to order fulfillment.'
-  }
-]
-
-export const experiences = [
+  },
   {
-    title: 'AI/ML Intern',
-    company: 'Alpinist Studios',
-    period: 'Current',
+    id: 1,
+    title: 'Controller Poster',
+    category: 'design',
+    categoryLabel: 'UI/UX',
+    tagline: 'Poster design for a gaming controller.',
     description:
-      'Working on AI/ML projects, applying ML to real-world problems, and building intelligent solutions.',
-    technologies: ['Python', 'PyTorch', 'Machine Learning', 'Deep Learning'],
+      'A bold promotional poster for a gaming controller, exploring strong typography, product composition, visual hierarchy, and color contrast.',
+    designFocus: ['Typography', 'Composition', 'Color System', 'Product Presentation'],
+    image: '/images/controller-poster.png',
+    technologies: ['Figma', 'Adobe Illustrator'],
+    github: 'https://github.com/omipiepy',
+    live: '#',
+    highlights: [
+      'Poster layout & composition',
+      'Typography hierarchy',
+      'Color grading',
+    ],
+    overview: 'A poster design of a gaming controller.',
+    problem: 'Create a striking poster-worthy visual for a gaming controller.',
+    solution: 'Designed a bold poster layout with strong typography, composition, and color grading.',
+    architecture: 'Single-page poster composition combining product visual with typography and color.',
+    features: [
+      'Bold product-focused composition',
+      'Clean typography hierarchy',
+      'Polished color treatment',
+    ],
+    challenges: 'Balancing product visual with text elements without overcrowding.',
+    results: 'A clean, professional poster highlighting the controller as the hero element.',
+    learned: 'Poster design fundamentals — composition, hierarchy, and visual storytelling.',
+  },
+  {
+    id: 2,
+    title: 'The Converse Shoes',
+    category: 'visual',
+    categoryLabel: 'Web / Visual Design',
+    tagline: 'Animated advertisement for shoes.',
+    description:
+      'An experimental digital shopping experience focused on bold editorial typography, product presentation, and immersive visual storytelling.',
+    designFocus: ['Layout', 'Typography', 'Product UI', 'Navigation'],
+    image: '/images/shoes-ads.png',
+    technologies: ['Figma', 'Adobe Illustrator'],
+    github: 'https://github.com/omipiepy',
+    live: '#',
+    highlights: [
+      'Animated product ad',
+      'Motion design',
+      'Brand-forward visuals',
+    ],
+    overview: 'An animated advertisement showcasing a pair of shoes with eye-catching motion.',
+    problem: 'Create an ad that makes a shoe product feel dynamic and appealing.',
+    solution: 'Designed the ad visual in Figma and Illustrator with a motion-ready layout for animation.',
+    architecture: 'Ad frame design combining shoe product with animated motion elements.',
+    features: [
+      'Animated product showcase',
+      'Motion-friendly layout',
+      'Brand-forward styling',
+    ],
+    challenges: 'Designing frames that stay visually strong when animated.',
+    results: 'A lively, product-focused animated ad.',
+    learned: 'Designing for motion — layouts that hold up across animated frames.',
   },
 ]
 
@@ -220,52 +202,6 @@ export const education = [
     period: 'Graduated',
     description: 'Completed Bachelor in Computer Engineering with projects in ML, web development, and databases.',
   },
-]
-
-export const certifications = [
-  {
-    title: 'MERN Stack Development Course',
-    issuer: 'letslearn.asia',
-    date: '2025',
-    image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=400&h=300&fit=crop',
-    credentialUrl: '#',
-  },
-]
-
-export const achievements = [
-  {
-    title: 'Projects Built',
-    value: 10,
-    suffix: '+',
-    description: 'Basic to intermediate level projects',
-  },
-  {
-    title: 'Tech Stack',
-    value: 12,
-    suffix: '+',
-    description: 'Languages and frameworks explored',
-  },
-  {
-    title: 'Certifications',
-    value: 1,
-    suffix: '',
-    description: 'MERN Stack Development',
-  },
-  {
-    title: 'GitHub Repos',
-    value: 10,
-    suffix: '+',
-    description: 'Academic and personal projects',
-  },
-]
-
-export const testimonials = []
-
-export const interests = [
-  'AI Research',
-  'Open Source',
-  'Reading',
-  'Photography',
 ]
 
 export const aboutSummary =

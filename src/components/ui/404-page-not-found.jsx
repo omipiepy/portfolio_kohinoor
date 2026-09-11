@@ -17,14 +17,14 @@ export function NotFoundPage() {
 
   if (navigating) {
     return (
-      <div className="fixed inset-0 z-50 grid place-items-center bg-white">
+      <div className="fixed inset-0 z-50 grid place-items-center relative section-fish-bg">
         <KineticDotsLoader />
       </div>
     )
   }
 
   return (
-    <section className="bg-white min-h-screen flex items-center justify-center px-4">
+    <section className="section-fish-bg relative min-h-screen flex items-center justify-center px-4">
       <div className="max-w-[700px] w-full text-center">
         {/* SVG Illustration: TV with no signal */}
         <div className="flex justify-center mb-6">
@@ -34,8 +34,8 @@ export function NotFoundPage() {
             <rect x="100" y="230" width="100" height="8" rx="4" fill="#94a3b8"/>
 
             {/* TV body */}
-            <rect x="40" y="40" width="220" height="180" rx="16" fill="#1e293b"/>
-            <rect x="48" y="48" width="204" height="156" rx="10" fill="#0f172a"/>
+            <rect x="40" y="40" width="220" height="180" rx="16" fill="#334155"/>
+            <rect x="48" y="48" width="204" height="156" rx="10" fill="#1e293b"/>
 
             {/* Screen */}
             <rect x="56" y="56" width="188" height="140" rx="6" fill="#111827"/>
@@ -93,11 +93,11 @@ export function NotFoundPage() {
         </div>
 
         {/* 404 text */}
-        <h1 className="text-6xl sm:text-7xl md:text-8xl font-extrabold text-slate-200 leading-none tracking-tight">
+        <h1 className="text-6xl sm:text-7xl md:text-8xl font-extrabold text-[var(--color-muted)] leading-none tracking-tight">
           404
         </h1>
 
-        <h3 className="text-xl sm:text-2xl font-bold text-[#1E3A5F] mt-2 mb-3">
+        <h3 className="text-xl sm:text-2xl font-bold text-[var(--color-ink)] mt-2 mb-3">
           Oops! Page not found
         </h3>
         <Button

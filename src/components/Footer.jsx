@@ -6,7 +6,7 @@ export default function Footer() {
   const year = new Date().getFullYear()
 
   return (
-    <footer className="border-t border-[var(--color-line)]">
+    <footer className="relative z-20 border-t border-[var(--color-line)] bg-[var(--color-bg)]">
       <div className="phi-wrap py-8">
         <div className="flex flex-col md:flex-row items-center justify-between gap-6">
           <motion.div

@@ -1,6 +1,5 @@
 import SectionTitle from '@/components/SectionTitle'
-import ContactInfo from '@/components/ContactInfo'
-import ContactForm from '@/components/ContactForm'
+import ContactSection from '@/components/ui/contact-01'
 
 export default function Contact() {
   return (
@@ -10,10 +9,7 @@ export default function Contact() {
           title="Get in Touch"
           subtitle="Have a project in mind or just want to chat? I'd love to hear from you."
         />
-        <div className="grid md:grid-cols-[1fr_1.2fr] gap-8 items-stretch max-w-[1100px] mx-auto">
-          <ContactInfo />
-          <ContactForm />
-        </div>
+        <ContactSection />
       </div>
     </section>
   )

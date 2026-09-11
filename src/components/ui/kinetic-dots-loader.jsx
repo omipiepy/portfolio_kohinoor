@@ -1,39 +1,100 @@
+import { motion } from 'framer-motion'
+
 const IS_MOBILE = typeof window !== 'undefined' && window.innerWidth < 768
 
+const bounceTransition = (delay) => ({
+  y: {
+    duration: 0.5,
+    repeat: Infinity,
+    repeatType: 'loop',
+    repeatDelay: 0.3,
+    delay,
+    times: [0, 0.3, 0.5, 0.75, 1],
+    ease: ['easeOut', 'easeIn', 'easeOut', 'easeIn'],
+  },
+  scaleY: {
+    duration: 0.5,
+    repeat: Infinity,
+    repeatType: 'loop',
+    repeatDelay: 0.3,
+    delay,
+    times: [0, 0.3, 0.5, 0.75, 1],
+    ease: ['easeOut', 'easeIn', 'easeOut', 'easeIn'],
+  },
+  scaleX: {
+    duration: 0.5,
+    repeat: Infinity,
+    repeatType: 'loop',
+    repeatDelay: 0.3,
+    delay,
+    times: [0, 0.3, 0.5, 0.75, 1],
+    ease: ['easeOut', 'easeIn', 'easeOut', 'easeIn'],
+  },
+})
+
 export default function KineticDotsLoader() {
+  const size = IS_MOBILE ? 24 : 32
+
   return (
-    <div className='kd-container flex items-center justify-center min-h-[200px] sm:min-h-[250px] p-6 sm:p-8'>
-      <div className='flex items-end gap-6 sm:gap-8'>
-        {[0, 1, 2, 3].map((i) => {
-          const d = `${(i * 0.2).toFixed(1)}s`
-          return (
-            <div key={i} className='relative flex flex-col items-center' style={{ width: IS_MOBILE ? 32 : 40 }}>
-              <div style={{ animation: `kd-bounce 3s ease-in-out ${d} infinite`, willChange: 'transform' }}>
-                <div style={{
-                  animation: `kd-squash 3s ease-in-out ${d} infinite`,
-                  willChange: 'transform',
-                  width: IS_MOBILE ? 28 : 36,
-                  height: IS_MOBILE ? 28 : 36,
-                  borderRadius: '50%',
-                  background: 'linear-gradient(135deg, #bae6fd 0%, #38bdf8 35%, #0284c7 70%, #0369a1 100%)',
-                  boxShadow: IS_MOBILE
-                    ? '0 0 8px rgba(56,189,248,0.4)'
-                    : '0 0 16px rgba(56,189,248,0.5), 0 0 32px rgba(56,189,248,0.25), inset 0 -2px 6px rgba(3,105,161,0.4)',
-                  position: 'relative',
-                }}>
-                  {!IS_MOBILE && (
-                    <>
-                      <div style={{ position: 'absolute', top: 5, left: 7, width: 13, height: 10, borderRadius: '50%', background: 'radial-gradient(ellipse, rgba(255,255,255,0.95), transparent 70%)', transform: 'rotate(-25deg)' }} />
-                      <div style={{ position: 'absolute', top: 4, left: 5, width: 6, height: 4, borderRadius: '50%', background: 'rgba(255,255,255,0.7)', filter: 'blur(1px)', transform: 'rotate(-25deg)' }} />
-                    </>
-                  )}
-                </div>
-              </div>
-              <div style={{ animation: `kd-shadow 3s ease-in-out ${d} infinite`, willChange: 'transform, opacity', position: 'absolute', bottom: -4, left: '50%', width: IS_MOBILE ? 28 : 36, height: 6, borderRadius: '50%', background: 'radial-gradient(ellipse, rgba(14,116,177,0.45), transparent 70%)' }} />
-            </div>
-          )
-        })}
-      </div>
+    <div className='flex items-end justify-center gap-5 sm:gap-7' style={{ height: IS_MOBILE ? 80 : 100 }}>
+      {[0, 1, 2, 3].map((i) => {
+        const delay = i * 0.15
+        return (
+          <div key={i} className='relative' style={{ width: size, height: size + 20 }}>
+            {/* Shadow */}
+            <motion.div
+              animate={{
+                scaleX: [1, 1.3, 0.6, 1.1, 1],
+                opacity: [0.4, 0.6, 0.15, 0.45, 0.4],
+              }}
+              transition={{
+                duration: 1.2,
+                repeat: Infinity,
+                delay,
+                times: [0, 0.1, 0.35, 0.6, 1],
+                ease: 'easeInOut',
+              }}
+              style={{
+                position: 'absolute',
+                bottom: 0,
+                left: '50%',
+                x: '-50%',
+                width: size,
+                height: 4,
+                borderRadius: '50%',
+                background: `color-mix(in srgb, var(--color-primary) 40%, transparent)`,
+              }}
+            />
+            {/* Ball */}
+            <motion.div
+              animate={{
+                y: [0, -50, 0, -25, 0],
+                scaleX: [1, 0.95, 1.15, 0.98, 1],
+                scaleY: [1, 1.05, 0.85, 1.02, 1],
+              }}
+              transition={bounceTransition(delay)}
+              style={{
+                position: 'absolute',
+                bottom: 4,
+                left: 0,
+                width: size,
+                height: size,
+                borderRadius: '50%',
+                background: `linear-gradient(135deg, var(--color-accent) 0%, var(--color-primary) 50%, var(--color-accent) 100%)`,
+                boxShadow: `0 0 12px color-mix(in srgb, var(--color-primary) 50%, transparent)`,
+              }}
+            >
+              {/* Highlight */}
+              {!IS_MOBILE && (
+                <>
+                  <div style={{ position: 'absolute', top: 4, left: 5, width: 10, height: 8, borderRadius: '50%', background: 'radial-gradient(ellipse, rgba(255,255,255,0.9), transparent 70%)', transform: 'rotate(-25deg)' }} />
+                  <div style={{ position: 'absolute', top: 3, left: 4, width: 5, height: 3, borderRadius: '50%', background: 'rgba(255,255,255,0.6)', filter: 'blur(1px)', transform: 'rotate(-25deg)' }} />
+                </>
+              )}
+            </motion.div>
+          </div>
+        )
+      })}
     </div>
   )
 }

@@ -22,11 +22,11 @@ const itemVariants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.5, ease: 'easeOut' } },
 }
 
-export default function Hero({ isDark }) {
+export default function Hero() {
   const typewriterText = useTypewriter(personalInfo.rotatingTitles)
 
   return (
-    <section id="home" className="relative min-h-dvh flex items-center justify-center px-5 pt-24 pb-8 overflow-hidden">
+    <div className="relative h-full flex items-center justify-center px-5 pt-24 pb-8 overflow-hidden" style={{ background: 'transparent' }}>
       <motion.div
         variants={containerVariants}
         initial="hidden"
@@ -37,41 +37,42 @@ export default function Hero({ isDark }) {
           {'<'}hello, world {'/>'}
         </motion.p>
 
-        <div className="font-sans font-extrabold text-[clamp(28px,5vw,52px)] leading-tight tracking-tight">
-          {/* Kohinoor — staggered letter reveal */}
-          <div className="flex justify-center">
+        <div className="font-serif font-extrabold text-[clamp(32px,6vw,56px)] leading-tight tracking-tight mb-2">
+          {/* Kohinoor — staggered letter reveal with spring */}
+          <span className="inline-block">
             {"Kohinoor".split("").map((char, i) => (
               <motion.span
                 key={i}
-                initial={{ opacity: 0, y: 40, rotateX: -90 }}
-                animate={{ opacity: 1, y: 0, rotateX: 0 }}
+                initial={{ opacity: 0, y: 50, rotateX: -120, scale: 0.5 }}
+                animate={{ opacity: 1, y: 0, rotateX: 0, scale: 1 }}
                 transition={{
-                  duration: 0.5,
-                  delay: 0.3 + i * 0.06,
-                  ease: [0.215, 0.61, 0.355, 1],
+                  type: 'spring',
+                  stiffness: 200,
+                  damping: 12,
+                  delay: 0.4 + i * 0.07,
                 }}
-                className="inline-block text-[#1E3A5F]"
+                className="inline-block text-[var(--color-ink)] hover:text-[var(--color-accent)] transition-colors cursor-default"
               >
                 {char}
               </motion.span>
             ))}
-          </div>
-
+          </span>
+          {' '}
           {/* Dallakoti — sliding reveal + moving gradient */}
-          <motion.div
-            className="overflow-hidden"
+          <motion.span
+            className="inline-block overflow-hidden align-bottom"
             initial={{ clipPath: "inset(0 100% 0 0)" }}
             animate={{ clipPath: "inset(0 0% 0 0)" }}
-            transition={{ duration: 0.8, delay: 0.8, ease: [0.215, 0.61, 0.355, 1] }}
+            transition={{ duration: 0.8, delay: 1.0, ease: [0.215, 0.61, 0.355, 1] }}
           >
-            <span className="block bg-gradient-to-r from-blue-600 via-indigo-500 to-cyan-400 bg-clip-text text-transparent bg-[length:200%_auto] animate-[gradient-shift_3s_linear_infinite]">
+            <span className="inline-block bg-gradient-to-r from-blue-600 via-indigo-500 to-cyan-400 bg-clip-text text-transparent bg-[length:200%_auto] animate-[gradient-shift_3s_linear_infinite]">
               Dallakoti
             </span>
-          </motion.div>
+          </motion.span>
         </div>
 
-        <motion.div variants={itemVariants} className="flex items-center justify-center">
-          <span className="font-mono text-[16px] sm:text-[18px] md:text-[20px]" style={{ color: isDark ? '#1E3A5F' : 'var(--color-muted)' }}>
+        <motion.div variants={itemVariants} className="flex items-center justify-center space-x-3">
+          <span className="font-mono text-[16px] sm:text-[18px] md:text-[20px] text-[var(--color-muted)]">
             {typewriterText}
             <motion.span
               animate={{ opacity: [1, 0] }}
@@ -93,11 +94,11 @@ export default function Hero({ isDark }) {
               View My Work
             </Button>
             <Button variant="outline" href={personalInfo.resumeUrl} icon={<FaDownload />}>
-              Resume
+              Download Resume
             </Button>
           </div>
 
-          <div className="flex items-center justify-center gap-3">
+          <div className="flex items-center justify-center gap-4">
             {socialLinks.map((link) => {
               const Icon = iconMap[link.icon]
               return (
@@ -108,16 +109,26 @@ export default function Hero({ isDark }) {
                   rel="noopener noreferrer"
                   whileHover={{ scale: 1.1, y: -2 }}
                   whileTap={{ scale: 0.92 }}
-                  className="w-11 h-11 grid place-items-center rounded-full border border-[var(--color-line)] bg-[color-mix(in_srgb,var(--color-bg)_50%,transparent)] backdrop-blur-[12px] text-[var(--color-muted)] hover:text-[var(--color-accent)] hover:border-[var(--color-accent)] transition-colors"
+                  className="w-12 h-12 grid place-items-center rounded-full border border-[var(--color-line)] bg-[color-mix(in_srgb,var(--color-bg)_50%,transparent)] backdrop-blur-[12px] text-[var(--color-muted)] hover:text-[var(--color-accent)] hover:border-[var(--color-accent)] transition-colors hover:shadow-lg"
                   aria-label={link.name}
                 >
-                  {Icon && <Icon size={18} />}
+                  {Icon && <Icon size={20} />}
                 </motion.a>
               )
             })}
           </div>
+
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 2, duration: 1 }}
+            className="mt-6 text-[var(--color-faint)] text-[13px]"
+          >
+            <span className="status-dot mr-2 inline-block"></span>
+            Currently available for freelance & full-time opportunities
+          </motion.div>
         </motion.div>
       </motion.div>
-    </section>
+    </div>
   )
 }

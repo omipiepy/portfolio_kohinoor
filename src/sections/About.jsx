@@ -19,7 +19,7 @@ export default function About() {
         <div className="grid md:grid-cols-[3fr_5fr] gap-14 items-start">
           {/* Left: photo only */}
           <motion.div {...fade} className="flex justify-center md:justify-start">
-            <div className="w-[200px] h-[200px] sm:w-[240px] sm:h-[240px] md:w-[280px] md:h-[280px] rounded-[20px] sm:rounded-[24px] overflow-hidden border border-[var(--color-line-2)] ring-6 sm:ring-8 ring-[color-mix(in_srgb,var(--color-accent)_8%,transparent)]">
+            <div className="w-[240px] h-[240px] sm:w-[280px] sm:h-[280px] md:w-[320px] md:h-[320px] rounded-[20px] sm:rounded-[24px] overflow-hidden border border-[var(--color-line-2)] ring-6 sm:ring-8 ring-[color-mix(in_srgb,var(--color-accent)_8%,transparent)]">
               <img
                 src={personalInfo.avatar}
                 alt={personalInfo.name}
