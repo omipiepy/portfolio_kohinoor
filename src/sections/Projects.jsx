@@ -1,12 +1,10 @@
-import { useState } from 'react'
 import { motion } from 'framer-motion'
 import ExpandableCard from '@/components/ui/expandable-card'
 import { projects } from '@/data/portfolio'
 
 const VISIBLE_COUNT = 3
 
-export default function Projects() {
-  const [showAll, setShowAll] = useState(false)
+export default function Projects({ showAll, onToggle }) {
   const visible = showAll ? projects : projects.slice(0, VISIBLE_COUNT)
 
   return (
@@ -49,7 +47,7 @@ export default function Projects() {
             className="flex justify-center mt-10"
           >
             <button
-              onClick={() => setShowAll(!showAll)}
+              onClick={onToggle}
               className="btn-phi btn-phi--ghost btn-phi--sm"
             >
               {showAll ? 'Show Less' : 'See More'}

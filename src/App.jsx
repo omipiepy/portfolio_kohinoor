@@ -24,6 +24,7 @@ function HomePage() {
   const rootRef = useRef(null)
   const aboutRef = useRef(null)
   const [heroVisible, setHeroVisible] = useState(true)
+  const [showAllProjects, setShowAllProjects] = useState(false)
 
   useEffect(() => {
     aboutRef.current = document.getElementById('about')
@@ -119,7 +120,7 @@ function HomePage() {
     }, rootRef)
 
     return () => ctx.revert()
-  }, [])
+  }, [showAllProjects])
 
   return (
     <>
@@ -143,11 +144,11 @@ function HomePage() {
         <Skills />
       </section>
 
-      <section id="projects" className="relative w-screen section-fish-bg">
-        <Projects />
+      <section id="projects" className={`${showAllProjects ? '' : 'gs-pin '}relative w-screen ${showAllProjects ? 'min-h-screen' : 'h-screen'} section-fish-bg`}>
+        <Projects showAll={showAllProjects} onToggle={() => setShowAllProjects((p) => !p)} />
       </section>
 
-      <section id="contact" className="relative w-screen min-h-screen section-fish-bg">
+      <section id="contact" className={`${showAllProjects ? '' : 'gs-pin '}relative w-screen min-h-screen section-fish-bg`}>
         <Contact />
         <Footer />
       </section>
