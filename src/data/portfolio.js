@@ -4,7 +4,7 @@ export const personalInfo = {
   email: 'dallakotikohinoor@gmail.com',
   phone: '+977-9800000000',
   location: 'Kathmandu, Nepal',
-  resumeUrl: '/resume.pdf',
+  resumeUrl: '/Resume_Kohinoor.pdf',
   avatar: '/pic3.jpeg',
   rotatingTitles: [
     'UI/UX Designer',
@@ -108,7 +108,7 @@ export const projects = [
     gallery: ['/images/beautykart1.png', '/images/beautykart2.png'],
     technologies: ['React', 'Node.js', 'Express', 'PostgreSQL', 'Prisma'],
     github: 'https://github.com/omipiepy/beautykart',
-    live: '#',
+    live: 'https://beautykart.onrender.com/',
     highlights: [
       'Product catalog with search and filters',
       'Shopping cart and checkout',
