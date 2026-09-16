@@ -1,6 +1,8 @@
 # Portfolio
 
 This is a personal portfolio website built with React, Vite, and Tailwind CSS.
+You can click in the link below to view my portfolio:
+https://www.kohinoordallakoti.com.np/
 
 ## Features
 
