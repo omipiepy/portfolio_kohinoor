@@ -14,7 +14,7 @@ export default function Projects({ showAll, onToggle }) {
         <motion.div
           initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: '-50px' }}
+          viewport={{ margin: '-50px' }}
           transition={{ duration: 0.4 }}
           className="text-center mb-14"
         >
@@ -30,7 +30,7 @@ export default function Projects({ showAll, onToggle }) {
               key={project.id || project.title}
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: '-50px' }}
+          viewport={{ margin: '-50px' }}
               transition={{ duration: 0.4, delay: idx * 0.1 }}
             >
               <ExpandableCard project={project} />
@@ -43,7 +43,7 @@ export default function Projects({ showAll, onToggle }) {
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
+            viewport={{ margin: '-50px' }}
             className="flex justify-center mt-10"
           >
             <button

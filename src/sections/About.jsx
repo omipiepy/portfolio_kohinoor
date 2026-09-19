@@ -4,10 +4,10 @@ import SectionTitle from '@/components/SectionTitle'
 import { personalInfo, aboutSummary, education } from '@/data/portfolio'
 
 const fade = {
-  initial: { opacity: 0, y: 21 },
+  initial: { opacity: 0, y: 12 },
   whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: '-40px' },
-  transition: { duration: 0.5 },
+  viewport: { margin: '-40px' },
+  transition: { duration: 0.4 },
 }
 
 export default function About() {
@@ -72,17 +72,17 @@ export default function About() {
                 {education.map((edu, i) => (
                   <motion.div
                     key={edu.degree}
-                    initial={{ opacity: 0, x: -13 }}
+                    initial={{ opacity: 0, x: -12 }}
                     whileInView={{ opacity: 1, x: 0 }}
-                    viewport={{ once: true }}
-                    transition={{ delay: i * 0.1 }}
+                    viewport={{ margin: '-40px' }}
+                    transition={{ duration: 0.4, delay: i * 0.1 }}
                     className="relative pb-0 last:pb-0"
                   >
                     <h4 className="font-sans text-[18px] font-semibold text-[var(--color-ink)] mb-2">{edu.degree}</h4>
                     <p className="font-mono text-[13px] text-[var(--color-accent)] mb-2">
                       {edu.institution} · {edu.period}
                     </p>
-                    <p className="font-sans text-[15px] text-[var(--color-muted)]">{edu.description}</p>
+                    <p className="font-sans text-[15px] text-[var(--color-ink)]">{edu.description}</p>
                   </motion.div>
                 ))}
               </div>

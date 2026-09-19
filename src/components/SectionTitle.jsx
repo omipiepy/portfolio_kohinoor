@@ -5,7 +5,7 @@ export default function SectionTitle({ kicker, title, subtitle }) {
     <motion.div
       initial={{ opacity: 0, y: 12 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: '-50px' }}
+      viewport={{ margin: '-50px' }}
       transition={{ duration: 0.4 }}
       className="mb-14 text-center"
     >

@@ -31,10 +31,10 @@ export default function Skills() {
         />
 
         <motion.div
-          initial={{ opacity: 0, y: 21 }}
+          initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.5 }}
+          viewport={{ margin: '-40px' }}
+          transition={{ duration: 0.4 }}
         >
           <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5 md:gap-6">
             {visible.map((skill, i) => (
@@ -42,8 +42,8 @@ export default function Skills() {
                 key={skill.name}
                 initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: i * 0.05 }}
+                viewport={{ margin: '-40px' }}
+                transition={{ duration: 0.4, delay: i * 0.05 }}
                 whileHover={{ y: -4 }}
                 className="net-panel net-panel-sm p-5 sm:p-6 flex flex-col items-center gap-3 sm:gap-4 cursor-default"
               >
@@ -65,7 +65,7 @@ export default function Skills() {
                     <motion.div
                       initial={{ width: 0 }}
                       whileInView={{ width: `${skill.level}%` }}
-                      viewport={{ once: true }}
+                      viewport={{ margin: '-40px' }}
                       transition={{ duration: 0.9, ease: 'easeOut', delay: 0.2 }}
                       className="h-full rounded-full bg-[var(--color-accent)]"
                     />
@@ -81,7 +81,7 @@ export default function Skills() {
           <motion.div
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
+            viewport={{ margin: '-40px' }}
             className="flex justify-center mt-8"
           >
             <button

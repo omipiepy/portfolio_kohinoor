@@ -38,7 +38,7 @@ export default function Hero() {
         </motion.p>
 
         <div className="font-serif font-extrabold text-[clamp(32px,6vw,56px)] leading-tight tracking-tight mb-2">
-          {/* Kohinoor — staggered letter reveal with spring */}
+          {/* Kohinoor — staggered letter reveal with spring + gradient */}
           <span className="inline-block">
             {"Kohinoor".split("").map((char, i) => (
               <motion.span
@@ -51,21 +51,21 @@ export default function Hero() {
                   damping: 12,
                   delay: 0.4 + i * 0.07,
                 }}
-                className="inline-block text-[var(--color-ink)] hover:text-[var(--color-accent)] transition-colors cursor-default"
+                className="inline-block bg-gradient-to-r from-blue-600 via-indigo-500 to-cyan-400 bg-clip-text text-transparent bg-[length:200%_auto] animate-[gradient-shift_3s_linear_infinite] cursor-default"
               >
                 {char}
               </motion.span>
             ))}
           </span>
           {' '}
-          {/* Dallakoti — sliding reveal + moving gradient */}
+          {/* Dallakoti — sliding reveal */}
           <motion.span
             className="inline-block overflow-hidden align-bottom"
             initial={{ clipPath: "inset(0 100% 0 0)" }}
             animate={{ clipPath: "inset(0 0% 0 0)" }}
             transition={{ duration: 0.8, delay: 1.0, ease: [0.215, 0.61, 0.355, 1] }}
           >
-            <span className="inline-block bg-gradient-to-r from-blue-600 via-indigo-500 to-cyan-400 bg-clip-text text-transparent bg-[length:200%_auto] animate-[gradient-shift_3s_linear_infinite]">
+            <span className="inline-block text-[var(--color-ink)]">
               Dallakoti
             </span>
           </motion.span>
@@ -122,7 +122,7 @@ export default function Hero() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 2, duration: 1 }}
-            className="mt-6 text-[var(--color-faint)] text-[13px]"
+            className="mt-10 text-[var(--color-ink)] text-[13px]"
           >
             <span className="status-dot mr-2 inline-block"></span>
             Currently available for freelance & full-time opportunities
