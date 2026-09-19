@@ -6,6 +6,7 @@ import MainLayout from '@/layouts/MainLayout'
 import KineticDotsLoader from '@/components/ui/kinetic-dots-loader'
 import { NotFoundPage } from '@/components/ui/404-page-not-found'
 import BubbleField from '@/components/BubbleField'
+import FishScene from '@/components/FishScene'
 import Footer from '@/components/Footer'
 import scrollStore from '@/store'
 
@@ -60,16 +61,10 @@ function HomePage() {
 
   return (
     <>
-    {/* Single continuous fish background — fixed so it never breaks */}
-    <div
-      className="fixed inset-0"
-      style={{
-        zIndex: 0,
-        backgroundImage: 'url(/images/fish.jfif)',
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-      }}
-    />
+    {/* Animated fish background — Three.js */}
+    <div className="fixed inset-0" style={{ zIndex: 0 }}>
+      <FishScene />
+    </div>
     <div className="fixed inset-0 z-[1] hero-overlay" />
 
     <div ref={rootRef} className="relative" style={{ zIndex: 2 }}>
