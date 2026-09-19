@@ -15,6 +15,7 @@ import Skills from '@/sections/Skills'
 import Projects from '@/sections/Projects'
 import Contact from '@/sections/Contact'
 import ScrollDemo from '@/pages/ScrollDemo'
+import Fish3D from '@/pages/Fish3D'
 
 function HomePage() {
   const rootRef = useRef(null)
@@ -158,6 +159,7 @@ export default function App() {
       <Routes>
         <Route path="/" element={<MainLayout isDark={isDark} toggleTheme={toggle}><HomePage /></MainLayout>} />
         <Route path="/scroll-demo" element={<ScrollDemo />} />
+        <Route path="/fish3d" element={<Fish3D />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>
