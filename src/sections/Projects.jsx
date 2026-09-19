@@ -8,14 +8,14 @@ export default function Projects({ showAll, onToggle }) {
   const visible = showAll ? projects : projects.slice(0, VISIBLE_COUNT)
 
   return (
-    <section id="projects" className="phi-section relative z-10 py-5">
+    <section className="phi-section relative z-10 py-5">
       <div className="phi-wrap pointer-events-auto relative z-10">
         {/* Header */}
         <motion.div
-          initial={{ opacity: 0, y: 21 }}
+          initial={{ opacity: 0, y: 12 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: '-50px' }}
-          transition={{ duration: 0.5 }}
+          transition={{ duration: 0.4 }}
           className="text-center mb-14"
         >
           <h2 className="font-sans text-[32px] md:text-[36px] font-bold text-[var(--color-ink)]">

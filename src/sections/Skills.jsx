@@ -24,7 +24,7 @@ export default function Skills() {
   const visible = showAll ? allSkills : allSkills.slice(0, 5)
 
   return (
-    <section id="skills" className="phi-section">
+    <section className="phi-section">
       <div className="phi-wrap pointer-events-auto">
         <SectionTitle
           title="What I Work With"

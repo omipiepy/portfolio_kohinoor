@@ -12,7 +12,7 @@ const fade = {
 
 export default function About() {
   return (
-    <section id="about" className="phi-section">
+    <section className="phi-section">
       <div className="phi-wrap pointer-events-auto">
         <SectionTitle title="About Me" />
 
