@@ -1,9 +1,3 @@
-import { useEffect, useRef } from 'react'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-
-gsap.registerPlugin(ScrollTrigger)
-
 const sections = [
   { id: 'sec-1', bg: '#0F172A', accent: '#8B5CF6', label: 'Hero', title: 'Scroll Down' },
   { id: 'sec-2', bg: '#1E293B', accent: '#F472B6', label: 'About', title: 'About Section' },
@@ -13,60 +7,11 @@ const sections = [
 ]
 
 export default function ScrollDemo() {
-  const rootRef = useRef(null)
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      const root = rootRef.current
-      const pins = Array.from(root.querySelectorAll('.sd-pin'))
-      const footer = root.querySelector('.sd-footer')
-
-      pins.forEach((section, index, all) => {
-        const next = all[index + 1] || footer
-        const endVal = footer
-          ? footer.offsetTop - window.innerHeight
-          : '+=' + window.innerHeight
-
-        gsap.to(section, {
-          scrollTrigger: {
-            trigger: section,
-            start: 'top top',
-            end: endVal,
-            pin: true,
-            pinSpacing: false,
-            scrub: 1,
-          },
-        })
-
-        gsap.fromTo(
-          section,
-          { scale: 1, borderRadius: 0 },
-          {
-            scale: 0.5,
-            borderRadius: 24,
-            ease: 'none',
-            scrollTrigger: {
-              trigger: section,
-              start: 'top top',
-              end: next
-                ? `top+=${next.offsetTop - section.offsetTop} top`
-                : `+=${window.innerHeight}`,
-              scrub: 1,
-            },
-          }
-        )
-      })
-    }, rootRef)
-
-    return () => ctx.revert()
-  }, [])
-
   return (
-    <div ref={rootRef} style={{ background: '#000', minHeight: '100vh' }}>
+    <div style={{ background: '#000', minHeight: '100vh' }}>
       {sections.map((s, i) => (
         <section
           key={s.id}
-          className="sd-pin"
           style={{
             width: '100vw',
             height: '100vh',
@@ -125,7 +70,6 @@ export default function ScrollDemo() {
       ))}
 
       <section
-        className="sd-footer"
         style={{
           width: '100%',
           height: '50vh',

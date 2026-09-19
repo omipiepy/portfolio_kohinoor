@@ -3,10 +3,10 @@ import { motion } from 'framer-motion'
 export default function SectionTitle({ kicker, title, subtitle }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 21 }}
+      initial={{ opacity: 0, y: 12 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-50px' }}
-      transition={{ duration: 0.5 }}
+      transition={{ duration: 0.4 }}
       className="mb-14 text-center"
     >
       {kicker && (

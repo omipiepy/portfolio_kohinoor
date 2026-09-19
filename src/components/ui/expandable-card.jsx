@@ -13,7 +13,7 @@ export default function ExpandableCard({ project }) {
         layoutId={layoutId}
         onClick={() => setIsOpen(true)}
         className="cursor-pointer overflow-hidden rounded-xl border border-[var(--color-line)] hover:border-[var(--color-accent)]/30 transition-colors group shadow-sm"
-        style={{ background: 'var(--color-bg)' }}
+        style={{ background: 'color-mix(in srgb, var(--color-bg) 50%, transparent)' }}
       >
         <motion.div layoutId={`image-${layoutId}`} className="relative h-48 w-full overflow-hidden">
           <motion.img

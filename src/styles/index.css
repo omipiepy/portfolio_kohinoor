@@ -44,7 +44,7 @@
 :root {
   --background: #0F172A;
   --foreground: #FFFFFF;
-  --card: #1E293B;
+  --card: rgba(30, 41, 59, 0.4);
   --card-foreground: #FFFFFF;
   --popover: #1E293B;
   --popover-foreground: #FFFFFF;
@@ -91,7 +91,7 @@ html {
 
 html.light {
   color-scheme: light;
-  --background: #F8FAFC;
+  --background: #FFFFFF;
   --foreground: #0F172A;
   --card: #FFFFFF;
   --card-foreground: #0F172A;
@@ -131,7 +131,7 @@ html.light {
   --shadow-offset-y: 0.2rem;
 
   /* Override portfolio tokens */
-  --color-bg: #F8FAFC;
+  --color-bg: #FFFFFF;
   --color-panel: rgba(255, 255, 255, 0.88);
   --color-panel-2: rgba(255, 255, 255, 0.92);
   --color-line: #E2E8F0;
@@ -341,11 +341,15 @@ html.light .btn-phi--outline {
 }
 
 .btn-phi--ghost {
-  color: var(--color-muted);
+  color: var(--color-ink);
+  background: color-mix(in srgb, var(--color-bg) 60%, transparent);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid color-mix(in srgb, var(--color-line-2) 40%, transparent);
 }
 
 .btn-phi--ghost:hover:not(:disabled) {
-  background: rgba(255, 255, 255, 0.04);
+  background: color-mix(in srgb, var(--color-bg) 80%, transparent);
   color: var(--color-ink);
 }
 
@@ -644,6 +648,12 @@ img {
   animation: shine var(--duration, 14s) linear infinite;
 }
 
+/* ---------- Hero overlay ---------- */
+
+html:not(.light) .hero-overlay {
+  background: rgba(26, 19, 16, 0.35);
+}
+
 /* ---------- Section fish background ---------- */
 
 .section-fish-bg {
@@ -662,7 +672,7 @@ html.light .section-fish-bg::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(248, 250, 252, 0.65);
+  background: rgba(248, 250, 252, 0.85);
   z-index: 0;
 }
 
@@ -670,22 +680,8 @@ html:not(.light) .section-fish-bg::before {
   content: '';
   position: absolute;
   inset: 0;
-  background: rgba(15, 23, 42, 0.6);
+  background: rgba(30, 41, 59, 0.8);
   z-index: 0;
 }
 
-/* ---------- Stacked page transitions ---------- */
-
-.sticky-section {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  overflow: hidden;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .sticky-section {
-    position: relative;
-    height: auto;
-  }
-}
+/* ---------- Section fish background (404 page) ---------- */

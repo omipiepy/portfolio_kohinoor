@@ -1,6 +1,6 @@
 export const personalInfo = {
   name: 'Kohinoor Dallakoti',
-  title: 'UI/UX Designer',
+  title: 'Full Stack Developer',
   email: 'dallakotikohinoor@gmail.com',
   phone: '+977-9800000000',
   location: 'Kathmandu, Nepal',
