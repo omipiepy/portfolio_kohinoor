@@ -12,6 +12,9 @@ dist
 dist-ssr
 *.local
 
+# Agent skills
+.agents
+
 # Local dev docs
 docs/
 
