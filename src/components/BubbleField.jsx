@@ -1,6 +1,12 @@
 import { useRef, useEffect } from 'react'
 
-const MAX_BUBBLES = 80
+function randomBetween(a, b) {
+  return a + Math.random() * (b - a)
+}
+
+function isLightMode() {
+  return document.documentElement.classList.contains('light')
+}
 
 export default function BubbleField() {
   const canvasRef = useRef(null)
@@ -9,27 +15,18 @@ export default function BubbleField() {
     const canvas = canvasRef.current
     if (!canvas) return
 
-    canvas.width = 2
-    canvas.height = 2
-
-    const realCanvas = document.createElement('canvas')
-    realCanvas.style.cssText =
-      'position:fixed;top:0;left:0;width:100vw;height:100vh;pointer-events:none;z-index:9999;'
-    document.body.appendChild(realCanvas)
-
-    const ctx = realCanvas.getContext('2d')
+    const ctx = canvas.getContext('2d')
     const dpr = Math.min(window.devicePixelRatio || 1, 2)
 
-    let w = window.innerWidth
-    let h = window.innerHeight
+    let w, h
 
     const resize = () => {
       w = window.innerWidth
       h = window.innerHeight
-      realCanvas.width = w * dpr
-      realCanvas.height = h * dpr
-      realCanvas.style.width = w + 'px'
-      realCanvas.style.height = h + 'px'
+      canvas.width = w * dpr
+      canvas.height = h * dpr
+      canvas.style.width = w + 'px'
+      canvas.style.height = h + 'px'
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
     }
 
@@ -39,46 +36,83 @@ export default function BubbleField() {
     let animId
     let running = true
 
-    const onClick = (e) => {
-      const count = 6 + Math.floor(Math.random() * 5)
+    function spawnBubbles(cx, cy) {
+      const count = 8 + Math.floor(Math.random() * 6)
       for (let i = 0; i < count; i++) {
-        if (bubbles.length >= MAX_BUBBLES) {
-          bubbles.shift()
-        }
-        const spread = Math.random() * 40 - 20
+        const angle = Math.random() * Math.PI * 2
+        const dist = Math.random() * 30
         bubbles.push({
-          x: e.clientX + spread,
-          y: e.clientY,
-          radius: 3 + Math.random() * 8,
-          speed: 0.4 + Math.random() * 0.8,
-          wobbleAmp: 0.3 + Math.random() * 0.6,
-          wobbleSpeed: 0.02 + Math.random() * 0.02,
+          x: cx + Math.cos(angle) * dist,
+          y: cy + Math.sin(angle) * dist,
+          radius: randomBetween(6, 24),
+          speed: randomBetween(0.3, 0.9),
+          wobbleAmp: randomBetween(0.2, 0.6),
+          wobbleSpeed: randomBetween(0.008, 0.015),
           wobbleOffset: Math.random() * Math.PI * 2,
           born: performance.now(),
-          life: 2500 + Math.random() * 1500,
+          life: 2500 + Math.random() * 2000,
         })
       }
     }
 
-    const onVisibilityChange = () => {
-      if (document.hidden) {
-        cancelAnimationFrame(animId)
-      } else {
-        animId = requestAnimationFrame(animate)
-      }
+    const onPointerDown = (e) => {
+      spawnBubbles(e.clientX, e.clientY)
     }
 
-    document.addEventListener('click', onClick, { passive: true })
+    document.addEventListener('pointerdown', onPointerDown, { passive: true })
     window.addEventListener('resize', resize, { passive: true })
-    document.addEventListener('visibilitychange', onVisibilityChange)
+
+    function drawBubble(x, y, r, alpha) {
+      const light = isLightMode()
+
+      ctx.save()
+      ctx.globalAlpha = alpha
+
+      const bodyGrad = ctx.createRadialGradient(
+        x - r * 0.25, y - r * 0.25, r * 0.05,
+        x, y, r
+      )
+      if (light) {
+        bodyGrad.addColorStop(0, 'rgba(255, 255, 255, 0.25)')
+        bodyGrad.addColorStop(0.5, 'rgba(255, 255, 255, 0.12)')
+        bodyGrad.addColorStop(0.85, 'rgba(255, 255, 255, 0.06)')
+        bodyGrad.addColorStop(1, 'rgba(255, 255, 255, 0.0)')
+      } else {
+        bodyGrad.addColorStop(0, 'rgba(100, 120, 150, 0.3)')
+        bodyGrad.addColorStop(0.5, 'rgba(80, 100, 130, 0.15)')
+        bodyGrad.addColorStop(0.85, 'rgba(60, 80, 110, 0.08)')
+        bodyGrad.addColorStop(1, 'rgba(40, 60, 90, 0.0)')
+      }
+
+      ctx.beginPath()
+      ctx.arc(x, y, r, 0, Math.PI * 2)
+      ctx.fillStyle = bodyGrad
+      ctx.fill()
+
+      ctx.globalAlpha = alpha * 0.9
+      ctx.beginPath()
+      ctx.arc(x, y, r, 0, Math.PI * 2)
+      ctx.strokeStyle = light ? 'rgba(255, 255, 255, 0.45)' : 'rgba(120, 140, 170, 0.4)'
+      ctx.lineWidth = 1.2
+      ctx.stroke()
+
+      ctx.globalAlpha = alpha * 0.8
+      ctx.beginPath()
+      ctx.ellipse(x - r * 0.3, y - r * 0.35, r * 0.35, r * 0.2, -0.5, 0, Math.PI * 2)
+      ctx.fillStyle = light ? 'rgba(255, 255, 255, 0.7)' : 'rgba(130, 150, 180, 0.5)'
+      ctx.fill()
+
+      ctx.globalAlpha = alpha * 0.5
+      ctx.beginPath()
+      ctx.ellipse(x - r * 0.15, y - r * 0.2, r * 0.12, r * 0.08, -0.5, 0, Math.PI * 2)
+      ctx.fillStyle = light ? 'rgba(255, 255, 255, 0.5)' : 'rgba(100, 120, 150, 0.35)'
+      ctx.fill()
+
+      ctx.restore()
+    }
 
     function animate(now) {
       if (!running) return
-
-      if (document.hidden) {
-        animId = requestAnimationFrame(animate)
-        return
-      }
 
       ctx.clearRect(0, 0, w, h)
 
@@ -86,28 +120,19 @@ export default function BubbleField() {
         const b = bubbles[i]
         const age = now - b.born
 
-        if (age > b.life || b.y + b.radius < -10) {
+        if (age > b.life) {
           bubbles.splice(i, 1)
           continue
         }
 
-        const ratio = age / b.life
-        const fadeIn = Math.min(age / 200, 1)
-        const fadeOut = 1 - Math.max((ratio - 0.75) / 0.25, 0)
-        const alpha = fadeIn * fadeOut * 0.85
-
         b.y -= b.speed
         b.x += Math.sin(now * b.wobbleSpeed + b.wobbleOffset) * b.wobbleAmp
 
-        const r = b.radius
+        const fadeIn = Math.min(age / 200, 1)
+        const fadeOut = 1 - Math.max((age / b.life - 0.7) / 0.3, 0)
+        const alpha = fadeIn * fadeOut
 
-        ctx.save()
-        ctx.globalAlpha = alpha
-        ctx.beginPath()
-        ctx.arc(b.x, b.y, r, 0, Math.PI * 2)
-        ctx.fillStyle = 'rgba(147, 197, 253, 0.5)'
-        ctx.fill()
-        ctx.restore()
+        drawBubble(b.x, b.y, b.radius, alpha)
       }
 
       animId = requestAnimationFrame(animate)
@@ -118,12 +143,20 @@ export default function BubbleField() {
     return () => {
       running = false
       cancelAnimationFrame(animId)
-      document.removeEventListener('click', onClick)
+      document.removeEventListener('pointerdown', onPointerDown)
       window.removeEventListener('resize', resize)
-      document.removeEventListener('visibilitychange', onVisibilityChange)
-      if (realCanvas.parentNode) document.body.removeChild(realCanvas)
     }
   }, [])
 
-  return <canvas ref={canvasRef} style={{ display: 'none' }} />
+  return (
+    <canvas
+      ref={canvasRef}
+      style={{
+        position: 'fixed',
+        inset: 0,
+        zIndex: 50,
+        pointerEvents: 'none',
+      }}
+    />
+  )
 }
