@@ -15,12 +15,10 @@ import Skills from '@/sections/Skills'
 import Projects from '@/sections/Projects'
 import Contact from '@/sections/Contact'
 import ScrollDemo from '@/pages/ScrollDemo'
-import Fish3D from '@/pages/Fish3D'
 
 function HomePage() {
   const rootRef = useRef(null)
   const heroRef = useRef(null)
-  const [heroVisible, setHeroVisible] = useState(true)
   const [showAllProjects, setShowAllProjects] = useState(false)
 
   const computeTargets = useCallback(() => {
@@ -44,21 +42,6 @@ function HomePage() {
     return () => window.removeEventListener('resize', computeTargets)
   }, [computeTargets, showAllProjects])
 
-  useEffect(() => {
-    const onScroll = () => {
-      const hero = heroRef.current
-      if (!hero) return
-      const rect = hero.getBoundingClientRect()
-      setHeroVisible((prev) => {
-        const next = rect.top > window.innerHeight * 0.3
-        return next === prev ? prev : next
-      })
-    }
-    window.addEventListener('scroll', onScroll, { passive: true })
-    onScroll()
-    return () => window.removeEventListener('scroll', onScroll)
-  }, [])
-
   return (
     <>
     {/* Single continuous fish background — fixed so it never breaks */}
@@ -66,46 +49,68 @@ function HomePage() {
       className="fixed inset-0"
       style={{
         zIndex: 0,
-        backgroundImage: 'url(/images/fish.jfif)',
+        backgroundImage: 'url(/images/ocean-surface.jpg)',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
       }}
     />
     <div className="fixed inset-0 z-[1] hero-overlay" />
+    <div
+      className="fixed inset-0 z-0 opacity-[0.15]"
+      style={{
+        backgroundImage: 'url(/images/bubbles.jpg)',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        filter: 'blur(2px)',
+      }}
+    />
+    <BubbleField />
 
     <div ref={rootRef} className="relative" style={{ zIndex: 2 }}>
-      <div
-        className="fixed inset-0"
-        style={{ zIndex: 1, pointerEvents: 'none', opacity: heroVisible ? 1 : 0, transition: 'opacity 0.3s' }}
-      >
-        <BubbleField />
-      </div>
 
-      <section id="home" ref={heroRef} className="relative w-screen h-screen">
+      <section id="home" ref={heroRef} className="relative w-full h-screen overflow-hidden">
+        <div
+          className="absolute inset-0 z-0"
+          style={{
+            backgroundImage: 'url(/images/bubbles.jpg)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            opacity: 0.2,
+            filter: 'blur(2px)',
+            maskImage: 'linear-gradient(to bottom, black 60%, transparent 100%)',
+            WebkitMaskImage: 'linear-gradient(to bottom, black 60%, transparent 100%)',
+          }}
+        />
+        <div
+          className="absolute inset-0 z-[1]"
+          style={{
+            background: 'radial-gradient(ellipse at center 40%, rgba(255,255,255,0.08) 0%, transparent 60%)',
+          }}
+        />
         <div className="relative z-10 h-full">
           <Hero />
         </div>
       </section>
 
-      <section id="about" className="relative w-screen min-h-screen">
+      <section id="about" className="relative w-full min-h-screen">
         <div className="relative z-10">
           <About />
         </div>
       </section>
 
-      <section id="skills" className="relative w-screen min-h-screen">
+      <section id="skills" className="relative w-full min-h-screen">
         <div className="relative z-10">
           <Skills />
         </div>
       </section>
 
-      <section id="projects" className="relative w-screen min-h-screen">
+      <section id="projects" className="relative w-full min-h-screen">
         <div className="relative z-10">
           <Projects showAll={showAllProjects} onToggle={() => setShowAllProjects((p) => !p)} />
         </div>
       </section>
 
-      <section id="contact" className="relative w-screen min-h-screen">
+      <section id="contact" className="relative w-full min-h-screen">
         <div className="relative z-10">
           <Contact />
         </div>
@@ -134,7 +139,7 @@ function LoadingScreen() {
           transition={{ duration: 0.4, ease: "easeInOut" }}
           className="fixed inset-0 z-50 flex items-center justify-center"
           style={{
-            backgroundImage: 'url(/images/fish.jfif)',
+            backgroundImage: 'url(/images/ocean-surface.jpg)',
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
@@ -159,7 +164,6 @@ export default function App() {
       <Routes>
         <Route path="/" element={<MainLayout isDark={isDark} toggleTheme={toggle}><HomePage /></MainLayout>} />
         <Route path="/scroll-demo" element={<ScrollDemo />} />
-        <Route path="/fish3d" element={<Fish3D />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
     </BrowserRouter>

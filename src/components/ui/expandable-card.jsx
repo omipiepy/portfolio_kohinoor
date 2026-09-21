@@ -30,13 +30,13 @@ export default function ExpandableCard({ project }) {
           </span>
           <motion.h3
             layoutId={`title-${layoutId}`}
-            className="text-base font-semibold tracking-tight text-[var(--color-ink)] mt-1 mb-1"
+            className="text-base font-semibold tracking-tight text-foreground mt-1 mb-1"
           >
             {project.title}
           </motion.h3>
           <motion.p
             layoutId={`desc-${layoutId}`}
-            className="text-[var(--color-muted)] text-xs tracking-wide line-clamp-2"
+            className="text-foreground text-xs tracking-wide line-clamp-2"
           >
             {project.tagline || project.description}
           </motion.p>
@@ -62,7 +62,7 @@ export default function ExpandableCard({ project }) {
               {/* Close button */}
               <button
                 onClick={() => setIsOpen(false)}
-                className="absolute top-4 right-4 z-20 flex h-8 w-8 items-center justify-center rounded-full border border-[var(--color-line)] text-[var(--color-muted)] hover:text-[var(--color-ink)] hover:border-[var(--color-accent)] transition-colors backdrop-blur-sm"
+                className="absolute top-4 right-4 z-20 flex h-8 w-8 items-center justify-center rounded-full border border-[var(--color-line)] text-foreground hover:text-[var(--color-accent)] hover:border-[var(--color-accent)] transition-colors backdrop-blur-sm"
                 style={{ background: 'color-mix(in srgb, var(--color-bg) 50%, transparent)' }}
               >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
@@ -79,10 +79,10 @@ export default function ExpandableCard({ project }) {
               </motion.div>
 
               {/* Content */}
-              <div className="p-8 overflow-y-auto custom-scrollbar">
+              <div className="p-8 overflow-y-auto custom-scrollbar text-foreground">
                 <motion.h3
                   layoutId={`title-${layoutId}`}
-                  className="text-xl sm:text-2xl font-semibold tracking-tight text-[var(--color-ink)] mb-1"
+                  className="text-xl sm:text-2xl font-semibold tracking-tight text-foreground mb-1"
                 >
                   {project.title}
                 </motion.h3>
@@ -98,17 +98,17 @@ export default function ExpandableCard({ project }) {
                   animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
                   exit={{ opacity: 0, y: 10, filter: 'blur(4px)' }}
                   transition={{ type: 'spring', duration: 0.3, bounce: 0, delay: 0.1 }}
-                  className="text-[var(--color-muted)] text-sm leading-relaxed space-y-4"
+                  className="text-foreground text-sm leading-relaxed space-y-4"
                 >
-                  <p>{project.description}</p>
+                  <p className="text-[var(--color-ink)]">{project.description}</p>
 
                   {project.overview && (
-                    <p className="text-[var(--color-faint)]">{project.overview}</p>
+                    <p className="text-[var(--color-ink)]">{project.overview}</p>
                   )}
 
                   {project.technologies && (
                     <div>
-                      <h4 className="text-[var(--color-ink)] font-semibold mt-6 mb-2 tracking-tight">Tech Stack</h4>
+                      <h4 className="text-foreground font-semibold mt-6 mb-2 tracking-tight">Tech Stack</h4>
                       <div className="flex flex-wrap gap-2">
                         {project.technologies.map((tech) => (
                           <span
@@ -124,8 +124,8 @@ export default function ExpandableCard({ project }) {
 
                   {project.features && (
                     <div>
-                      <h4 className="text-[var(--color-ink)] font-semibold mt-6 mb-2 tracking-tight">Features</h4>
-                      <ul className="list-disc pl-5 space-y-1.5 text-[var(--color-muted)]">
+                      <h4 className="text-foreground font-semibold mt-6 mb-2 tracking-tight">Features</h4>
+                      <ul className="list-disc pl-5 space-y-1.5 text-foreground">
                         {project.features.map((f) => (
                           <li key={f}>{f}</li>
                         ))}
@@ -140,7 +140,7 @@ export default function ExpandableCard({ project }) {
                         href={project.github}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg border border-[var(--color-line-2)] text-[var(--color-ink)] font-medium text-sm hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] transition-colors"
+                        className="flex items-center justify-center gap-2 px-5 py-2.5 rounded-lg border border-[var(--color-line-2)] text-foreground font-medium text-sm hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] transition-colors"
                       >
                         <FiGithub size={16} />
                         View Code

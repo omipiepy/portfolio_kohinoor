@@ -57,10 +57,14 @@ export default function ContactInfo() {
               {item.copyable && (
                 <button
                   onClick={() => handleCopy(item.key, item.value)}
-                  className="ml-2 p-1.5 rounded-md text-muted-foreground hover:text-foreground hover:bg-muted transition-all opacity-0 group-hover:opacity-100"
+                  className="ml-2 px-2.5 py-1.5 rounded-md text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-muted transition-all flex items-center gap-1.5 shrink-0"
                   aria-label={`Copy ${item.label}`}
                 >
-                  {copied === item.key ? <FiCheck className="h-4 w-4 text-primary" /> : <FiCopy className="h-4 w-4" />}
+                  {copied === item.key ? (
+                    <><FiCheck className="h-3.5 w-3.5 text-primary" /> <span className="text-primary">Copied</span></>
+                  ) : (
+                    <><FiCopy className="h-3.5 w-3.5" /> <span>Copy</span></>
+                  )}
                 </button>
               )}
             </div>

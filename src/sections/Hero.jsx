@@ -5,8 +5,8 @@ import { useTypewriter } from '@/hooks/useTypewriter'
 import { personalInfo, socialLinks } from '@/data/portfolio'
 
 const iconMap = {
-  FaGithub,
-  FaEnvelope,
+  GitHub: FaGithub,
+  Email: FaEnvelope,
 }
 
 const containerVariants = {
@@ -37,7 +37,7 @@ export default function Hero() {
           {'<'}hello, world {'/>'}
         </motion.p>
 
-        <div className="font-serif font-extrabold text-[clamp(32px,6vw,56px)] leading-tight tracking-tight mb-2">
+        <h1 className="font-serif font-extrabold text-[clamp(32px,6vw,56px)] leading-tight tracking-tight mb-2">
           {/* Kohinoor — staggered letter reveal with spring + gradient */}
           <span className="inline-block">
             {"Kohinoor".split("").map((char, i) => (
@@ -69,10 +69,10 @@ export default function Hero() {
               Dallakoti
             </span>
           </motion.span>
-        </div>
+        </h1>
 
         <motion.div variants={itemVariants} className="flex items-center justify-center space-x-3">
-          <span className="font-mono text-[16px] sm:text-[18px] md:text-[20px] text-[var(--color-muted)]">
+          <span className="font-mono text-[16px] sm:text-[18px] md:text-[20px] text-[var(--color-ink)]">
             {typewriterText}
             <motion.span
               animate={{ opacity: [1, 0] }}
@@ -98,35 +98,36 @@ export default function Hero() {
             </Button>
           </div>
 
-          <div className="flex items-center justify-center gap-4">
-            {socialLinks.map((link) => {
-              const Icon = iconMap[link.icon]
-              return (
-                <motion.a
-                  key={link.name}
-                  href={link.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  whileHover={{ scale: 1.1, y: -2 }}
-                  whileTap={{ scale: 0.92 }}
-                  className="w-12 h-12 grid place-items-center rounded-full border border-[var(--color-line)] bg-[color-mix(in_srgb,var(--color-bg)_50%,transparent)] backdrop-blur-[12px] text-[var(--color-muted)] hover:text-[var(--color-accent)] hover:border-[var(--color-accent)] transition-colors hover:shadow-lg"
-                  aria-label={link.name}
-                >
-                  {Icon && <Icon size={20} />}
-                </motion.a>
-              )
-            })}
-          </div>
-
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ delay: 2, duration: 1 }}
-            className="mt-10 text-[var(--color-ink)] text-[13px]"
+            className="text-[var(--color-ink)] text-[var(--fs-sm)]"
           >
             <span className="status-dot mr-2 inline-block"></span>
-            Currently available for freelance & full-time opportunities
+            Available for freelance & full-time
           </motion.div>
+
+          <div className="flex items-center justify-center gap-4">
+            {socialLinks.map((link) => {
+              const Icon = iconMap[link.name]
+              return (
+                <motion.a
+                  key={link.name}
+                  href={link.url}
+                  target={link.url.startsWith('http') ? '_blank' : undefined}
+                  rel={link.url.startsWith('http') ? 'noopener noreferrer' : undefined}
+                  whileHover={{ scale: 1.05, y: -2 }}
+                  whileTap={{ scale: 0.92 }}
+                  className="flex items-center gap-2 px-4 py-2.5 rounded-xl border border-[var(--color-line)] bg-[color-mix(in_srgb,var(--color-bg)_50%,transparent)] backdrop-blur-[12px] text-[var(--color-ink)] hover:text-[var(--color-accent)] hover:border-[var(--color-accent)] transition-colors hover:shadow-lg"
+                  aria-label={link.name}
+                >
+                  {Icon && <Icon size={18} />}
+                  <span className="text-sm font-medium">{link.name}</span>
+                </motion.a>
+              )
+            })}
+          </div>
         </motion.div>
       </motion.div>
     </div>

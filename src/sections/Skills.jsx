@@ -36,7 +36,7 @@ export default function Skills() {
           viewport={{ margin: '-40px' }}
           transition={{ duration: 0.4 }}
         >
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-5 md:gap-6">
+          <div className="flex flex-wrap justify-center gap-4 sm:gap-5 md:gap-6">
             {visible.map((skill, i) => (
               <motion.div
                 key={skill.name}
@@ -45,7 +45,7 @@ export default function Skills() {
                 viewport={{ margin: '-40px' }}
                 transition={{ duration: 0.4, delay: i * 0.05 }}
                 whileHover={{ y: -4 }}
-                className="net-panel net-panel-sm p-5 sm:p-6 flex flex-col items-center gap-3 sm:gap-4 cursor-default"
+                className="net-panel net-panel-sm p-5 sm:p-6 flex flex-col items-center gap-3 sm:gap-4 cursor-default w-[calc(50%-8px)] sm:w-[calc(33.333%-14px)] lg:w-[calc(25%-18px)]"
               >
                 {iconImages[skill.icon] ? (
                   <img
@@ -59,7 +59,7 @@ export default function Skills() {
                     {skill.name[0]}
                   </span>
                 )}
-                <h4 className="font-sans text-[14px] font-semibold text-[var(--color-ink)]">{skill.name}</h4>
+                <h3 className="font-sans text-[14px] font-semibold text-[var(--color-ink)]">{skill.name}</h3>
                 <div className="w-full flex items-center gap-2 px-1">
                   <div className="flex-1 h-1.5 rounded-full bg-[color-mix(in_srgb,var(--color-faint)_18%,transparent)] overflow-hidden">
                     <motion.div

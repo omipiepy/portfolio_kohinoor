@@ -34,13 +34,13 @@ export default function About() {
 
             {/* Contact info */}
             <div className="flex flex-wrap gap-x-6 gap-y-3 mb-6">
-              <span className="flex items-center gap-2 font-mono text-[13px] text-[var(--color-faint)]">
+              <span className="flex items-center gap-2 font-mono text-[13px] text-[var(--color-ink)]">
                 <FiMapPin size={14} className="text-[var(--color-accent)]" />
                 {personalInfo.location}
               </span>
               <a
                 href={`mailto:${personalInfo.email}`}
-                className="flex items-center gap-2 font-mono text-[13px] text-[var(--color-faint)] hover:text-[var(--color-accent)] transition-colors"
+                className="flex items-center gap-2 font-mono text-[13px] text-[var(--color-ink)] hover:text-[var(--color-accent)] transition-colors"
               >
                 <FiMail size={14} className="text-[var(--color-accent)]" />
                 {personalInfo.email}
@@ -49,7 +49,7 @@ export default function About() {
                 href="https://github.com/omipiepy"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex items-center gap-2 font-mono text-[13px] text-[var(--color-faint)] hover:text-[var(--color-accent)] transition-colors"
+                className="flex items-center gap-2 font-mono text-[13px] text-[var(--color-ink)] hover:text-[var(--color-accent)] transition-colors"
               >
                 <FiGithub size={14} className="text-[var(--color-accent)]" />
                 github.com/omipiepy
