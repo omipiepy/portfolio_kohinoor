@@ -62,7 +62,7 @@ export default function KineticDotsLoader() {
                 width: size,
                 height: 4,
                 borderRadius: '50%',
-                background: `color-mix(in srgb, var(--color-primary) 40%, transparent)`,
+                background: `color-mix(in srgb, var(--color-primary) 30%, transparent)`,
               }}
             />
             {/* Ball */}
@@ -80,8 +80,8 @@ export default function KineticDotsLoader() {
                 width: size,
                 height: size,
                 borderRadius: '50%',
-                background: `linear-gradient(135deg, var(--color-accent) 0%, var(--color-primary) 50%, var(--color-accent) 100%)`,
-                boxShadow: `0 0 12px color-mix(in srgb, var(--color-primary) 50%, transparent)`,
+                background: `linear-gradient(135deg, #A78BFA 0%, var(--color-primary) 50%, #818CF8 100%)`,
+                boxShadow: `0 0 12px color-mix(in srgb, var(--color-primary) 40%, transparent)`,
               }}
             >
               {/* Highlight */}
